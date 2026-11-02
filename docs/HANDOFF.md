@@ -276,11 +276,17 @@ wx.login() → code
 
 ---
 
-## 11. 联系人 / 上下文
+## 11. 仓库地址 / 联系人
 
-- 前端仓库：本分支 `miniprogram`
-- ERP 后端：`H-max-dotcom/fmcg-erp`（`main`）
-- 共享仓库：`zrq8870-rgb/fmcg-erp-employee-mobile-collab`
+| 用途 | 地址 |
+|---|---|
+| **小程序前端（公开，直接打开即可看）** | https://github.com/H-max-dotcom/qcg-miniprogram |
+| 交接文档直达 | https://github.com/H-max-dotcom/qcg-miniprogram/blob/main/docs/HANDOFF.md |
+| 改动说明直达 | https://github.com/H-max-dotcom/qcg-miniprogram/blob/main/docs/CHANGELOG-2026-11-02.md |
+| ERP 后端（私有） | https://github.com/H-max-dotcom/fmcg-erp |
+| 共享仓库（私有，需被邀请） | https://github.com/zrq8870-rgb/fmcg-erp-employee-mobile-collab |
+
 - 小程序 AppID：`wx9cb4a72f6ae06f6a`
+- 小程序代码**与 ERP 代码完全分离**：公开仓库只有小程序，不含任何后端代码
 
 > 有任何接口疑问，先看 `utils/request.js` 对应函数的入参/出参处理，再对着本文第 4 节查路径——**前端对字段的依赖都在那里，不会有第三种来源**。
