@@ -1,0 +1,101 @@
+<view class="page no-tab">
+  <view class="mini-topbar">
+    <button class="icon-btn" bindtap="goBack">‹</button>
+    <view class="brand">
+      <text class="brand-title" style="font-size: 34rpx;">订单详情</text>
+      <text class="brand-subtitle">查看商品、备注和配送进度</text>
+    </view>
+    <button class="icon-btn" open-type="contact">客</button>
+  </view>
+
+  <block wx:if="{{order}}">
+  <delivery-promise storefront-code="{{storefrontCode}}" order-id="{{id}}" />
+  <view class="section">
+    <view class="row">
+      <view>
+        <view class="product-name">{{order.orderNo}}</view>
+        <view class="small">下单时间：{{order.submittedAtText}}</view>
+      </view>
+      <text class="tag status-{{order.statusTone}}">{{order.customerStatusText}}</text>
+    </view>
+    <view class="divider"></view>
+    <view class="row order-status-row"><text>订单状态</text><text class="order-status-hint">{{order.statusHint}}</text></view>
+    <view class="row" wx:if="{{order.originalTotalText}}"><text>原金额</text><text>{{order.originalTotalText}}</text></view>
+    <view class="row" wx:if="{{order.campaignDiscountTotalText}}"><text>活动优惠</text><text>-{{order.campaignDiscountTotalText}}</text></view>
+    <view wx:if="{{order.couponDiscountText}}">
+      <view class="row"><text>优惠券减免</text><text>-{{order.couponDiscountText}}</text></view>
+      <view class="small">{{order.couponName}}</view>
+    </view>
+    <view class="row"><text>最终金额</text><text class="money">{{order.amountText}}</text></view>
+    <view class="row" wx:if="{{order.hasPendingPrice}}"><text>已确认金额</text><text>{{order.confirmedSubtotalText}}</text></view>
+    <view class="row" wx:if="{{order.hasPendingPrice}}"><text>待确认商品</text><text class="tag orange">{{order.pendingPriceLineCount}} 种</text></view>
+    <view class="notice">如价格发生变化，我们会及时联系您。</view>
+  </view>
+
+  <view class="section settlement-section" wx:if="{{order.settlement}}">
+    <view class="row"><text class="section-title">结款信息</text><text class="tag status-{{order.settlement.tone}}">{{order.settlement.statusText}}</text></view>
+    <view class="row"><text>订单金额</text><text>{{order.amountText}}</text></view>
+    <view class="row" wx:if="{{order.settlement.fulfilledAmount !== null}}"><text>实际履约金额</text><text>¥{{order.settlement.fulfilledAmount}}</text></view>
+    <view class="row"><text>最终应收</text><text>{{order.settlement.finalReceivable !== null ? '¥' + order.settlement.finalReceivable : '待确认'}}</text></view>
+    <view class="row" wx:if="{{order.settlement.discountAmount !== null}}"><text>优惠金额</text><text>-¥{{order.settlement.discountAmount}}</text></view>
+    <view class="row"><text>实际支付</text><text class="settlement-amount">{{order.settlement.paidAmount !== null ? '¥' + order.settlement.paidAmount : '—'}}</text></view>
+    <view class="row"><text>付款方式</text><text>{{order.settlement.methodText}}</text></view>
+    <view class="row" wx:if="{{order.settlement.paymentTime}}"><text>付款时间</text><text>{{order.settlement.paymentTimeText}}</text></view>
+    <view class="row" wx:if="{{order.settlement.outstandingAmount !== null}}"><text>未结清金额</text><text>¥{{order.settlement.outstandingAmount}}</text></view>
+    <button wx:for="{{order.settlement.payments}}" wx:key="id" class="settlement-link" bindtap="openPayment" data-id="{{item.id}}">查看付款详情{{order.settlement.payments.length > 1 ? ' ' + (index + 1) : ''}} ›</button>
+  </view>
+
+  <view class="section">
+    <view class="section-title">您下单的商品</view>
+    <view class="detail-item" wx:for="{{order.items}}" wx:key="id">
+      <view class="product-row">
+        <view class="product-thumb">{{item.icon}}</view>
+        <view>
+          <view class="product-name">{{item.productName}}</view>
+          <view class="spec" wx:if="{{item.saleMode === 'FIXED_WEIGHT_SPEC'}}">{{item.spec}} × {{item.quantity}}份</view>
+          <view class="spec" wx:else>规格 {{item.spec}} · 单位 {{item.unitName || '-'}} · x {{item.quantity}}</view>
+          <view class="money">{{item.priceText}}{{item.saleMode === 'FIXED_WEIGHT_SPEC' ? ' / 份' : ''}}</view>
+          <view class="small">小计 {{item.lineAmountText}}</view>
+          <view class="small">{{item.priceStatusText}}</view>
+          <view class="notice" wx:if="{{item.lineRemark}}">商品备注：{{item.lineRemark}}</view>
+          <view class="small" wx:else>商品备注：无</view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="section" wx:if="{{order.customerFeedback}}">
+    <view class="section-title">客户反馈</view>
+    <view class="notice warning-notice">
+      <view class="product-name">{{order.customerFeedback.reasonLabel}}</view>
+      <view>{{order.customerFeedback.message}}</view>
+      <view class="small" wx:if="{{order.customerFeedback.occurredAtText}}">{{order.customerFeedback.occurredAtText}}</view>
+    </view>
+  </view>
+
+  <view class="section">
+    <view class="section-title">订单进度</view>
+    <button wx:if="{{order.wechatReceipt.eligible}}" class="button-plain" bindtap="confirmWechatReceipt">微信交易收货确认（可选）</button>
+    <view wx:if="{{order.wechatReceipt.eligible}}" class="muted">仅用于微信交易结算，不影响订单完成</view>
+    <view class="list-row"><view class="row"><text>已提交</text><text class="tag">已完成</text></view></view>
+    <view class="list-row"><view class="row"><text>已接单</text><text class="tag orange">{{order.acceptText}}</text></view></view>
+    <view class="list-row"><view class="row"><text>配送进度</text><text class="tag gray">{{order.deliveryText}}</text></view></view>
+    <view class="notice">如有商品、价格或配送变化，我们会及时联系您</view>
+  </view>
+
+  <view class="section">
+    <view class="section-title">订单备注</view>
+    <view class="notice">{{order.remark || '暂无整单备注'}}</view>
+    <view class="order-actions">
+      <button wx:if="{{order.canCancel}}" class="button-plain" bindtap="cancelOrder" loading="{{cancelling}}" disabled="{{cancelling || reordering}}">取消订单</button>
+      <button class="button-plain" bindtap="reorder" loading="{{reordering}}" disabled="{{reordering || cancelling}}">{{reorderAdded ? '已加入，去购物车' : '再来一单'}}</button>
+      <button class="button-plain" open-type="contact">联系客服</button>
+    </view>
+    <view class="notice" wx:if="{{reorderError}}">{{reorderError}}</view>
+  </view>
+  </block>
+  <view class="section empty" wx:else>
+    <view>{{loadErrorText || '订单详情加载中'}}</view>
+    <button class="button-primary" bindtap="loadOrder">重新加载</button>
+  </view>
+</view>

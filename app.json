@@ -1,0 +1,36 @@
+{
+  "pages": [
+    "pages/loading/loading",
+    "pages/index/index",
+    "pages/category/category",
+    "pages/product/detail",
+    "pages/cart/cart",
+    "pages/checkout/checkout",
+    "pages/address/list",
+    "pages/address/edit",
+    "pages/orders/list",
+    "pages/orders/detail",
+    "pages/me/me",
+    "pages/account/account",
+    "pages/account/finance",
+    "pages/campaigns/list",
+    "pages/campaigns/detail",
+    "pages/coupons/coupons",
+    "pages/membership/membership",
+    "pages/payments/payment",
+    "pages/payments/invite",
+    "pages/receivables/center",
+    "pages/payments/batch",
+    "pages/payments/batch-history",
+    "pages/auth/status",
+    "pages/auth/invite-confirm"
+  ],
+  "window": {
+    "navigationBarTitleText": "全渠供",
+    "navigationBarBackgroundColor": "#0f8f5f",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#f5f7f4"
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

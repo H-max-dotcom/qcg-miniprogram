@@ -1,0 +1,12 @@
+<view class="delivery" wx:if="{{delivery}}">
+  <block wx:if="{{delivery.order}}"><view>{{delivery.order.status}}</view><view>预计配送：{{delivery.order.date || '待商家安排'}}</view></block>
+  <block wx:elif="{{delivery.estimate}}"><view>{{delivery.estimate.label}} · {{delivery.estimate.date}}</view><view class="hint">每日 {{delivery.estimate.cutoff}} 截止，之后下单预计次日配送</view></block>
+  <block wx:if="{{orderId && delivery.expedite.visible && delivery.order.status !== '已取消' && delivery.order.status !== '已完成' && delivery.order.status !== '配送中'}}">
+    <view wx:if="{{delivery.order.expedite === 'PENDING'}}">加急申请已提交，等待业务确认</view>
+    <view wx:elif="{{delivery.order.expedite === 'CONFIRMED'}}">加急已确认，本次已扣 1 次额度</view>
+    <view wx:elif="{{delivery.order.expedite === 'REJECTED'}}">本次加急未获确认，未扣次数</view>
+    <button class="delivery-action" wx:elif="{{delivery.expedite.canRequest}}" bindtap="apply" loading="{{busy}}" disabled="{{busy}}">申请加急 · 本月剩余 {{delivery.expedite.remaining}} 次</button>
+    <view wx:else>本月暂无可用加急次数</view>
+  </block>
+  <view wx:if="{{error}}">{{error}}</view>
+</view>

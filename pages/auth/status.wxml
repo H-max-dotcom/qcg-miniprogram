@@ -1,0 +1,38 @@
+<view class="page auth-status-page">
+  <view class="section status-card">
+    <view class="title">{{title}}</view>
+    <view class="muted">{{desc}}</view>
+    <view class="reject-reason" wx:if="{{rejectionReason}}">{{rejectionReason}}</view>
+    <view class="detail-row" wx:if="{{shopName}}"><text>门店</text><text>{{shopName}}</text></view>
+    <view class="detail-row" wx:if="{{ownerName}}"><text>负责业务员</text><text>{{ownerName}}</text></view>
+    <view class="detail-row" wx:if="{{ownerPhone}}"><text>联系电话</text><text>{{ownerPhone}}</text></view>
+    <button
+      class="secondary-btn"
+      wx:if="{{ownerPhone}}"
+      bindtap="contactOwner"
+      loading="{{ownerContacting}}"
+      disabled="{{ownerContacting}}"
+    >联系业务员</button>
+    <view class="warning" wx:if="{{showOwnerFallback}}">请联系公司客服或等待业务员处理</view>
+  </view>
+
+  <view class="section profile-card" wx:if="{{canSubmitProfile}}">
+    <view class="title profile-title">门店资料</view>
+    <view class="profile-fields">
+      <input class="input profile-control profile-input" data-key="shopName" value="{{form.shopName}}" bindinput="inputProfile" placeholder="店名 / 招牌" adjust-position="{{true}}" cursor-spacing="32" />
+      <input class="input profile-control profile-input" data-key="contactName" value="{{form.contactName}}" bindinput="inputProfile" placeholder="联系人" adjust-position="{{true}}" cursor-spacing="32" />
+      <input class="input profile-control profile-input" data-key="phone" value="{{form.phone}}" bindinput="inputProfile" placeholder="联系电话" type="number" adjust-position="{{true}}" cursor-spacing="32" />
+      <textarea class="textarea profile-control profile-textarea profile-address" data-key="address" value="{{form.address}}" bindinput="inputProfile" maxlength="200" placeholder="完整门店 / 收货地址（区域、道路、门牌或位置说明）" adjust-position="{{true}}" cursor-spacing="32" disable-default-padding="{{true}}" />
+      <textarea class="textarea profile-control profile-textarea profile-remark" data-key="sourceScene" value="{{form.sourceScene}}" bindinput="inputProfile" maxlength="200" placeholder="可选备注，如门店位置、营业时间、补充说明" adjust-position="{{true}}" cursor-spacing="32" disable-default-padding="{{true}}" />
+    </view>
+    <view class="warning" wx:if="{{!formReady}}">{{formValidationMessage}}</view>
+  </view>
+
+  <view class="button-row">
+    <button class="primary-btn" wx:if="{{customerStatus === 'APPROVED_BOUND_CUSTOMER'}}" disabled="{{!subscribeReady}}" bindtap="subscribeOrderReminders">接收订单及付款提醒</button>
+    <button class="primary-btn" wx:if="{{showLogin}}" bindtap="prepareLogin" loading="{{loginSubmitting}}">微信登录</button>
+    <button class="primary-btn" wx:if="{{canSubmitProfile}}" bindtap="submitProfile" loading="{{submitting}}" disabled="{{submitting || !formReady}}">提交门店资料</button>
+    <button class="secondary-btn" wx:if="{{showHome}}" bindtap="goHome">返回商城首页</button>
+    <button class="secondary-btn" bindtap="goMe">返回我的</button>
+  </view>
+</view>

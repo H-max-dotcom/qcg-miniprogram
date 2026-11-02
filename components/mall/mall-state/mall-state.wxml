@@ -1,0 +1,15 @@
+<view class="state">
+  <view wx:if="{{type === 'loading'}}" class="dots">
+    <view class="dot"></view>
+    <view class="dot"></view>
+    <view class="dot"></view>
+  </view>
+  <view wx:else class="state-ico {{type === 'error' ? 'is-error' : 'is-empty'}}">
+    {{type === 'error' ? '!' : '🛒'}}
+  </view>
+
+  <text class="state-text">{{text}}</text>
+  <text wx:if="{{subtext}}" class="state-sub">{{subtext}}</text>
+
+  <view wx:if="{{type === 'error'}}" class="state-retry" bindtap="onRetry">重新加载</view>
+</view>

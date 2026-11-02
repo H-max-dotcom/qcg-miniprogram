@@ -1,0 +1,98 @@
+:host {
+  display: block;
+}
+
+.promo-swiper {
+  width: 100%;
+  height: 184rpx;
+  border-radius: 22rpx;
+  overflow: hidden;
+}
+
+.slide {
+  width: 100%;
+  height: 100%;
+}
+
+.slide-img {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* v2：兜底不再是大绿墙，改干净浅底 + 绿色点缀 */
+.slide-fallback {
+  width: 100%;
+  height: 100%;
+  padding: 28rpx 30rpx;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: #f1faf5;
+  border: 1rpx solid #e3f1e9;
+}
+
+.slide-title {
+  font-size: 30rpx;
+  font-weight: 700;
+  color: #0b7a4f;
+}
+
+.slide-sub {
+  margin-top: 8rpx;
+  font-size: 22rpx;
+  line-height: 1.5;
+  color: #6a7c71;
+}
+
+.slide-cta {
+  margin-top: 16rpx;
+  align-self: flex-start;
+  padding: 8rpx 22rpx;
+  border-radius: 999rpx;
+  font-size: 22rpx;
+  color: #ffffff;
+  background: #16a86a;
+}
+
+.acts {
+  margin-top: 16rpx;
+  width: 100%;
+}
+
+.acts-row {
+  display: inline-flex;
+  gap: 14rpx;
+  padding: 2rpx;
+}
+
+.act {
+  flex: 0 0 auto;
+  min-width: 240rpx;
+  max-width: 320rpx;
+  padding: 18rpx 22rpx;
+  border-radius: 20rpx;
+  background: #ffffff;
+  box-shadow: 0 8rpx 22rpx rgba(16, 90, 60, 0.06);
+}
+
+.act-title {
+  display: block;
+  font-size: 25rpx;
+  font-weight: 700;
+  color: #18271f;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.act-sub {
+  display: block;
+  margin-top: 6rpx;
+  font-size: 21rpx;
+  color: #7c8d83;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

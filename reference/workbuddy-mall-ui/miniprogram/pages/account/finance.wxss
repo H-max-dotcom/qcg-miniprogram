@@ -1,0 +1,11 @@
+.finance-page .section { margin-top: 20rpx; padding: 26rpx; border-radius: 24rpx; }
+.back-link { padding: 14rpx 0; text-align: left; color: #176c4c; font-size: 27rpx; }
+.fact-row { display: flex; justify-content: space-between; align-items: start; gap: 18rpx; margin-top: 20rpx; font-size: 26rpx; overflow-wrap: anywhere; }
+.fact-row > text { min-width: 0; }
+.amount { color: #166344; font-weight: 700; text-align: right; }
+.note { margin-top: 12rpx; font-size: 23rpx; line-height: 1.6; color: #6b7c70; overflow-wrap: anywhere; }
+.record { margin-top: 18rpx; padding: 4rpx 0 18rpx; border-top: 1rpx solid #e6ede7; }
+.empty { padding: 38rpx 0; text-align: center; color: #6b7c70; font-size: 25rpx; }
+
+.reference{font-size:22rpx;color:#68776e;line-height:1.6;word-break:break-all;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;word-break:break-all;line-height:1.5;margin-top:10rpx}
+.status-label{font-size:24rpx;color:#246749;flex:none}.finance-page .fact-row{gap:20rpx;align-items:center}.finance-page .amount{font-size:32rpx;flex:none}

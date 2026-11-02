@@ -1,0 +1,147 @@
+.auth-status-page {
+  min-height: 100vh;
+  overflow-x: hidden;
+  padding: 24rpx 24rpx calc(32rpx + constant(safe-area-inset-bottom));
+  padding: 24rpx 24rpx calc(32rpx + env(safe-area-inset-bottom));
+}
+
+.auth-status-page .section {
+  margin-top: 0;
+}
+
+.auth-status-page .section + .section {
+  margin-top: 20rpx;
+}
+
+.section {
+  margin-bottom: 16rpx;
+}
+
+.status-card .title {
+  margin-bottom: 8rpx;
+}
+
+.status-card .muted {
+  display: block;
+}
+
+.status-detail {
+  display: grid;
+  gap: 12rpx;
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 20rpx;
+  padding: 12rpx 0;
+  border-bottom: 1rpx solid #edf2f7;
+  color: #334155;
+  font-size: 26rpx;
+}
+
+.detail-row text:last-child {
+  text-align: right;
+}
+
+.reject-reason {
+  margin-top: 16rpx;
+  border: 1rpx solid #fecaca;
+  border-radius: 12rpx;
+  padding: 16rpx;
+  color: #b91c1c;
+  background: #fef2f2;
+  line-height: 1.6;
+}
+
+.profile-card {
+  padding: 22rpx;
+}
+
+.profile-title {
+  margin-bottom: 16rpx;
+}
+
+.profile-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 12rpx;
+  width: 100%;
+}
+
+.profile-control {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  border: 1rpx solid #dce8df;
+  border-radius: 14rpx;
+  background: #ffffff;
+  color: #1f2a24;
+  font-size: 32rpx;
+  box-sizing: border-box;
+}
+
+.profile-input {
+  height: 88rpx;
+  min-height: 88rpx;
+  padding: 0 20rpx;
+}
+
+.profile-textarea {
+  height: 132rpx;
+  min-height: 132rpx;
+  max-height: 270rpx;
+  padding: 20rpx;
+  line-height: 44rpx;
+  overflow-y: auto;
+}
+
+.profile-address {
+  height: 176rpx;
+  max-height: 176rpx;
+}
+
+.profile-remark {
+  height: 136rpx;
+  max-height: 136rpx;
+}
+
+.button-row {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+  width: 100%;
+  margin-top: 20rpx;
+}
+
+.primary-btn,
+.secondary-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: 16rpx;
+  font-size: 30rpx;
+  font-weight: 700;
+  line-height: 1;
+  text-align: center;
+}
+
+.primary-btn {
+  min-height: 92rpx;
+  color: #ffffff;
+  background: #0f8f5f;
+}
+
+.primary-btn[disabled] {
+  color: rgba(255, 255, 255, 0.86);
+  background: #76b99d;
+}
+
+.secondary-btn {
+  min-height: 80rpx;
+  border: 1rpx solid #86b7a0;
+  color: #087a50;
+  background: #effaf4;
+}

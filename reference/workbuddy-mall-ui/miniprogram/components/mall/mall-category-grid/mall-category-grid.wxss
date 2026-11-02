@@ -1,0 +1,50 @@
+:host {
+  display: block;
+}
+
+.cats {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 18rpx 6rpx;
+}
+
+.cat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10rpx;
+  min-width: 0;
+}
+
+.cat-ico {
+  width: 92rpx;
+  height: 92rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 28rpx;
+  overflow: hidden;
+  background: linear-gradient(135deg, #e9f7ef, #f4fbf7);
+}
+
+.cat-img {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.cat-initial {
+  font-size: 34rpx;
+  font-weight: 700;
+  color: #0b7a4f;
+}
+
+.cat-name {
+  width: 100%;
+  text-align: center;
+  font-size: 22rpx;
+  color: #44544a;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

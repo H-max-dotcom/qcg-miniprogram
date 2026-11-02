@@ -1,0 +1,33 @@
+<view class="page no-tab coupon-page">
+  <view class="mini-topbar"><button class="icon-btn" bindtap="goBack">‹</button><view class="brand"><text class="brand-title">优惠券中心</text><text class="brand-subtitle">领取优惠，付款时核验</text></view></view>
+  <view class="coupon-intro" wx:if="{{featureEnabled}}"><text class="coupon-eyebrow">门店采购 · 优惠随行</text><view class="coupon-title">好券，让补货更划算</view><view class="coupon-intro-note">每张券的门槛与适用范围清晰可查。付款用券以待付款订单的正式核验为准。</view></view><view class="status-tabs coupon-tabs"><button wx:if="{{featureEnabled}}" class="coupon-tab {{activeTab === 'AVAILABLE' ? 'active' : ''}}" data-tab="AVAILABLE" bindtap="setTab">领券中心<text class="tab-count" wx:if="{{!loading && !error}}">{{availableCount}}</text></button><button class="coupon-tab {{activeTab === 'MINE' ? 'active' : ''}}" data-tab="MINE" bindtap="setTab">我的优惠券<text class="tab-count" wx:if="{{!loading && !error}}">{{mineCount}}</text></button></view>
+  <view class="empty" wx:if="{{loading}}">正在读取优惠券…</view>
+  <view class="notice coupon-retry" wx:elif="{{error}}"><view>{{error}}</view><button class="button-plain" bindtap="refresh">重新读取</button></view>
+  <block wx:else>
+    <view class="notice" wx:if="{{legacyCheckoutEntry}}">下单阶段不选券。付款用券将在待付款订单中核验。</view>
+    <view class="notice" wx:if="{{featureEnabled && !canClaim}}">当前成员可查看优惠券，领取需要下单权限。可联系客户管理员确认。</view>
+    <view class="notice coupon-retry" wx:if="{{claimError}}"><view>{{claimError}}</view><button class="button-plain" wx:if="{{canClaim}}" disabled="{{claimingTemplateId}}" bindtap="retryClaim">重试领取</button></view>
+    <block wx:if="{{activeTab === 'AVAILABLE'}}">
+      <view class="coupon-card card" wx:for="{{available}}" wx:key="id">
+        <coupon-card name="{{item.name}}" label="{{item.typeText}}" benefit-text="{{item.benefitText}}" valid-to-text="{{item.validToText}}" template="{{item}}" />
+        <button class="button-plain" loading="{{claimingTemplateId === item.id && !claimingCouponId}}" disabled="{{!canClaim || claimingTemplateId}}" data-id="{{item.id}}" bindtap="claim">{{!canClaim ? '仅查看' : claimingTemplateId === item.id && !claimingCouponId ? '领取中' : '领取'}}</button>
+      </view>
+      <view class="empty" wx:if="{{availableCount === 0}}"><view class="empty-symbol">券</view><view class="empty-title">暂无可领取优惠券</view><view class="empty-note">新优惠会在这里展示，下拉可刷新查看</view></view>
+    </block>
+    <block wx:else>
+      <view class="mine-status-tabs">
+        <button class="mine-status-tab {{mineStatus === 'CLAIMED' ? 'active' : ''}}" data-status="CLAIMED" bindtap="setMineStatus">可使用</button>
+        <button class="mine-status-tab {{mineStatus === 'USED' ? 'active' : ''}}" data-status="USED" bindtap="setMineStatus">已使用</button>
+        <button class="mine-status-tab {{mineStatus === 'INVALID' ? 'active' : ''}}" data-status="INVALID" bindtap="setMineStatus">已失效</button>
+        <button wx:if="{{mineStatusCounts.OTHER}}" class="mine-status-tab {{mineStatus === 'OTHER' ? 'active' : ''}}" data-status="OTHER" bindtap="setMineStatus">待领取 / 占用</button>
+      </view>
+      <view class="coupon-card card {{item.status === 'USED' || item.status === 'EXPIRED' || item.status === 'VOIDED' ? 'coupon-inactive' : ''}}" wx:for="{{mine}}" wx:key="id" wx:if="{{mineStatus === item.walletGroup}}">
+        <coupon-card name="{{item.name}}" label="{{item.statusText}}" status="{{item.status}}" benefit-text="{{item.benefitText}}" valid-to-text="{{item.validToText}}" template="{{item.template}}" />
+        <button class="button-plain" wx:if="{{featureEnabled && item.status === 'ISSUED' && !item.displayExpired && item.template}}" loading="{{claimingCouponId === item.id}}" disabled="{{!canClaim || claimingTemplateId}}" data-id="{{item.template.id}}" data-coupon-id="{{item.id}}" bindtap="claim">{{!canClaim ? '仅查看' : claimingCouponId === item.id ? '领取中' : '领取'}}</button>
+      </view>
+      <view class="empty" wx:if="{{mineCount > 0 && !mineStatusCounts[mineStatus]}}"><view class="empty-title">{{mineStatus === 'CLAIMED' ? '暂无可使用的优惠券' : mineStatus === 'USED' ? '暂无已使用的优惠券' : mineStatus === 'INVALID' ? '暂无已失效的优惠券' : '暂无待领取或占用的优惠券'}}</view><view class="empty-note">{{mineStatus === 'CLAIMED' ? '使用条件以付款时核验为准' : '优惠券状态更新后会显示在这里'}}</view></view>
+      <view class="empty" wx:if="{{mineCount === 0}}"><view class="empty-symbol">券</view><view class="empty-title">暂无优惠券</view><view class="empty-note">{{featureEnabled ? "前往领券中心，看看适合本次采购的优惠" : "优惠券历史记录会保留在这里"}}</view><button wx:if="{{featureEnabled}}" class="button-plain" data-tab="AVAILABLE" bindtap="setTab">去领券中心</button></view>
+    </block>
+    <view class="coupon-hint small">可用商品和优惠金额以付款时核验为准。下拉可刷新优惠券。</view>
+  </block>
+</view>

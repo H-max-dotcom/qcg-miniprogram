@@ -1,0 +1,158 @@
+<view class="page no-tab">
+  <delivery-promise storefront-code="{{storefrontCode}}" />
+  <view class="mini-topbar">
+    <button class="icon-btn" bindtap="goCart">‹</button>
+    <view class="brand">
+      <text class="brand-title" style="font-size: 34rpx;">提交订单</text>
+      <text class="brand-subtitle">确认商品、价格和收货信息</text>
+    </view>
+    <text class="tag orange">{{customerMode === 'GUEST' ? '请先登录' : '确认下单'}}</text>
+  </view>
+
+  <view class="notice">
+    商品价格和库存可能变化，请确认本页信息后提交。价格确认中的商品暂不能下单。
+  </view>
+
+  <view class="section submit-uncertain" wx:if="{{submitUncertain && !submittedOrderId}}">
+    <view class="section-head">
+      <text>订单结果待确认</text>
+      <text class="tag orange">正在确认</text>
+    </view>
+    <view class="warning">{{submitUncertainMessage}}</view>
+    <button class="button-primary" bindtap="submit" loading="{{submitting}}" disabled="{{submitting}}">查询提交结果</button>
+  </view>
+
+  <view class="section submit-success" wx:if="{{submittedOrderId}}">
+    <button class="button-primary" disabled="{{!subscribeReady}}" bindtap="subscribeOrderReminders">开启本单后续通知</button>
+    <view class="section-head">
+      <text>订单提交成功</text>
+      <text class="tag">{{submittedOrderStatusText}}</text>
+    </view>
+    <view class="row"><text>订单号</text><text class="product-name">{{submittedOrderNo}}</text></view>
+    <view class="row"><text>订单状态</text><text>{{submittedOrderStatusText}}</text></view>
+    <view class="small" wx:if="{{idempotentHit}}">订单已确认，没有重复下单。</view>
+    <button class="button-primary" bindtap="goSubmittedOrder">查看订单详情</button>
+  </view>
+
+  <view class="section minimum-review" wx:if="{{minimumOrderEnabled && !submittedOrderId}}">
+    <view class="section-head">
+      <text>起送金额</text>
+      <text class="tag {{isMinimumMet && !hasPendingPrice ? '' : 'orange'}}">{{hasPendingPrice ? '价格确认中' : isMinimumMet ? '已满足' : '需补货'}}</text>
+    </view>
+    <view class="row"><text>已确认商品金额</text><text class="money">{{goodsTotalText}}</text></view>
+    <view class="row" wx:if="{{hasPendingPrice}}"><text>待确认商品</text><text class="tag orange">{{pendingPriceLineCount}} 种</text></view>
+    <view class="row"><text>最低起送金额</text><text>{{minimumOrderAmountText}}</text></view>
+    <view class="minimum-hint">{{minimumHint}}</view>
+    <view class="small" wx:if="{{quoteLoading}}">正在更新商品价格、规格和库存信息…</view>
+    <view class="warning" wx:if="{{quoteError}}">{{quoteError}}</view>
+    <view class="warning" wx:if="{{quoteNeedsConfirmation}}">价格已变化，请确认最新总额后再提交。</view>
+    <button class="button-plain requote-button" wx:if="{{quoteNeedsConfirmation}}" bindtap="confirmLatestQuote" disabled="{{hasPendingPrice}}">确认最新总额</button>
+    <button class="button-plain requote-button" wx:else bindtap="requote" loading="{{quoteLoading}}" disabled="{{quoteLoading || submitting}}">更新价格</button>
+    <view class="contact-row" wx:if="{{ownerName}}">
+      <view>
+        <view class="product-name">{{ownerName}}</view>
+        <view class="small">{{ownerPhone || '暂无联系电话'}}</view>
+      </view>
+      <button class="button-plain" bindtap="callOwner">联系业务员</button>
+    </view>
+  </view>
+
+  <view class="section">
+    <view class="section-head">
+      <text>门店信息</text>
+      <text class="tag">{{customerMode === 'GUEST' ? '请先登录' : '可以下单'}}</text>
+    </view>
+    <view class="row" style="margin-top: 16rpx;">
+      <view>
+        <view class="product-name">{{customerMode === 'GUEST' ? '请先登录' : customerName}}</view>
+        <view class="small">{{customerMode === 'GUEST' ? '登录后可查看价格和提交订单' : '请确认门店和收货信息'}}</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="section">
+    <view class="section-head">
+      <text>收货地址</text>
+      <text class="tag {{addressState === 'READY' ? '' : 'orange'}}">{{addressState === 'READY' ? '可使用' : '待处理'}}</text>
+    </view>
+    <view class="address-choice" wx:if="{{selectedAddress}}" bindtap="chooseAddress">
+      <view class="address-choice-head">
+        <text class="product-name">{{selectedAddress.recipientNameMasked}}</text>
+        <text>{{selectedAddress.phoneMasked}}</text>
+        <text class="tag" wx:if="{{selectedAddress.isDefault}}">默认</text>
+      </view>
+      <view class="address-choice-detail">{{selectedAddress.fullAddress}}</view>
+      <view class="address-choice-footer"><text class="small">{{addressStateText}}</text><text class="select-address-link">更换地址 ›</text></view>
+    </view>
+    <view class="empty address-empty" wx:else>
+      <view>{{addressLoading ? '正在读取收货地址…' : addressStateText}}</view>
+      <view class="small" wx:if="{{!addressLoading && addressState === 'ONLY_PENDING'}}">地址确认完成后会自动出现在可选列表，请稍后刷新。</view>
+      <view class="small" wx:if="{{!addressLoading && addressState === 'ALL_REJECTED'}}">请在地址管理查看原因，并重新提交新的申请。</view>
+      <view class="address-empty-actions" wx:if="{{!addressLoading}}">
+        <button class="button-primary" bindtap="applyAddress">新增地址</button>
+        <button class="button-plain" bindtap="chooseAddress">查看地址状态</button>
+      </view>
+    </view>
+  </view>
+
+  <view class="section">
+    <view class="section-head">
+      <text>商品清单</text>
+      <text class="tag gray">共 {{items.length}} 种</text>
+    </view>
+    <view class="checkout-item" wx:for="{{items}}" wx:key="lineKey">
+      <view class="product-row">
+        <view class="product-thumb">{{item.icon}}</view>
+        <view>
+          <view class="product-name">{{item.name}}</view>
+          <view class="spec" wx:if="{{item.saleMode === 'FIXED_WEIGHT_SPEC'}}">{{item.spec}} × {{item.quantity}}份</view>
+          <view class="spec" wx:else>规格 {{item.spec || '-'}} · 单位 {{item.unitName || '-'}} · x {{item.quantity}}</view>
+          <view class="warning" wx:if="{{item.invalidReason}}">{{item.invalidReason}}</view>
+          <view class="notice" wx:if="{{item.lineRemark}}">商品备注：{{item.lineRemark}}</view>
+          <view class="row">
+            <text class="money">{{item.priceText}}{{item.saleMode === 'FIXED_WEIGHT_SPEC' ? ' / 份' : ''}}</text>
+            <text class="small">{{item.lineAmountText}}</text>
+          </view>
+          <view class="small" wx:if="{{quoteReady && item.campaignDiscountText}}">原价 {{item.basePriceText}} · {{item.campaignName || '活动优惠'}} · 活动减免 -{{item.campaignDiscountText}}</view>
+        </view>
+      </view>
+    </view>
+    <view class="empty" wx:if="{{!items.length}}">暂无商品，请返回购物车选择。</view>
+  </view>
+
+  <view class="section">
+    <view class="field">
+      <text class="small">订单备注</text>
+      <view class="order-remark-shell">
+        <textarea class="textarea order-remark" data-key="remark" value="{{remark}}" bindinput="input" maxlength="200" adjust-position="{{true}}" cursor-spacing="180" disable-default-padding="{{true}}" placeholder="选填，例如：请带推车、避开午市高峰" />
+        <text class="order-remark-counter">{{remark.length}}/200</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="section">
+    <view class="small">付款条件以业务员确认结果为准，可在订单中查看付款安排。</view>
+  </view>
+
+  <view class="section">
+    <view class="section-title">金额摘要</view>
+    <view class="row"><text>原金额</text><text>{{originalTotalText}}</text></view>
+    <view class="row" wx:if="{{quoteReady}}"><text>活动优惠</text><text>{{campaignDiscountTotalText === '暂无金额' ? '确认中' : '-' + campaignDiscountTotalText}}</text></view>
+    <view class="row"><text>已确认金额</text><text>{{goodsTotalText}}</text></view>
+    <view class="row" wx:if="{{hasPendingPrice}}"><text>待确认商品</text><text>{{pendingPriceLineCount}} 种</text></view>
+    <view class="row" wx:if="{{minimumOrderEnabled}}"><text>最低起送金额</text><text>{{minimumOrderAmountText}}</text></view>
+    <view class="row" wx:if="{{minimumOrderEnabled && !isMinimumMet}}"><text>还差</text><text class="money">{{remainingAmountText}}</text></view>
+    <view class="row"><text>配送费</text><text class="muted">确认中</text></view>
+    <view class="row" wx:if="{{couponDiscountText}}"><text>优惠券减免</text><text class="money">-{{couponDiscountText}}</text></view>
+    <view class="divider"></view>
+    <view class="row"><text class="product-name">最终金额</text><text class="money">{{payTotalText}}</text></view>
+  </view>
+
+  <view class="submit-bar" wx:if="{{!submittedOrderId}}">
+    <view>
+      <view class="small">{{customerMode === 'GUEST' ? '请先登录' : '确认无误后提交'}}</view>
+      <view class="money">{{payTotalText}}</view>
+    </view>
+    <button class="button-primary" bindtap="submit" loading="{{submitting}}" disabled="{{!quoteReady || !isMinimumMet || hasPendingPrice || quoteNeedsConfirmation || !selectedAddressId}}">{{customerMode === 'GUEST' ? '登录后提交' : submitButtonText}}</button>
+  </view>
+</view>

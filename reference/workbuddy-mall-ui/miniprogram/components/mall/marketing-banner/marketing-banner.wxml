@@ -1,0 +1,45 @@
+<view wx:if="{{banners.length || activities.length}}" class="promo">
+  <swiper
+    wx:if="{{banners.length}}"
+    class="promo-swiper"
+    current="{{current}}"
+    bindchange="onSlideChange"
+    autoplay="{{banners.length > 1}}"
+    circular="{{banners.length > 1}}"
+    interval="4500"
+    indicator-dots="{{banners.length > 1}}"
+    indicator-color="rgba(11,122,79,0.22)"
+    indicator-active-color="#0b7a4f"
+  >
+    <swiper-item wx:for="{{banners}}" wx:key="id" data-id="{{item.id}}" bindtap="onSelect" aria-label="{{item.title}}">
+      <view class="slide">
+        <image
+          wx:if="{{item.imageUrl}}"
+          class="slide-img"
+          src="{{item.imageUrl}}"
+          mode="aspectFit"
+        />
+        <view wx:else class="slide-fallback">
+          <text class="slide-title">{{item.title}}</text>
+          <text wx:if="{{item.subtitle}}" class="slide-sub">{{item.subtitle}}</text>
+          <text wx:if="{{item.buttonText}}" class="slide-cta">{{item.buttonText}} ›</text>
+        </view>
+      </view>
+    </swiper-item>
+  </swiper>
+
+  <scroll-view wx:if="{{activities.length}}" class="acts" scroll-x show-scrollbar="{{false}}">
+    <view class="acts-row">
+      <view
+        wx:for="{{activities}}"
+        wx:key="index"
+        class="act"
+        data-index="{{index}}"
+        bindtap="onActivity"
+      >
+        <text class="act-title">{{item.title || item.name || '本周活动'}}</text>
+        <text wx:if="{{item.subtitle || item.desc}}" class="act-sub">{{item.subtitle || item.desc}}</text>
+      </view>
+    </view>
+  </scroll-view>
+</view>

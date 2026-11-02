@@ -1,0 +1,14 @@
+<view class="page batch-page">
+ <view class="mini-topbar"><button class="icon-btn" bindtap="goBack" aria-label="返回待付款">‹</button><view class="brand"><text class="brand-title">确认结款</text><text class="brand-subtitle">逐笔核对明细及优惠</text></view></view>
+ <view wx:if="{{state==='LOADING'}}" class="state">正在核对结款信息…</view>
+ <view wx:if="{{error}}" class="error">{{error}}</view>
+ <button wx:if="{{invalidEntry}}" class="button-primary" bindtap="goBack">返回待付款重新选择</button>
+ <button wx:elif="{{state==='ERROR'||state==='STALE'}}" bindtap="refresh">重新核对</button>
+ <block wx:if="{{quote}}">
+  <view wx:for="{{items}}" wx:key="receivableId" class="record"><view class="row"><text class="record-title">结款明细 {{index+1}}</text><text class="record-amount">¥{{item.net}}</text></view><view class="sub">应收 ¥{{item.gross}} · 优惠 ¥{{item.discount}}</view><view class="reference" wx:if="{{item.billNo}}">业务单号 {{item.billNo}}</view><button disabled="{{paying||state!=='READY'}}" data-id="{{item.receivableId}}" bindtap="openCoupons">{{item.couponId?'更换优惠券':'选择优惠券'}}</button></view>
+  <view class="record"><view class="row"><text>应收合计</text><text>¥{{quote.grossAmount}}</text></view><view class="row"><text>优惠合计</text><text>−¥{{quote.discountAmount}}</text></view><view class="row total"><text>实际结款</text><text>¥{{quote.netAmount}}</text></view></view>
+  <view class="record"><view>预付款余额支付</view><view class="sub">可用余额 ¥{{quote.prepaidBalance}}</view><view wx:if="{{insufficient}}" class="error">预付款余额不足，请先补充余额</view></view>
+  <button class="pay" loading="{{paying}}" disabled="{{paying||state!=='READY'||insufficient||!quote.capabilities.prepaidBalance}}" bindtap="confirmPayment">确认使用预付款结款 ¥{{quote.netAmount}}</button>
+ </block>
+ <view wx:if="{{couponReceivableId}}" class="coupon-panel"><view class="title">选择本笔优惠券</view><button bindtap="closeCoupons">关闭</button><view wx:if="{{couponLoading}}">正在读取优惠券…</view><view wx:if="{{couponError}}">{{couponError}}</view><button data-id="" bindtap="chooseCoupon">不使用优惠券</button><button wx:for="{{coupons}}" wx:key="id" disabled="{{!item.eligible}}" data-id="{{item.id}}" bindtap="chooseCoupon"><view class="coupon-name">{{item.name}}</view><view wx:if="{{item.discountAmount}}" class="record-amount">可优惠 ¥{{item.discountAmount}}</view><view class="sub">{{item.thresholdText}}</view><view class="sub">{{item.validFromText}} 至 {{item.validToText}}</view><view class="sub">{{item.eligible?'可用':item.reason}}</view></button></view>
+</view>

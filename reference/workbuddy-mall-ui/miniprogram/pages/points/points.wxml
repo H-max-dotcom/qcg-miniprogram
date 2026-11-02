@@ -1,0 +1,52 @@
+<view class="page no-tab">
+  <view class="mini-topbar">
+    <button class="icon-btn" bindtap="goBack">‹</button>
+    <view class="brand">
+      <text class="brand-title" style="font-size: 34rpx;">我的积分</text>
+      <text class="brand-subtitle">积分余额、流水、兑换入口</text>
+    </view>
+    <text class="tag orange">展示版</text>
+  </view>
+
+  <view class="points-hero">
+    <view class="row">
+      <text>当前积分</text>
+      <text class="tag orange">暂未开放</text>
+    </view>
+    <view class="points-big">{{points}}</view>
+    <view class="small">积分余额以商城后台正式接入后的数据为准</view>
+    <button class="button-primary" bindtap="exchange">去兑换</button>
+  </view>
+
+  <view class="section">
+    <view class="section-title">积分流水</view>
+    <view class="list-row" wx:for="{{records}}" wx:key="id">
+      <view class="row">
+        <view>
+          <view class="product-name">{{item.name}}</view>
+          <view class="small">{{item.desc}}</view>
+        </view>
+        <text class="{{item.positive ? 'point-plus' : 'money'}}">{{item.value}}</text>
+      </view>
+    </view>
+    <view class="empty" wx:if="{{!records.length}}">暂无积分流水</view>
+  </view>
+
+  <view class="section">
+    <view class="section-head">
+      <text>积分兑换</text>
+      <text class="tag gray">不真实扣减</text>
+    </view>
+    <view class="exchange-card card" wx:for="{{exchanges}}" wx:key="id">
+      <view>
+        <view class="product-name">{{item.name}}</view>
+        <view class="small">{{item.stock}}</view>
+        <view class="point-plus">{{item.points}} 积分</view>
+      </view>
+      <button class="button-plain" bindtap="exchange">立即兑换</button>
+    </view>
+    <view class="empty" wx:if="{{!exchanges.length}}">暂无可兑换商品</view>
+  </view>
+
+  <view class="warning">积分抵扣当前不可用；页面不会扣减客户积分。</view>
+</view>

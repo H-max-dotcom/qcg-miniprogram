@@ -1,0 +1,18 @@
+page { background: #f5f8f5; color: #243d32; }
+.membership-page { padding: 28rpx; padding-bottom: calc(40rpx + env(safe-area-inset-bottom)); }
+.identity,.benefits { background: #fff; border: 1rpx solid #e5ece6; border-radius: 20rpx; padding: 30rpx; margin-bottom: 24rpx; }
+.eyebrow,.tier,.description,.heading,.name { display: block; }
+.eyebrow { color: #6e8175; font-size: 24rpx; }
+.tier { font-size: 38rpx; font-weight: 600; margin: 14rpx 0; }
+.heading { font-size: 30rpx; font-weight: 600; }
+.description { font-size: 26rpx; color: #6e8175; line-height: 1.6; white-space: pre-wrap; overflow-wrap: anywhere; }
+.benefit { margin-top: 22rpx; padding-top: 20rpx; border-top: 1rpx solid #edf1ed; }
+.name { font-size: 28rpx; margin-bottom: 10rpx; }
+.state { padding: 32rpx 0; color: #6e8175; font-size: 28rpx; }
+.state button { margin-top: 24rpx; background: #fff; color: #15835e; }
+.state-card { background: #fff; border: 1rpx solid #e5ece6; border-radius: 20rpx; padding: 30rpx; margin-top: 24rpx; }
+.state button { min-height: 80rpx; padding: 18rpx 24rpx; line-height: 1.5; border-radius: 12rpx; }
+.state .button-primary { background: #0f8f5f; color: #fff; }
+
+.tier, .name { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; word-break: break-word; }
+.description { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }

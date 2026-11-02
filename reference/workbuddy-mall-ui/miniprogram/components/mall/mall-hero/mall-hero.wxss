@@ -1,0 +1,74 @@
+:host {
+  display: block;
+}
+
+.hero {
+  background: #ffffff;
+  padding: 18rpx 24rpx 14rpx;
+}
+
+.hero-row {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+}
+
+.hero-logo {
+  font-size: 38rpx;
+  font-weight: 800;
+  letter-spacing: 3rpx;
+  color: #0b7a4f;
+}
+
+.hero-pill {
+  padding: 5rpx 16rpx;
+  border-radius: 999rpx;
+  font-size: 21rpx;
+  color: #0b7a4f;
+  background: #e8f7ef;
+}
+
+.hero-store {
+  display: block;
+  margin-top: 12rpx;
+  font-size: 28rpx;
+  font-weight: 700;
+  color: #1a2a21;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.hero-welcome {
+  display: block;
+  margin-top: 6rpx;
+  font-size: 23rpx;
+  line-height: 1.45;
+  color: #6a7c71;
+}
+
+.hero-notice {
+  display: flex;
+  align-items: center;
+  gap: 10rpx;
+  margin-top: 14rpx;
+  padding: 12rpx 16rpx;
+  border-radius: 14rpx;
+  background: #f1faf5;
+  color: #0b7a4f;
+}
+
+.notice-icon {
+  flex: 0 0 auto;
+  font-size: 22rpx;
+  font-weight: 800;
+}
+
+.notice-text {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 23rpx;
+}

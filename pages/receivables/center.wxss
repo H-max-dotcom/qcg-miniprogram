@@ -1,0 +1,28 @@
+.receivable-center{padding:28rpx;background:#f5f7f4;min-height:100vh;box-sizing:border-box}.title{font-size:42rpx;font-weight:700;color:#173b2d}.subtitle{font-size:24rpx;color:#728077;margin-top:12rpx}.filters,.pagination,.row,.summary,.actions{display:flex;align-items:center;justify-content:space-between;gap:12rpx}.filters{margin:28rpx 0}.filter{font-size:25rpx;padding:0 16rpx;background:white;color:#53665a;flex:1}.filter.active{color:white;background:#0f8f5f}.summary,.record{background:white;border-radius:20rpx;padding:26rpx;margin-bottom:20rpx}.summary{color:#52695c}.amount{font-size:34rpx;font-weight:600;color:#174b35}.row{font-size:27rpx}.select{color:#0f8f5f;margin-top:24rpx;font-size:27rpx}.reason{color:#8d7448;font-size:24rpx;margin-top:20rpx}.state{padding:80rpx 20rpx;text-align:center;color:#64786a}.pagination{font-size:24rpx;margin:28rpx 0}.pagination button{font-size:24rpx}.actions{flex-wrap:wrap}.actions button{font-size:25rpx;background:#0f8f5f;color:white;flex:1;white-space:nowrap}.actions button[disabled]{background:#dce7df;color:#8d9d93}.note{padding:16rpx 0 32rpx}
+
+.filters{flex-wrap:wrap;justify-content:flex-start}.filter{flex:none;min-width:100rpx;margin:0}.date-range{background:#fff;border-radius:20rpx;padding:20rpx;margin-bottom:20rpx}.date-controls{display:flex;flex-wrap:wrap;align-items:center;gap:12rpx;margin-top:16rpx}.date-input{padding:16rpx;background:#f5f7f4;border-radius:12rpx;font-size:26rpx}.date-controls button{font-size:26rpx;background:#0f8f5f;color:#fff;margin:0}.date-hint{font-size:24rpx;color:#52695c;margin-bottom:16rpx}.date-error{font-size:24rpx;color:#a1362c;margin-top:12rpx}
+/* Native touch targets remain usable after the application button reset. */
+.receivable-center button{min-height:72rpx;line-height:1.5;padding:16rpx 20rpx;text-align:center;box-sizing:border-box;border-radius:12rpx}
+.receivable-center .filters .filter{padding:16rpx;font-size:26rpx}
+.receivable-center .pagination{flex-wrap:nowrap;gap:16rpx}
+.receivable-center .pagination button{flex:1;min-width:0;font-size:26rpx}
+.receivable-center .pagination text{flex:none;white-space:nowrap;text-align:center}
+.receivable-center .actions{gap:16rpx}
+.receivable-center .actions button{flex:1 1 calc(50% - 8rpx);min-width:0;font-size:28rpx;white-space:normal}
+.receivable-center .actions button:first-child{flex-basis:100%}
+.receivable-center .date-controls button{padding:16rpx 24rpx}
+.receivable-center .filters{display:flex;flex-wrap:wrap;justify-content:flex-start;gap:12rpx}
+.receivable-center .filters .filter{width:calc((100% - 36rpx) / 4);flex:0 0 calc((100% - 36rpx) / 4);min-width:0;max-width:calc((100% - 36rpx) / 4);margin:0;padding:16rpx 8rpx}
+.receivable-center{padding-bottom:calc(330rpx + env(safe-area-inset-bottom))}
+.record .row>text:first-child{min-width:0;overflow-wrap:anywhere;flex:1}.record .row .amount{flex:none}
+.quick-pay{display:flex;align-items:center;justify-content:space-between;gap:16rpx;background:#fff5e8;color:#92501b;padding:22rpx;border-radius:16rpx;margin-bottom:20rpx;font-size:26rpx}
+.quick-pay>view{display:flex;flex-direction:column;gap:8rpx;min-width:0}.today-amount{font-size:34rpx;font-weight:700}.quick-pay button{flex:none;background:#fff;color:#92501b;margin:0;font-size:26rpx}.quick-pay button[disabled]{color:#929a94;background:#edf0eb}
+.settlement-bar{position:fixed;z-index:20;left:0;right:0;bottom:0;box-sizing:border-box;background:#fff;padding:18rpx 28rpx calc(18rpx + env(safe-area-inset-bottom));box-shadow:0 -4rpx 22rpx rgba(30,65,45,.08);border-top:1rpx solid #e1e9e3}
+.selection-breakdown{display:flex;justify-content:space-between;gap:12rpx;flex-wrap:wrap;color:#59695e;font-size:25rpx}.quote-hint{font-size:22rpx;line-height:1.5;color:#7b877f;margin-top:8rpx}.settlement-main{display:flex;align-items:center;justify-content:space-between;gap:16rpx;margin-top:12rpx}.selection-total{min-width:0;flex:1;display:flex;flex-direction:column;gap:5rpx}.selection-count{font-size:25rpx;color:#54665a}.payable{font-size:38rpx;font-weight:700;color:#174b35;overflow-wrap:anywhere;line-height:1.2}.settlement-main button{flex:none;width:210rpx;margin:0;background:#0f8f5f;color:#fff;font-size:28rpx}.settlement-main button[disabled]{background:#dce7df;color:#84958a}.receivable-center .quote-retry{min-height:0;margin:6rpx 0 0;padding:6rpx 0;background:transparent;font-size:24rpx;color:#0f8f5f;text-align:left}
+
+/* 032E: amount and status precede audit references. */
+.reference{font-size:22rpx;color:#68776e;line-height:1.6;word-break:break-all;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;word-break:break-all;line-height:1.5;margin-top:10rpx}
+.record .financial-head>.amount{font-size:38rpx;flex:1;color:#b65326}.record .financial-head>.payment-state{flex:none;font-size:24rpx;color:#246749;background:#edf6ee;border-radius:8rpx;padding:6rpx 12rpx}.record .subtitle{line-height:1.6}
+
+/* 032F: secondary facts remain below amount/status hierarchy. */
+.receivable-center .subtitle, .receivable-center .reference, .receivable-center .quote-hint { font-size: 25rpx; line-height: 1.6; color: #59695f; }

@@ -1,0 +1,104 @@
+<view class="page">
+  <view class="mini-topbar">
+    <button class="icon-btn" bindtap="goMe">‹</button>
+    <view class="brand">
+      <text class="brand-title" style="font-size: 34rpx;">我的订单</text>
+      <text class="brand-subtitle">查看订单和配送进度</text>
+    </view>
+    <button class="icon-btn" bindtap="loadOrders">刷</button>
+  </view>
+
+  <view class="search-row">
+    <view class="search">
+      <text>查</text>
+      <input placeholder="搜索订单号 / 备注" maxlength="100" value="{{keyword}}" bindinput="inputKeyword" confirm-type="search" bindconfirm="search" />
+      <button class="button-primary" bindtap="search">搜索</button>
+    </view>
+  </view>
+
+  <scroll-view scroll-x="true" class="order-tabs status-tabs">
+    <button class="filter-pill {{activeTab === item ? 'active' : ''}}" wx:for="{{tabs}}" wx:key="*this" data-tab="{{item}}" bindtap="setTab">{{item}}</button>
+  </scroll-view>
+
+  <view class="date-quick">
+    <button wx:for="{{datePresets}}" wx:key="*this" wx:if="{{item === '今天' || item === '本周' || item === '本月'}}" class="filter-pill {{datePreset === item ? 'active' : ''}}" data-preset="{{item}}" bindtap="setDatePreset">{{item}}</button>
+    <button class="more-filter-toggle" bindtap="toggleMoreFilters">{{moreFiltersOpen ? '收起筛选' : '更多筛选'}} {{moreFiltersOpen ? '⌃' : '⌄'}}</button>
+  </view>
+  <view wx:if="{{moreFiltersOpen}}" class="more-filter-panel">
+    <view class="filter-panel-title">付款状态</view>
+    <view class="order-tabs">
+      <button wx:for="{{paymentFilters}}" wx:key="value" class="filter-pill {{paymentFilter === item.value ? 'active' : ''}}" data-value="{{item.value}}" bindtap="setPaymentFilter">{{item.label}}</button>
+    </view>
+    <view class="filter-panel-title">其他订单状态</view>
+    <view class="order-tabs">
+      <button wx:for="{{moreTabs}}" wx:key="*this" class="filter-pill {{activeTab === item ? 'active' : ''}}" data-tab="{{item}}" bindtap="setTab">{{item}}</button>
+    </view>
+    <view class="filter-panel-title">更多日期</view>
+    <view class="order-tabs">
+      <button class="filter-pill {{datePreset === '全部' ? 'active' : ''}}" bindtap="clearDateFilter">全部日期</button>
+      <button wx:for="{{datePresets}}" wx:key="*this" wx:if="{{item !== '今天' && item !== '本周' && item !== '本月'}}" class="filter-pill {{datePreset === item ? 'active' : ''}}" data-preset="{{item}}" bindtap="setDatePreset">{{item}}</button>
+      <button class="filter-pill" bindtap="openDatePanel">日历 / 自定义</button>
+    </view>
+  </view>
+  <view class="date-caption"><text>{{dateFrom ? dateFrom + (dateTo !== dateFrom ? ' 至 ' + dateTo : '') : '全部下单日期'}} · 北京时间</text></view>
+  <view class="date-mask" wx:if="{{datePanelOpen}}" bindtap="closeDatePanel">
+    <view class="date-panel" catchtap="keepDatePanel">
+      <view class="row"><text class="section-title">选择下单日期</text><button class="date-close" bindtap="closeDatePanel">关闭</button></view>
+      <view class="date-modes"><button class="filter-pill {{dateMode === '指定某一天' ? 'active' : ''}}" data-mode="指定某一天" bindtap="setDateMode">指定某一天</button><button class="filter-pill {{dateMode === '自定义' ? 'active' : ''}}" data-mode="自定义" bindtap="setDateMode">日期范围</button></view>
+      <picker mode="date" value="{{draftDateFrom}}" data-field="draftDateFrom" bindchange="pickDate"><view class="date-input">{{draftDateFrom || '选择开始日期'}} ›</view></picker>
+      <picker wx:if="{{dateMode === '自定义'}}" mode="date" value="{{draftDateTo}}" data-field="draftDateTo" bindchange="pickDate"><view class="date-input">{{draftDateTo || '选择结束日期'}} ›</view></picker>
+      <view class="date-panel-actions"><button class="button-plain" bindtap="clearDateFilter">全部日期</button><button class="button-primary" bindtap="applyDates">应用日期</button></view>
+    </view>
+  </view>
+  <view class="small" wx:if="{{appliedKeyword}}">当前搜索：{{appliedKeyword}}</view>
+  <view class="small" wx:if="{{loadedOrderCount > 0}}">已加载 {{loadedOrderCount}} / {{total}} 个{{appliedKeyword || paymentFilter || dateFrom || dateTo || activeTab !== '全部' ? '匹配' : ''}}订单</view>
+
+  <view class="order-card" wx:for="{{orders}}" wx:key="id">
+    <view class="row">
+      <view>
+        <view class="product-name">{{item.orderNo}}</view>
+        <view class="small">下单时间：{{item.submittedAtText}}</view>
+      </view>
+      <text class="tag status-{{item.statusTone}}">{{item.customerStatusText}}</text>
+    </view>
+    <view class="row" style="margin-top: 16rpx;">
+      <view class="thumbs">
+        <text class="pic" wx:for="{{item.icons}}" wx:key="*this">{{item}}</text>
+      </view>
+      <view style="text-align: right;">
+        <view class="money">{{item.amountText}}</view>
+        <view class="small" wx:if="{{item.hasPendingPrice}}">已确认 {{item.confirmedSubtotalText}} · 待确认 {{item.pendingPriceLineCount}} 种</view>
+        <view class="small">共 {{item.goodsCount}} 种商品</view>
+      </view>
+    </view>
+    <view class="notice ok-notice">
+      {{item.statusHint}}
+    </view>
+    <view class="order-actions">
+      <button class="button-plain" data-id="{{item.id}}" bindtap="goDetail">查看详情</button>
+      <button class="button-plain" data-id="{{item.id}}" bindtap="reorder">再来一单</button>
+      <button class="button-plain" open-type="contact">联系客服</button>
+    </view>
+  </view>
+
+  <view class="empty" wx:if="{{loading}}">订单加载中...</view>
+  <view class="empty" wx:elif="{{loadErrorText}}">
+    <view>{{loadErrorText}}</view>
+    <button wx:if="{{sessionActionText}}" class="button-primary" bindtap="goSessionAction">{{sessionActionText}}</button>
+    <button wx:else class="button-plain" bindtap="retryOrders">{{failedOrderPage > 1 ? '重试加载更多' : '重新加载订单'}}</button>
+  </view>
+  <view class="empty" wx:elif="{{orders.length === 0}}">
+    <view>{{appliedKeyword || paymentFilter || dateFrom || dateTo || activeTab !== '全部' ? '没有找到匹配订单' : '暂无订单'}}</view>
+    <view>{{appliedKeyword || paymentFilter || dateFrom || dateTo || activeTab !== '全部' ? '可修改日期、关键词或切换状态' : '下单后可在这里查看订单进度'}}</view>
+  </view>
+  <button class="button-plain" wx:if="{{hasNextPage && !loading && !loadErrorText}}" bindtap="loadMore">加载更早的订单</button>
+  <view class="small" wx:if="{{loadedOrderCount > 0 && !hasNextPage && !loading && !loadErrorText}}">已加载全部{{appliedKeyword || paymentFilter || dateFrom || dateTo || activeTab !== '全部' ? '匹配' : ''}}订单</view>
+
+  <view class="qcg-tabbar">
+    <button class="qcg-tab" bindtap="goHome"><text class="tab-ico">首</text><text>首页</text></button>
+    <button class="qcg-tab" bindtap="goCategory"><text class="tab-ico">类</text><text>分类</text></button>
+    <button class="qcg-tab" bindtap="goCart"><text class="tab-ico">车</text><text>购物车</text></button>
+    <button class="qcg-tab active"><text class="tab-ico">单</text><text>订单</text></button>
+    <button class="qcg-tab" bindtap="goMe"><text class="tab-ico">我</text><text>我的</text></button>
+  </view>
+</view>

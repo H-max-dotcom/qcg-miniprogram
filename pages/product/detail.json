@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "商品详情",
+  "usingComponents": {
+    "mall-cart-entry": "/components/mall/mall-cart-entry/mall-cart-entry"
+  }
+}

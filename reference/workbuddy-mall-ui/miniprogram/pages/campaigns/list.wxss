@@ -1,0 +1,88 @@
+.campaigns-page {
+  padding-bottom: calc(48rpx + env(safe-area-inset-bottom));
+}
+
+.mini-topbar {
+  justify-content: flex-start;
+}
+
+.campaign-list {
+  display: grid;
+  gap: 18rpx;
+}
+
+.campaign-card {
+  display: grid;
+  gap: 14rpx;
+  width: 100%;
+  padding: 22rpx;
+  border: 1rpx solid #e2e9e3;
+  border-radius: 20rpx;
+  background: #ffffff;
+}
+
+.campaign-card-head,
+.campaign-fact,
+.campaign-action {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16rpx;
+}
+
+.campaign-title {
+  min-width: 0;
+  color: #1f2a24;
+  font-size: 31rpx;
+  font-weight: 900;
+  line-height: 1.4;
+  word-break: break-word;
+}
+
+.campaign-description {
+  color: #526158;
+  font-size: 25rpx;
+  line-height: 1.6;
+}
+
+.campaign-fact {
+  padding-top: 12rpx;
+  border-top: 1rpx solid #edf1ee;
+  color: #33443a;
+  font-size: 23rpx;
+  line-height: 1.5;
+}
+
+.campaign-fact text:first-child {
+  flex: 0 0 112rpx;
+  color: #7a8b82;
+}
+
+.campaign-fact text:last-child {
+  min-width: 0;
+  text-align: right;
+}
+
+.campaign-action {
+  justify-content: flex-end;
+  color: #0f8f5f;
+  font-size: 25rpx;
+  font-weight: 800;
+}
+
+.campaign-action text {
+  font-size: 34rpx;
+  line-height: 0.8;
+}
+
+.state-action {
+  margin: 20rpx auto 0;
+}
+
+.empty-title {
+  margin-bottom: 10rpx;
+  color: #33443a;
+  font-weight: 800;
+}
+
+@import "./marketing.wxss";

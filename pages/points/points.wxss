@@ -1,0 +1,39 @@
+.points-hero {
+  padding: 28rpx;
+  border: 1rpx solid #c7e5d2;
+  border-radius: 22rpx;
+  background: linear-gradient(135deg, #e8f8ef, #ffffff);
+  display: grid;
+  gap: 18rpx;
+}
+
+.points-hero .row {
+  flex-wrap: wrap;
+}
+
+.points-big {
+  color: #0f8f5f;
+  font-size: 86rpx;
+  line-height: 1;
+  font-weight: 900;
+}
+
+.point-plus {
+  color: #0f8f5f;
+  font-weight: 800;
+}
+
+.exchange-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 16rpx;
+  align-items: center;
+  margin-top: 16rpx;
+  padding: 20rpx;
+}
+
+.exchange-card .button-plain {
+  width: auto;
+  max-width: 180rpx;
+  padding: 0 18rpx;
+}

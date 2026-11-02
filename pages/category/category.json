@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "分类采购",
+  "enablePullDownRefresh": true,
+  "usingComponents": {
+    "mall-cart-entry": "/components/mall/mall-cart-entry/mall-cart-entry"
+  }
+}

@@ -1,0 +1,33 @@
+<view class="page receivable-center">
+ <view class="title">待付款</view><button bindtap="history">付款记录</button>
+ <view class="subtitle">待付款中心 · 按应收形成时间查看</view><view wx:if="{{collectionMessage}}" class="record">{{collectionMessage}}<button wx:if="{{collectionReady}}" bindtap="confirmCollection">核对本次付款</button></view>
+ <view class="filters"><button wx:for="{{periods}}" wx:key="id" class="filter {{period===item.id?'active':''}}" data-id="{{item.id}}" bindtap="changePeriod">{{item.name}}</button></view>
+ <view wx:if="{{customEditing}}" class="date-range">
+  <view class="date-hint">应收形成日期（北京时间），同一天可选择相同起止日期</view>
+  <view class="date-controls"><picker mode="date" value="{{draftDateFrom}}" data-field="draftDateFrom" bindchange="pickDate"><view class="date-input">{{draftDateFrom || '开始日期'}}</view></picker><text>至</text><picker mode="date" value="{{draftDateTo}}" data-field="draftDateTo" bindchange="pickDate"><view class="date-input">{{draftDateTo || '结束日期'}}</view></picker><button bindtap="applyDates">查询</button></view>
+  <view wx:if="{{dateError}}" class="date-error">{{dateError}}</view>
+ </view>
+ <view wx:if="{{period==='custom'}}" class="date-hint">当前范围：{{dateFrom}} 至 {{dateTo}}（北京时间）</view>
+ <view wx:if="{{state==='LOADING'}}" class="state">正在读取待付款信息…</view>
+ <view wx:elif="{{state==='ERROR' || state==='LOGIN'}}" class="state"><text>{{state==='LOGIN'?'请先登录并绑定客户':'待付款信息暂不可用'}}</text><button wx:if="{{state==='LOGIN'}}" bindtap="login">前往登录</button><button bindtap="refresh">重新加载</button></view>
+ <block wx:else>
+  <view class="summary"><text>当前范围 {{totalCount}} 笔</text><text class="amount">¥{{totalAmount}}</text></view>
+  <view class="quick-pay"><view><text>今日待付款 {{summary.todayCount}} 笔</text><text class="today-amount">¥{{summary.todayAmount}}</text></view><button disabled="{{!summary.todayCount}}" data-selection="today" bindtap="confirm">结清今天</button></view>
+  <view wx:if="{{!items.length}}" class="state">当前范围暂无待付款记录</view>
+  <view wx:for="{{items}}" wx:key="receivableId" class="record" data-id="{{item.receivableId}}" bindtap="toggle">
+   <view class="row financial-head"><text class="amount">¥{{item.amount}}</text><text class="payment-state">{{item.paymentStatusText}}</text></view>
+   <view class="subtitle">应收形成 {{item.occurredAtText}}</view><view class="subtitle">签收 {{item.deliveredAtText}}</view><view class="reference">业务单号 {{item.billNo}}</view>
+   <view wx:if="{{item.eligible}}" class="select">{{item.selected?'☑ 已选择':'□ 选择付款'}}</view>
+   <view wx:else class="reason">{{item.unavailableReason}}</view>
+  </view>
+  <view class="pagination"><button disabled="{{page<=1}}" bindtap="previous">上一页</button><text>第 {{page}} 页</text><button disabled="{{!hasMore}}" bindtap="next">下一页</button></view>
+  <view class="actions"><button disabled="{{!summary.totalCount}}" data-selection="all" bindtap="confirm">全部结款 · {{summary.totalCount}} 笔</button></view>
+  <view class="subtitle note">下一步核对明细、优惠及付款方式，确认后付款。</view>
+  <view class="settlement-bar">
+   <view wx:if="{{selectedIds.length}}" class="selection-breakdown"><text>应收 {{selectionQuote ? '¥'+selectionQuote.grossAmount : '—'}}</text><text>优惠 {{selectionQuote ? '−¥'+selectionQuote.discountAmount : '—'}}</text></view>
+   <view wx:if="{{selectedIds.length}}" class="quote-hint">{{selectionQuoteState==='LOADING'?'正在核对所选金额…':selectionQuoteState==='ERROR'?'金额暂不可用，请重试': '当前未选优惠券，可在下一步选择并重新核价'}}</view>
+   <button wx:if="{{selectionQuoteState==='ERROR'}}" class="quote-retry" bindtap="refreshSelectionQuote">重新核对金额</button>
+   <view class="settlement-main"><view class="selection-total"><text class="selection-count">已选 {{selectedIds.length}} 笔 · 应付</text><text class="payable">{{selectionQuote ? '¥'+selectionQuote.netAmount : '—'}}</text></view><button disabled="{{!selectedIds.length || selectionQuoteState!=='READY'}}" bindtap="confirm">一起付款</button></view>
+  </view>
+ </block>
+</view>

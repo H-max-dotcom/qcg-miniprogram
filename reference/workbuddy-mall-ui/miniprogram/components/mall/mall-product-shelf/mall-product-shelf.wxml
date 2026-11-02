@@ -1,0 +1,40 @@
+<view class="shelf">
+  <view class="shelf-head">
+    <view class="shelf-titles">
+      <text class="shelf-title">{{title}}</text>
+      <text wx:if="{{note}}" class="shelf-note">{{note}}</text>
+    </view>
+    <text wx:if="{{moreVisible}}" class="shelf-more" bindtap="onMore">查看更多 ›</text>
+  </view>
+
+  <scroll-view
+    wx:if="{{layout === 'scroll'}}"
+    class="shelf-scroll"
+    scroll-x
+    show-scrollbar="{{false}}"
+  >
+    <view class="shelf-row">
+      <mall-product-card
+        wx:for="{{products}}"
+        wx:key="productId"
+        class="shelf-row-item"
+        product="{{item}}"
+        price-hint="{{priceHint}}"
+        compact="{{true}}"
+        bind:open="onOpen"
+        bind:add="onAdd"
+      />
+    </view>
+  </scroll-view>
+
+  <view wx:else class="shelf-grid">
+    <mall-product-card
+      wx:for="{{products}}"
+      wx:key="productId"
+      product="{{item}}"
+      price-hint="{{priceHint}}"
+      bind:open="onOpen"
+      bind:add="onAdd"
+    />
+  </view>
+</view>

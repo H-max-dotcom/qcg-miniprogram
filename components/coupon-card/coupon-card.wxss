@@ -1,0 +1,14 @@
+:host { display: block; min-width: 0; }
+.coupon-body { padding: 26rpx 28rpx 22rpx; color: #243d32; }
+.coupon-top { display: flex; justify-content: space-between; align-items: center; }
+.coupon-label { display: inline-block; padding: 6rpx 12rpx; border-radius: 8rpx; background: #e9f3ed; color: #226748; font-size: 22rpx; font-weight: 600; }
+.coupon-mark { color: #b1bfb1; font-size: 26rpx; }
+.coupon-name { margin-top: 18rpx; font-size: 31rpx; font-weight: 700; line-height: 1.45; word-break: break-all; }
+.coupon-benefit { margin-top: 10rpx; color: #b64b29; font-size: 32rpx; font-weight: 700; line-height: 1.5; word-break: break-all; }
+.coupon-rules { margin-top: 20rpx; }
+.coupon-rule { display: flex; gap: 14rpx; margin-top: 8rpx; font-size: 22rpx; color: #65756b; line-height: 1.6; word-break: break-all; }
+.rule-label { flex-shrink: 0; width: 90rpx; color: #79847c; }
+.muted .coupon-benefit, .muted .coupon-name { color: #768078; }
+.muted .coupon-label { background: #eef0ed; color: #6c776e; }
+
+.coupon-name{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;word-break:break-all;line-height:1.5;}.rule-value{min-width:0;flex:1;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;word-break:break-all;line-height:1.5;}

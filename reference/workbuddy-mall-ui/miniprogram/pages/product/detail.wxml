@@ -1,0 +1,176 @@
+<view class="page no-tab" wx:if="{{viewState === 'READY' && product}}">
+  <view class="mini-topbar">
+    <button class="icon-btn" bindtap="goCategory">‹</button>
+    <view class="brand">
+      <text class="brand-title" style="font-size: 34rpx;">商品详情</text>
+      <text class="brand-subtitle">选择规格与数量</text>
+    </view>
+    <mall-cart-entry id="cart-entry" count="{{cartCount}}" selected="{{cartCount > 0}}" bind:entrytap="goCart" />
+  </view>
+
+  <view class="detail-cover {{!product.imageUrls.length || product.imageFailed ? 'detail-cover-empty' : ''}}">
+    <swiper
+      wx:if="{{product.imageUrls.length && !product.imageFailed}}"
+      class="detail-cover-swiper"
+      current="{{imageCurrent}}"
+      circular="{{product.imageUrls.length > 1}}"
+      indicator-dots="{{product.imageUrls.length > 1}}"
+      indicator-color="rgba(255,255,255,.72)"
+      indicator-active-color="#0f8f5f"
+      bindchange="changeImage"
+    >
+      <swiper-item wx:for="{{product.imageUrls}}" wx:key="*this">
+        <image wx:if="{{index <= imageRenderLimit}}" class="detail-cover-image" src="{{item}}" mode="aspectFill" data-index="{{index}}" data-url="{{item}}" bindload="onImageLoad" binderror="onImageError" />
+      </swiper-item>
+    </swiper>
+    <image wx:else class="detail-cover-image" src="/assets/product-placeholder.png" mode="aspectFit" />
+    <view wx:if="{{product.imageUrls.length && imageLoadStatus === 'LOADING'}}" class="detail-image-loading"><text>图片加载中…</text></view>
+    <text class="detail-image-count" wx:if="{{product.imageUrls.length > 1}}">{{imageCurrent + 1}} / {{product.imageUrls.length}}</text>
+  </view>
+
+  <view class="section product-core">
+    <view class="product-title">{{product.name}}</view>
+    <view class="labels">
+      <text class="tag gray" wx:for="{{product.tags}}" wx:key="*this">{{item}}</text>
+      <text class="tag gray" wx:if="{{product.sellableSpecCount > 1}}">多规格可选</text>
+    </view>
+    <view class="selected-spec" wx:if="{{product.productUnitId}}">
+      <text>已选</text>
+      <text class="selected-spec-name">{{product.specLabel}}</text>
+      <text wx:if="{{product.minOrderText}}">{{product.minOrderText}}</text>
+    </view>
+    <view class="selected-spec" wx:else>
+      <text>{{specHint || '请先选择规格'}}</text>
+    </view>
+
+    <view class="price-panel">
+      <text class="price-label">价格</text>
+      <text class="price-state" wx:if="{{product.saleMode === 'FIXED_WEIGHT_SPEC' && product.requiresSpecSelection}}">请选择销售规格</text>
+      <view wx:elif="{{product.priceVisible && !product.requiresConfirmation}}">
+        <text class="money price-value">{{product.priceText}}{{product.saleMode === "FIXED_WEIGHT_SPEC" ? " / 份" : ""}}</text>
+      </view>
+      <text class="price-state" wx:elif="{{product.customerCanViewPrice}}">当前规格暂无可售价格</text>
+      <text class="price-state" wx:else>完成登录和门店资料后可查看价格</text>
+      <view class="recent-price" wx:if="{{product.showRecentPrice}}">
+        <text>上次购买价</text>
+        <text>{{product.recentPriceText}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="section">
+    <view class="section-head compact-head">
+      <text>{{product.saleMode === "FIXED_WEIGHT_SPEC" ? "选择销售规格" : "选择购买单位"}}</text>
+      <text class="selection-count" wx:if="{{product.specOptions.length > 1}}">{{product.specOptions.length}} 种可选</text>
+    </view>
+    <view class="spec-options">
+      <button
+        class="spec-option {{selectedSpecId === item.productUnitId ? 'active' : ''}} {{item.disabled ? 'disabled' : ''}}"
+        wx:for="{{product.specOptions}}"
+        wx:key="productUnitId"
+        data-id="{{item.productUnitId}}"
+        bindtap="selectSpec"
+      >
+        <view class="spec-copy">
+          <text class="spec-primary">{{item.label}}</text>
+          <text wx:if="{{item.priceVisible && !item.requiresConfirmation}}">{{item.priceText}}</text>
+        </view>
+        <text class="spec-check" wx:if="{{selectedSpecId === item.productUnitId}}">✓</text>
+        <text class="spec-disabled-text" wx:if="{{item.disabled}}">暂不可选</text>
+      </button>
+    </view>
+    <view class="empty" wx:if="{{!product.specOptions.length}}">当前商品暂无可售规格</view>
+    <view class="empty" wx:if="{{product.mallSellabilityStatus === 'NOT_SELLABLE'}}">当前商品暂无报价</view>
+    <view class="purchase-row">
+      <view>
+        <text class="purchase-label">所选规格数量</text>
+        <text class="quantity-hint" wx:if="{{product.productUnitId}}">{{product.minOrderText}}</text>
+      </view>
+      <view class="qty">
+        <button bindtap="minus" disabled="{{!product.productUnitId}}">−</button>
+        <input class="qty-input" type="{{product.quantityInputType}}" value="{{quantity}}" bindinput="changeQuantity" bindblur="confirmQuantity" disabled="{{!product.productUnitId}}" />
+        <button bindtap="plus" disabled="{{!product.productUnitId}}">+</button>
+      </view>
+      <text class="quantity-unit" wx:if="{{product.productUnitId}}">个</text>
+    </view>
+    <view class="inline-error" wx:if="{{quantityError}}">{{quantityError}}</view>
+    <view class="field">
+      <text class="small">备注（选填）</text>
+      <button class="remark-trigger" wx:if="{{!lineRemarkExpanded}}" bindtap="expandLineRemark">＋ 添加商品备注</button>
+      <view class="remark-shell" wx:else>
+        <textarea
+          class="textarea line-remark"
+          value="{{lineRemark}}"
+          bindinput="inputLineRemark"
+          maxlength="100"
+          auto-height
+          adjust-position="{{true}}"
+          cursor-spacing="180"
+          disable-default-padding="{{true}}"
+          placeholder="请输入商品备注"
+        />
+        <text class="remark-counter">{{lineRemarkLength}}/100</text>
+        <button class="remark-clear" bindtap="clearLineRemark">清空</button>
+      </view>
+    </view>
+    <view class="availability" wx:if="{{product.productUnitId}}">
+      <text>可订购状态</text>
+      <text class="availability-value">{{product.stockText}}</text>
+    </view>
+  </view>
+
+  <view class="section" wx:if="{{product.description}}">
+    <view class="section-title">商品说明</view>
+    <view class="product-description">{{product.description}}</view>
+  </view>
+
+  <view class="section" wx:if="{{customerMode === 'BOUND'}}">
+    <button class="button-plain" bindtap="openSharePanel">分享商品</button>
+    <view wx:if="{{sharePanelOpen}}" class="product-share-panel">
+      <view class="product-share-actions"><button wx:if="{{shareReady}}" class="button-primary" open-type="share">发送给好友</button><button wx:else class="button-primary" bindtap="openSharePanel" loading="{{sharing}}" disabled="{{sharing}}">{{sharing ? '准备分享中' : '重新准备分享'}}</button><button class="button-plain" bindtap="showTimelineGuide" disabled="{{!shareReady}}">分享到朋友圈</button></view>
+      <text class="warning" wx:if="{{shareError}}">{{shareError}}</text><text class="small">朋友圈分享请点击右上角“…”菜单</text><button class="button-plain" bindtap="closeSharePanel">收起</button>
+    </view>
+  </view>
+  <view class="bottom-bar">
+    <view class="action-summary">
+      <view class="small" wx:if="{{cartFeedbackText}}">{{cartFeedbackText}}</view>
+      <view class="small" wx:elif="{{customerMode === 'VIEW_ONLY'}}">当前账号仅可查看商品</view>
+      <view class="small" wx:elif="{{ctaDisabledReason}}">{{ctaDisabledReason}}</view>
+      <view class="small" wx:else>{{product.requiresConfirmation ? '可加入购物车' : '金额以购物车报价为准'}}</view>
+    </view>
+    <button class="button-primary" bindtap="addCart" disabled="{{customerMode === 'BOUND' ? ctaDisabled : true}}">{{ctaText}}</button>
+  </view>
+</view>
+<view class="page no-tab detail-state-page" wx:elif="{{viewState === 'LOADING'}}">
+  <view class="detail-state-card">
+    <view class="detail-state-title">正在加载商品详情</view>
+    <view class="small">正在加载价格、规格和库存信息…</view>
+  </view>
+</view>
+<view class="page no-tab detail-state-page" wx:elif="{{viewState === 'EMPTY'}}">
+  <view class="detail-state-card">
+    <view class="detail-state-title">商品暂不可用</view>
+    <view class="warning">{{errorMessage}}</view>
+    <view class="detail-state-actions">
+      <button class="button-plain" bindtap="retryProduct" loading="{{loading}}" disabled="{{loading}}">重新加载</button>
+      <button class="button-primary" bindtap="safeBack">返回商城</button>
+    </view>
+  </view>
+</view>
+<view class="page no-tab detail-state-page" wx:elif="{{viewState === 'ERROR'}}">
+  <view class="detail-state-card">
+    <view class="detail-state-title">商品详情加载失败</view>
+    <view class="warning">{{errorMessage}}</view>
+    <view class="detail-state-actions">
+      <button class="button-primary" bindtap="retryProduct" loading="{{loading}}" disabled="{{loading}}">重试</button>
+      <button class="button-plain" bindtap="safeBack">返回商城</button>
+    </view>
+  </view>
+</view>
+<view class="page no-tab detail-state-page" wx:else>
+  <view class="detail-state-card">
+    <view class="detail-state-title">商品页面暂不可用</view>
+    <view class="warning">请返回商城后重新进入。</view>
+    <button class="button-primary" bindtap="safeBack">返回商城</button>
+  </view>
+</view>

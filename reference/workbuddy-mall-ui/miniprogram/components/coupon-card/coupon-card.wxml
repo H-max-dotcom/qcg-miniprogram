@@ -1,0 +1,10 @@
+<view class="coupon-body {{status === 'USED' || status === 'EXPIRED' || status === 'VOIDED' ? 'muted' : ''}}">
+  <view class="coupon-top"><text class="coupon-label">{{label || '优惠券'}}</text><text class="coupon-mark">券</text></view>
+  <view class="coupon-name">{{name}}</view>
+  <view class="coupon-benefit">{{benefitText}}</view>
+  <view class="coupon-rules">
+    <view class="coupon-rule"><text class="rule-label">适用范围</text><text class="rule-value" wx:if="{{template && template.scope}}">{{template.scope.allProducts ? '全部商品' : '指定商品范围'}}<text wx:if="{{!template.scope.allProducts && template.scope.productCount}}"> · {{template.scope.productCount}} 款商品</text><text wx:if="{{!template.scope.allProducts && template.scope.productUnitCount}}"> · {{template.scope.productUnitCount}} 个规格</text><text wx:if="{{!template.scope.allProducts && template.scope.brandCount}}"> · {{template.scope.brandCount}} 个品牌</text></text><text class="rule-value" wx:else>以下单核验为准</text></view>
+    <view class="coupon-rule"><text class="rule-label">有效至</text><text class="rule-value">{{validToText}}</text></view>
+    <view class="coupon-rule" wx:if="{{template && template.allowCampaignStack === false}}"><text class="rule-label">叠加说明</text><text class="rule-value">不可与活动优惠叠加</text></view>
+  </view>
+</view>

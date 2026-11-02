@@ -1,0 +1,81 @@
+:host {
+  display: block;
+}
+
+.cstatus {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  padding: 16rpx 18rpx;
+  border-radius: 20rpx;
+  background: #ffffff;
+  box-shadow: 0 8rpx 22rpx rgba(16, 90, 60, 0.05);
+}
+
+.cstatus-ico {
+  flex: 0 0 64rpx;
+  width: 64rpx;
+  height: 64rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 32rpx;
+  color: #ffffff;
+}
+
+.cstatus-main {
+  flex: 1;
+  min-width: 0;
+}
+
+.cstatus-title {
+  display: block;
+  font-size: 28rpx;
+  font-weight: 700;
+  color: #18271f;
+}
+
+.cstatus-desc {
+  display: block;
+  margin-top: 4rpx;
+  font-size: 23rpx;
+  line-height: 1.4;
+  color: #6a7c71;
+}
+
+.cstatus-cta {
+  flex: 0 0 auto;
+  padding: 14rpx 24rpx;
+  border-radius: 999rpx;
+  font-size: 24rpx;
+  font-weight: 600;
+  color: #ffffff;
+  background: linear-gradient(135deg, #16a86a, #0d8455);
+}
+
+/* tone: approved （v2：白底，绿色仅在勾选图标上点缀） */
+.cstatus--approved .cstatus-ico {
+  background: linear-gradient(135deg, #16a86a, #0d8455);
+}
+
+/* tone: guest */
+.cstatus--guest .cstatus-ico {
+  background: linear-gradient(135deg, #2aa97a, #0f8f5f);
+}
+
+/* tone: pending */
+.cstatus--pending .cstatus-ico {
+  background: linear-gradient(135deg, #e0a534, #c8860d);
+}
+.cstatus--pending .cstatus-cta {
+  background: linear-gradient(135deg, #e0a534, #c8860d);
+}
+
+/* tone: blocked */
+.cstatus--blocked .cstatus-ico {
+  background: linear-gradient(135deg, #d97a6a, #c8543f);
+}
+.cstatus--blocked .cstatus-cta {
+  background: linear-gradient(135deg, #d97a6a, #c8543f);
+}

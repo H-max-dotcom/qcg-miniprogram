@@ -1,0 +1,10 @@
+<view class="membership-page">
+  <view class="mini-topbar"><button class="icon-btn" bindtap="back" aria-label="返回我的账户">‹</button><view class="brand"><text class="brand-title">会员权益</text></view></view>
+  <view wx:if="{{loading}}" class="state">正在读取会员信息…</view>
+  <view wx:elif="{{error}}" class="state state-card"><text>{{error}}</text><button class="button-primary" bindtap="refresh">重新读取</button></view>
+  <block wx:elif="{{enabled}}">
+    <view class="identity"><text class="eyebrow">商城会员</text><text class="tier">{{membership && membership.tier ? membership.tier.name : '商城会员'}}</text><text wx:if="{{membership && membership.tier && membership.tier.description}}" class="description">{{membership.tier.description}}</text></view>
+    <view wx:if="{{membership}}" class="benefits"><text class="heading">会员权益</text><view wx:for="{{membership.benefits}}" wx:key="id" class="benefit"><text class="name">{{item.name}}</text><text class="description">{{item.description}}</text></view><view wx:if="{{!membership.benefits.length}}" class="benefit"><text class="name">会员专享服务</text><text class="description">具体权益以门店政策为准</text></view></view>
+  </block>
+  <view wx:else class="state"><button bindtap="back">返回我的账户</button></view>
+</view>

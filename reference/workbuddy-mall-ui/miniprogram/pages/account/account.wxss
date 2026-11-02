@@ -1,0 +1,142 @@
+.account-page {
+  padding-bottom: calc(48rpx + env(safe-area-inset-bottom));
+}
+
+.mini-topbar {
+  justify-content: flex-start;
+}
+
+.account-hero {
+  display: grid;
+  gap: 10rpx;
+  padding: 30rpx;
+  border-radius: 24rpx;
+  background: linear-gradient(135deg, #0f8f5f, #28a86d);
+  color: #ffffff;
+  box-shadow: 0 18rpx 48rpx rgba(15, 143, 95, 0.18);
+}
+
+.account-label,
+.account-caption {
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 24rpx;
+}
+
+.account-amount {
+  font-size: 54rpx;
+  font-weight: 900;
+  line-height: 1.25;
+}
+
+.balance-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14rpx;
+  margin-top: 18rpx;
+}
+
+.balance-grid > view {
+  display: grid;
+  gap: 8rpx;
+  padding: 18rpx;
+  border: 1rpx solid #e2e9e3;
+  border-radius: 16rpx;
+  background: #fbfdfb;
+}
+
+.balance-grid text:first-child {
+  color: #708078;
+  font-size: 23rpx;
+}
+
+.balance-grid text:last-child {
+  color: #1f2a24;
+  font-size: 29rpx;
+  font-weight: 800;
+}
+
+.unavailable-metric,
+.account-note {
+  line-height: 1.6;
+}
+
+.ledger-empty {
+  padding: 28rpx 18rpx;
+}
+
+.ledger-list {
+  margin-top: 12rpx;
+}
+
+.ledger-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 16rpx;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #edf1ee;
+}
+
+.ledger-row:last-child {
+  border-bottom: 0;
+}
+
+.ledger-main,
+.ledger-amount {
+  display: grid;
+  gap: 7rpx;
+}
+
+.ledger-title {
+  color: #1f2a24;
+  font-size: 27rpx;
+  font-weight: 800;
+}
+
+.ledger-time {
+  color: #8a968e;
+  font-size: 21rpx;
+}
+
+.ledger-amount {
+  justify-items: end;
+  align-content: center;
+  font-size: 22rpx;
+}
+
+.ledger-amount text:last-child {
+  font-size: 27rpx;
+  font-weight: 800;
+}
+
+.ledger-amount.increase {
+  color: #0f8f5f;
+}
+
+.ledger-amount.decrease {
+  color: #d85a2a;
+}
+
+.ledger-amount.hold {
+  color: #b66b12;
+}
+
+.state-action {
+  margin: 20rpx auto 0;
+}
+
+.ledger-order { color: #284b39; font-size: 23rpx; overflow-wrap: anywhere; }
+.ledger-payment-link { margin: 3rpx 0 0; padding: 6rpx 12rpx; justify-self: start; font-size: 23rpx; line-height: 1.6; color: #0b7950; background: #edf8f1; border-radius: 10rpx; }
+
+.state-note,
+.empty-title {
+  margin-bottom: 10rpx;
+  font-weight: 800;
+}
+
+.account-page{background:linear-gradient(180deg,#e7f2e7,#f4f7f1 520rpx)}.account-page .section{border:1rpx solid #e3eadd;border-radius:24rpx}.account-page .account-hero{background:linear-gradient(120deg,#174f37,#2a7850);padding:36rpx 30rpx;box-shadow:none}.account-page .account-amount{font-size:62rpx;letter-spacing:1rpx;overflow-wrap:anywhere}.account-page .account-caption{font-size:21rpx;line-height:1.6}.account-page .ledger-title{font-size:25rpx}.account-page .ledger-amount{text-align:right}.account-page .ledger-amount text:last-child{overflow-wrap:anywhere;max-width:210rpx}
+
+/* 032E: source references remain secondary to ledger facts. */
+.ledger-main{min-width:0}.ledger-title,.ledger-order{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;word-break:break-all;line-height:1.5;}.ledger-reference{font-size:21rpx;color:#718078;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;word-break:break-all;line-height:1.5;}.ledger-time{color:#68776e;font-size:23rpx}
+
+/* 032F: secondary ledger dates and references. */
+.account-page .ledger-time, .account-page .ledger-reference, .account-page .ledger-order { font-size: 25rpx; line-height: 1.6; color: #59695f; }

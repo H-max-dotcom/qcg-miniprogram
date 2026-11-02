@@ -1,0 +1,14 @@
+<view class="quick">
+  <view
+    wx:for="{{entries}}"
+    wx:key="key"
+    class="quick-item {{item.enabled ? '' : 'is-disabled'}}"
+    data-key="{{item.key}}"
+    data-enabled="{{item.enabled}}"
+    bindtap="onTap"
+  >
+    <view class="quick-ico">{{item.icon}}</view>
+    <text class="quick-label">{{item.label}}</text>
+    <text wx:if="{{item.hint}}" class="quick-hint">{{item.hint}}</text>
+  </view>
+</view>

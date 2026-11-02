@@ -1,0 +1,38 @@
+<view class="page no-tab">
+  <view class="mini-topbar">
+    <view class="brand">
+      <text class="brand-title" style="font-size: 34rpx;">{{isEdit ? '修改收货地址' : isReapply ? '重新提交收货地址' : '新增收货地址'}}</text>
+      <text class="brand-subtitle">提交后由工作人员确认，确认完成后生效</text>
+    </view>
+  </view>
+
+  <view class="notice">提交后地址将显示“确认中”；确认完成前不会影响当前收货地址，也不能用于下单。</view>
+  <view class="warning" wx:if="{{error}}">{{error}}</view>
+  <view class="empty" wx:if="{{loading}}">正在读取地址…</view>
+
+  <view class="section address-form" wx:if="{{!loading}}">
+    <view class="two-column">
+      <label class="field"><text class="small">收货人</text><input class="input" data-key="recipientName" value="{{form.recipientName}}" bindinput="input" maxlength="80" placeholder="请输入收货人" /></label>
+      <label class="field"><text class="small">联系电话</text><input class="input" data-key="phone" value="{{form.phone}}" bindinput="input" maxlength="50" type="text" placeholder="手机号或座机" /></label>
+    </view>
+    <view class="region-grid">
+      <label class="field"><text class="small">省份</text><input class="input" data-key="province" value="{{form.province}}" bindinput="input" maxlength="60" placeholder="浙江省" /></label>
+      <label class="field"><text class="small">城市</text><input class="input" data-key="city" value="{{form.city}}" bindinput="input" maxlength="60" placeholder="温州市" /></label>
+      <label class="field"><text class="small">区县</text><input class="input" data-key="district" value="{{form.district}}" bindinput="input" maxlength="60" placeholder="鹿城区" /></label>
+    </view>
+    <view class="field">
+      <text class="small">详细地址</text>
+      <view class="address-textarea-shell">
+        <textarea class="textarea address-textarea" data-key="detailAddress" value="{{form.detailAddress}}" bindinput="input" maxlength="200" adjust-position="{{true}}" cursor-spacing="160" disable-default-padding="{{true}}" placeholder="街道、门牌号、楼层和卸货位置" />
+        <text class="address-counter">{{form.detailAddress.length}}/200</text>
+      </view>
+    </view>
+    <label class="field"><text class="small">备注（选填）</text><input class="input" data-key="remark" value="{{form.remark}}" bindinput="input" maxlength="500" placeholder="例如：后门卸货、联系时间" /></label>
+    <view class="default-row">
+      <view><view class="product-name">确认完成后设为默认</view><view class="small">默认地址可在已确认地址之间切换</view></view>
+      <switch color="#0f8f5f" checked="{{form.isDefault}}" bindchange="toggleDefault" />
+    </view>
+  </view>
+
+  <button class="button-primary save-button" bindtap="submit" loading="{{saving}}" disabled="{{loading || saving}}">提交地址</button>
+</view>

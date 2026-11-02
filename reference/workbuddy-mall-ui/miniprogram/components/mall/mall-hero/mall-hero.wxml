@@ -1,0 +1,12 @@
+<view class="hero">
+  <view class="hero-row">
+    <text class="hero-logo">全渠供</text>
+    <text class="hero-pill">{{tagText}}</text>
+  </view>
+  <text class="hero-store">{{storefrontName}}</text>
+  <text wx:if="{{welcome}}" class="hero-welcome">{{welcome}}</text>
+  <view wx:if="{{announcement}}" class="hero-notice">
+    <text class="notice-icon">播</text>
+    <text class="notice-text">{{announcement}}</text>
+  </view>
+</view>

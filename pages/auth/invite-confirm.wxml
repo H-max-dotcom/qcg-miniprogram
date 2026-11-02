@@ -1,0 +1,54 @@
+<view class="page invite-page">
+  <view class="invite-card">
+    <view class="state-mark">{{state === "VALID" ? "邀" : "态"}}</view>
+    <view class="title">{{title}}</view>
+    <view class="muted">{{desc}}</view>
+    <view class="error" wx:if="{{errorMessage}}">{{errorMessage}}</view>
+  </view>
+
+  <view class="invite-card" wx:if="{{invite}}">
+    <view class="section-title">门店信息</view>
+    <view class="detail-row">
+      <text>门店</text>
+      <text>{{invite.customerDisplayName}}</text>
+    </view>
+    <view class="detail-row" wx:if="{{invite.maskedContact}}">
+      <text>联系人</text>
+      <text>{{invite.maskedContact}}</text>
+    </view>
+    <view class="detail-row">
+      <text>门店地址</text>
+      <text>{{invite.maskedAddress}}</text>
+    </view>
+    <view class="detail-row">
+      <text>负责业务员</text>
+      <text>{{invite.customerOwnerDisplayName}}</text>
+    </view>
+    <view class="safe-note">请核对门店信息，确认后将绑定当前微信。</view>
+  </view>
+
+  <view class="button-row">
+    <button
+      class="primary-btn"
+      wx:if="{{(state === 'VALID' || state === 'PENDING') && !loggedIn}}"
+      bindtap="login"
+      loading="{{loginSubmitting}}"
+      disabled="{{loginSubmitting}}"
+    >微信登录后继续</button>
+    <button
+      class="primary-btn"
+      wx:if="{{(state === 'VALID' || state === 'PENDING') && loggedIn}}"
+      bindtap="confirm"
+      loading="{{submitting}}"
+      disabled="{{submitting}}"
+    >确认并绑定门店</button>
+    <button
+      class="primary-btn"
+      wx:if="{{state === 'RETRYABLE_ERROR'}}"
+      bindtap="retry"
+      loading="{{loading}}"
+      disabled="{{loading}}"
+    >重新加载</button>
+    <button class="secondary-btn" bindtap="goHome">返回商城首页</button>
+  </view>
+</view>

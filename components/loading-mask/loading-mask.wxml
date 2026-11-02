@@ -1,0 +1,51 @@
+<view
+  wx:if="{{isLoading}}"
+  class="lm-mask"
+  style="background: {{background}};"
+  catchtouchmove="noop"
+>
+  <view class="lm-center">
+    <!-- 分图层吉祥物：身体 + 两只手 + 两只眼睛。
+         WXSS 驱动「上下挥手」(translateY) + 眨眼 (scaleY) + 身体浮动。
+         图层坐标来自 assets/loading/rig/_layout.json（相对 284x451 画布的百分比）。 -->
+    <view
+      wx:if="{{!rigFailed}}"
+      class="lm-mascot {{animated ? 'lm-alive' : ''}}"
+      style="width: {{imageWidth}}; height: {{imageHeight}};"
+    >
+      <image class="lm-layer lm-body" src="{{rigDir}}/body.png" mode="aspectFit" binderror="onRigError" />
+      <image
+        class="lm-layer lm-hand lm-hand--l {{animated ? 'lm-wave--l' : ''}}"
+        src="{{rigDir}}/hand-left.png" mode="aspectFit" binderror="onRigError"
+      />
+      <image
+        class="lm-layer lm-hand lm-hand--r {{animated ? 'lm-wave--r' : ''}}"
+        src="{{rigDir}}/hand-right.png" mode="aspectFit" binderror="onRigError"
+      />
+      <image
+        class="lm-layer lm-eye lm-eye--l {{animated ? 'lm-blink' : ''}}"
+        src="{{rigDir}}/eye-left.png" mode="aspectFit" binderror="onRigError"
+      />
+      <image
+        class="lm-layer lm-eye lm-eye--r {{animated ? 'lm-blink' : ''}}"
+        src="{{rigDir}}/eye-right.png" mode="aspectFit" binderror="onRigError"
+      />
+    </view>
+
+    <!-- 兜底：分图层资源异常时退回单张静态吉祥物（仍保留浮动）。
+         注意：这里用的是吉祥物透明抠图，不是启动页那张大图。 -->
+    <image
+      wx:else
+      class="lm-mascot lm-mascot--static {{animated ? 'lm-mascot--float' : ''}}"
+      style="width: {{imageWidth}}; height: {{imageHeight}};"
+      src="{{imageSrc}}"
+      mode="aspectFit"
+    />
+
+    <!-- 转圈指示器 -->
+    <view wx:if="{{showRing}}" class="lm-ring"></view>
+
+    <!-- 文案 -->
+    <view class="lm-text" style="color: {{textColor}};">{{text}}</view>
+  </view>
+</view>

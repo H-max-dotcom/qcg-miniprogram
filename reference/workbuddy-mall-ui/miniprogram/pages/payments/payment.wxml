@@ -1,0 +1,69 @@
+<view class="page no-tab payment-page">
+  <view class="mini-topbar"><button class="icon-btn" bindtap="goBack">‹</button><view class="brand"><text class="brand-title">{{recordsMode ? paymentId ? "付款详情" : "付款记录" : "待付款订单"}}</text><text class="brand-subtitle">{{recordsMode ? "以正式支付记录为准" : confirmedOrder ? "按业务员确认的本单金额付款" : "按订单付款条件核验金额"}}</text></view></view>
+  <view class="empty" wx:if="{{state === 'LOADING'}}">{{recordsMode ? '正在读取付款记录…' : '正在读取待付款订单…'}}</view>
+  <block wx:elif="{{state === 'HISTORY_READY'}}">
+    <block wx:if="{{payment}}">
+      <view class="card payment-section"><view class="history-label">实际支付</view><view class="history-amount">¥{{payment.amount}}</view><text class="payment-status {{payment.statusClass}}">{{payment.statusText}}</text><view>{{payment.methodText}} · {{payment.paymentTimeText}}</view></view>
+      <view class="card payment-section"><view class="payment-heading">付款详情</view><view class="detail-row"><text>原应收</text><text>¥{{payment.originalAmount}}</text></view><view class="detail-row"><text>优惠券</text><text class="payment-amount">-¥{{payment.couponDiscountAmount}}</text></view><view class="detail-row"><text>实际支付</text><text class="payment-amount">¥{{payment.amount}}</text></view><view wx:if="{{payment.kind !== 'BATCH'}}">订单 {{payment.order.orderNo || '暂无关联订单'}}</view></view>
+      <view wx:if="{{payment.kind === 'BATCH'}}" class="card payment-section"><view class="payment-heading">结清 {{payment.settledCount}} 笔</view><view wx:for="{{payment.allocations}}" wx:key="receivableId" class="detail-row"><view class="allocation-main"><view class="reference">订单 {{item.orderNo}}</view><view class="small">应收 ¥{{item.grossAmount}} · 优惠 ¥{{item.discountAmount}}</view></view><text>实付 ¥{{item.netAmount}}</text></view></view>
+      <view class="card payment-section"><view class="payment-heading">收款凭据</view><block wx:if="{{payment.receipt}}"><view class="reference">凭证号 {{payment.receipt.billNo}}</view><view>{{payment.receipt.status === 'POSTED' ? '已入账' : '尚未入账'}} · ¥{{payment.receipt.amount}}</view></block><view wx:else>暂无已关联收款凭据</view></view>
+    </block>
+    <block wx:else>
+      <view class="payment-count">付款记录 {{totalCount}} 笔</view>
+      <button class="card payment-order" wx:for="{{items}}" wx:key="id" data-id="{{item.id}}" bindtap="openPayment"><view class="history-head"><text class="history-amount">¥{{item.amount}}</text><text class="payment-status {{item.statusClass}}">{{item.statusText}}</text></view><view wx:if="{{item.kind === 'BATCH'}}">批量付款 · 结清 {{item.settledCount}} 笔</view><view wx:else>订单付款</view><view class="history-meta">{{item.methodText}} · {{item.paymentTimeText}}</view><view wx:if="{{item.couponDiscountAmount !== '0.00'}}" class="payment-amount">优惠券 -¥{{item.couponDiscountAmount}}</view><text class="history-link">付款详情 ›</text></button>
+      <view class="empty" wx:if="{{!items.length}}">暂无付款记录</view>
+      <view class="payment-pagination"><button wx:if="{{page > 1}}" class="button-plain" bindtap="previousPage">上一页</button><button wx:if="{{hasMore}}" class="button-plain" bindtap="nextPage">下一页</button></view>
+    </block>
+  </block>
+  <view class="card payment-notice" wx:elif="{{state === 'NOT_INTEGRATED'}}"><view class="payment-heading">待付款服务尚未接入</view><view>当前无法读取待付款订单与金额。请联系业务员确认付款安排。</view><button class="button-plain" bindtap="refresh">重新读取</button></view>
+  <view class="notice" wx:elif="{{state === 'ERROR'}}">{{error}}<button class="button-plain" bindtap="refresh">重试</button></view>
+  <view class="empty" wx:elif="{{state === 'NOT_WAITING'}}">该订单当前不在待付款列表中，请返回刷新。</view>
+  <block wx:elif="{{state === 'READY'}}">
+    <block wx:if="{{!orderId}}">
+      <view class="payment-count">待付款 {{totalCount}} 笔</view>
+      <button class="card payment-order" wx:for="{{items}}" wx:key="orderId" data-id="{{item.orderId}}" bindtap="openOrder"><view class="history-amount">¥{{item.amount}}</view><view>待付款</view><view class="reference">订单 {{item.orderNo}}</view><text class="small">查看付款详情 ›</text></button>
+      <view class="empty" wx:if="{{!items.length}}">暂无待付款订单</view>
+      <view class="payment-pagination"><button wx:if="{{page > 1}}" class="button-plain" bindtap="previousPage">上一页</button><button wx:if="{{hasMore}}" class="button-plain" bindtap="nextPage">下一页</button></view>
+    </block>
+    <block wx:elif="{{confirmedOrder}}">
+      <view class="card payment-section"><view class="history-label">本单已确认金额</view><view class="history-amount">¥{{confirmedOrder.amount}}</view><view class="reference">订单 {{confirmedOrder.orderNo}}</view><text class="small">先款后货 · 按本单确认金额付款</text></view>
+      <view class="card payment-section"><view class="payment-heading">付款方式</view><view wx:if="{{wechatAvailable}}">微信支付</view><view wx:else class="notice">微信支付暂不可用，请稍后重试。</view><text class="small">本单当前不支持优惠券、预付款余额或组合付款。</text></view>
+      <view wx:if="{{paymentRestricted}}" class="notice">微信支付权限受限，已停止支付，请联系商家处理。</view>
+      <view wx:if="{{quoteError}}" class="notice">{{quoteError}}</view>
+      <button class="button-primary" disabled="{{!wechatAvailable || paymentRestricted || recoveryNeeded || paying || confirming}}" loading="{{paying}}" bindtap="pay">确认付款 ¥{{confirmedOrder.amount}}</button>
+      <button wx:if="{{recoveryNeeded && !paymentRestricted}}" class="button-plain" disabled="{{paying}}" bindtap="recover">核实付款状态</button>
+    </block>
+    <block wx:else>
+      <view class="card payment-section"><view class="history-label">待付款金额</view><view class="history-amount">¥{{order.amount}}</view><view class="reference">订单 {{order.orderNo}}</view><view class="small">实际送达 {{order.deliveredAtText}}</view><text class="small">选择优惠券后将核验付款金额。</text></view>
+      <view class="card payment-section"><view class="payment-heading">优惠券</view><view class="small">每笔待付款订单最多使用一张券</view>
+        <view wx:if="{{couponState !== 'READY'}}" class="payment-notice">付款用券尚未接入，当前不能选择优惠券。</view>
+        <block wx:else>
+          <view class="coupon-summary"><text wx:if="{{quoting}}">正在核验优惠券…</text><text wx:elif="{{quote && selectedCouponId}}" class="payment-amount">已选：{{selectedCouponName}} · -¥{{quote.discountAmount}}</text><text wx:elif="{{quote}}">不使用优惠券 · 已确认</text><text wx:else>未选择优惠券</text></view>
+          <button class="button-plain coupon-entry" disabled="{{paying || confirming}}" bindtap="openCouponPicker">选择优惠券 · {{availableCoupons.length}} 张可用 ›</button>
+        </block>
+      </view>
+      <view class="card payment-section"><view class="payment-heading">付款金额</view><view wx:if="{{quoting}}">正在核验…</view><view wx:elif="{{quote}}"><view>原应收 ¥{{quote.originalAmount}}</view><view class="payment-amount">优惠券 -¥{{quote.discountAmount}}</view><view class="history-amount">应付 ¥{{quote.finalAmount}}</view><text class="small">报价有时效，支付前须再次核验。</text></view><view wx:else>待核验</view><view class="notice" wx:if="{{quoteError}}">{{quoteError}}</view></view>
+      <view class="card payment-section"><view class="payment-heading">付款方式</view><button wx:if="{{prepaidAvailable}}" class="button-plain {{method === 'PREPAID_BALANCE' ? 'coupon-selected' : ''}}" disabled="{{paying}}" data-method="PREPAID_BALANCE" bindtap="chooseMethod">预付款余额 {{quote ? '¥' + quote.prepaidBalance : ''}}</button><button wx:if="{{wechatAvailable}}" class="button-plain {{method === 'WECHAT_PAY' ? 'coupon-selected' : ''}}" disabled="{{paying}}" data-method="WECHAT_PAY" bindtap="chooseMethod">微信支付</button><view wx:if="{{!(prepaidAvailable || wechatAvailable)}}" class="notice">当前暂无可用付款方式，请联系业务员确认付款安排。</view><text class="small">每次选择一种付款方式，不支持组合付款。</text><view wx:if="{{insufficient}}" class="notice">{{wechatAvailable ? "预付款余额不足，请选择微信支付。" : "预付款余额不足，请联系业务员确认付款安排。"}}</view></view>
+      <button class="button-primary" disabled="{{!quote || quoting || confirming || paying || recoveryNeeded || (method === 'WECHAT_PAY' && paymentRestricted) || insufficient || (!(prepaidAvailable || wechatAvailable))}}" loading="{{paying}}" bindtap="pay">{{insufficient ? '余额不足' : quote ? '确认付款 ¥' + quote.finalAmount : '请先核验付款金额'}}</button>
+      <button wx:if="{{recoveryNeeded && !paymentRestricted}}" class="button-plain" disabled="{{paying}}" bindtap="recover">核实付款状态</button>
+      <button wx:if="{{couponInvalid}}" class="button-plain" bindtap="requoteWithoutCoupon">不使用失效优惠券，重新核验金额</button>
+    </block>
+  </block>
+  <view wx:if="{{couponPickerOpen}}" class="coupon-picker-overlay">
+    <view class="coupon-picker-mask" bindtap="closeCouponPicker" catchtouchmove="stopCouponBubble"></view>
+    <view class="coupon-picker-sheet" catchtap="stopCouponBubble">
+      <view class="coupon-picker-head"><text class="payment-heading">选择优惠券</text><button class="coupon-picker-close" bindtap="closeCouponPicker" aria-label="关闭优惠券选择">关闭</button></view>
+      <view class="coupon-summary">{{quote && selectedCouponId ? '当前已优惠 ¥' + quote.discountAmount : '当前未使用优惠券'}}</view><view class="small">{{availableCoupons.length}} 张可用 · 每笔付款最多使用一张券</view>
+      <scroll-view scroll-y class="coupon-picker-list">
+        <button class="button-plain {{quote && !selectedCouponId ? 'coupon-selected' : ''}}" data-id="" bindtap="chooseCoupon">不使用优惠券 {{quote && !selectedCouponId ? '· 已确认' : ''}}</button>
+        <view class="coupon-group-title">可用券（{{availableCoupons.length}}）</view>
+        <view class="small" wx:if="{{!availableCoupons.length}}">当前订单暂无可用券</view>
+        <button wx:for="{{availableCoupons}}" wx:key="id" class="button-plain {{quote && selectedCouponId === item.id ? 'coupon-selected' : ''}}" data-id="{{item.id}}" bindtap="chooseCoupon"><view class="coupon-name">{{item.name}} {{quoting && requestedCouponId === item.id ? '· 核验中' : quote && selectedCouponId === item.id ? '· 已选' : ''}}</view><view wx:if="{{item.discountAmount}}" class="payment-amount">可优惠 ¥{{item.discountAmount}}</view><view class="small">{{item.thresholdText}}</view><view class="small">有效期 {{item.validFromText}} 至 {{item.validToText}}</view></button>
+        <view class="coupon-group-title">不可用券（{{unavailableCoupons.length}}）</view>
+        <view class="small" wx:if="{{!unavailableCoupons.length}}">暂无不可用券</view>
+        <view wx:for="{{unavailableCoupons}}" wx:key="id" class="coupon-unavailable"><view class="coupon-name">{{item.name}}</view><view class="small">{{item.reason}}</view><view class="small">{{item.thresholdText}}</view><view class="small">有效期 {{item.validFromText}} 至 {{item.validToText}}</view></view>
+        <view class="notice" wx:if="{{quoteError}}">{{quoteError}}</view>
+      </scroll-view>
+    </view>
+  </view>
+</view>

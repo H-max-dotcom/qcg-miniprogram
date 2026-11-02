@@ -1,0 +1,73 @@
+<view
+  id="mall-auth-sheet-root"
+  class="auth-root"
+  hidden="{{!visible}}"
+  catchtouchmove="stopBubble"
+>
+  <view class="auth-mask" catchtap="onMaskClose" catchtouchmove="stopBubble"></view>
+  <view class="auth-sheet" catchtap="stopBubble" catchtouchmove="stopBubble">
+    <view class="auth-handle"></view>
+    <view class="auth-head">
+      <view class="auth-title">授权登录</view>
+      <button
+        class="auth-close {{submitting ? 'auth-close--disabled' : ''}}"
+        catchtap="onCloseTap"
+        disabled="{{submitting}}"
+        hover-class="auth-close--hover"
+        aria-label="关闭授权登录弹层"
+      >×</button>
+    </view>
+
+    <view class="auth-brand-area">
+      <view class="auth-brand">{{brandName}}</view>
+      <view class="auth-value">
+        <text class="auth-value-line">登录后可查看商品价格、常购商品，</text>
+        <text class="auth-value-line">并快速提交订单</text>
+      </view>
+    </view>
+
+    <view class="auth-login-boundary">
+      <button
+        class="auth-login {{privacyAgreed ? '' : 'auth-login--disabled'}} {{submitting ? 'auth-login--pending' : ''}}"
+        catchtap="onLoginTap"
+        disabled="{{!privacyAgreed || submitting}}"
+        hover-class="auth-login--hover"
+      >
+        <view class="auth-login-content">
+          <view class="auth-login-spinner-slot">
+            <view class="auth-login-spinner {{submitting ? 'auth-login-spinner--visible' : ''}}"></view>
+          </view>
+          <text class="auth-login-text">{{submitting ? '登录中…' : '微信授权登录'}}</text>
+          <view class="auth-login-spinner-slot"></view>
+        </view>
+      </button>
+    </view>
+
+    <view class="auth-privacy">
+      <checkbox-group class="auth-checkbox-group" bindchange="onTogglePrivacy">
+        <label class="auth-checkbox-hit">
+          <checkbox
+            class="auth-checkbox-control"
+            value="agree"
+            checked="{{privacyAgreed}}"
+            disabled="{{submitting}}"
+            color="#07c160"
+            aria-label="同意小程序用户隐私保护指引"
+          />
+          <view class="auth-checkbox-visual {{privacyAgreed ? 'auth-checkbox-visual--checked' : ''}}">
+            <text class="auth-checkbox-check">✓</text>
+          </view>
+        </label>
+      </checkbox-group>
+      <view class="auth-privacy-copy">
+        我已阅读并同意
+        <text
+          class="auth-privacy-link {{submitting ? 'auth-privacy-link--disabled' : ''}}"
+          catchtap="onOpenPrivacyGuide"
+        >《{{privacyTitle}}》</text>
+      </view>
+    </view>
+
+    <view class="auth-error" hidden="{{!errorMessage}}">{{errorMessage}}</view>
+  </view>
+</view>

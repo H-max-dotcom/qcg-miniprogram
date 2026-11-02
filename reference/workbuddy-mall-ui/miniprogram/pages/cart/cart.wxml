@@ -1,0 +1,173 @@
+<view class="page">
+  <view class="mini-topbar">
+    <button class="icon-btn" bindtap="goHome">‹</button>
+    <view class="brand">
+      <text class="brand-title" style="font-size: 34rpx;">购物车</text>
+      <text class="brand-subtitle">确认商品、数量和价格</text>
+    </view>
+    <button class="button-plain" bindtap="clear">清空</button>
+  </view>
+
+  <view class="notice">
+    商品价格和库存可能变化，请以结算页面显示为准。
+  </view>
+
+  <view class="section checkout-precheck" wx:if="{{items.length}}">
+    <view class="section-head">
+      <text>结算前检查</text>
+      <text class="tag {{defaultAddressReady ? '' : 'orange'}}">{{defaultAddressReady ? '收货地址可用' : '地址待处理'}}</text>
+    </view>
+    <view class="small" wx:if="{{defaultAddressLoading}}">正在读取收货地址…</view>
+    <view class="warning" wx:elif="{{defaultAddressError}}">{{defaultAddressError}}，请联系业务员或文员维护后再结算。</view>
+    <button class="button-plain" wx:if="{{defaultAddressError && customerMode === 'BOUND'}}" bindtap="loadCheckoutAddress">重新读取地址</button>
+  </view>
+
+  <view class="section price-status-card" wx:if="{{items.length}}">
+    <view class="small" wx:if="{{quoteLoading}}">正在确认价格…</view>
+    <view wx:elif="{{quoteError}}">
+      <view class="warning">{{quoteError}}</view>
+      <button class="button-plain danger off-shelf-action" wx:if="{{hasOffShelfItems}}" bindtap="removeOffShelfItems">移除已下架商品，继续购买</button>
+      <button class="button-plain" bindtap="retryQuote">重新核算</button>
+    </view>
+    <view wx:elif="{{hasPendingPrice}}" class="warning">{{pendingPriceLineCount}} 种商品待业务员确认价格，确认后可结算。</view>
+    <view wx:elif="{{quoteReady}}">
+      <view class="section-title">金额摘要</view>
+      <view class="row"><text>商品金额</text><text>{{originalTotalText}}</text></view>
+      <view class="row"><text>活动优惠</text><text>{{campaignDiscountTotalText === '暂无金额' ? '—' : '-' + campaignDiscountTotalText}}</text></view>
+      <view class="row"><text>配送费用</text><text class="small">以订单确认页为准</text></view>
+      <view class="row"><text>商品合计</text><text class="money">{{totalText}}</text></view>
+    </view>
+    <view wx:else class="small">{{customerMode === 'GUEST' ? '登录后确认价格' : primaryActionText}}</view>
+  </view>
+
+  <view class="section minimum-card" wx:if="{{items.length && minimumOrderEnabled && quoteReady && !hasPendingPrice}}">
+    <view class="section-head">
+      <text>起送进度</text>
+      <text class="tag {{isMinimumMet ? '' : 'orange'}}">{{isMinimumMet ? '已满足' : '还需凑单'}}</text>
+    </view>
+    <view class="minimum-summary">当前 {{totalText}} / {{minimumOrderAmountText}} 起送</view>
+    <view class="minimum-track"><view class="minimum-fill" style="width: {{minimumProgress}}%;"></view></view>
+    <view class="minimum-remaining" wx:if="{{!isMinimumMet && quoteReady}}">还差 {{remainingAmountText}}</view>
+  </view>
+
+  <view class="section">
+    <view class="section-head">
+      <text>商品明细</text>
+      <text class="tag gray" wx:if="{{items.length}}">{{items.length}} 种规格</text>
+    </view>
+    <view class="cart-item {{item.offShelf ? 'off-shelf-item' : ''}}" wx:for="{{items}}" wx:key="lineKey">
+      <view class="product-row">
+        <view class="product-thumb" data-id="{{item.productId}}" bindtap="goProduct"><image wx:if="{{item.imageUrl}}" style="width:100%;height:100%" src="{{item.imageUrl}}" mode="aspectFit" data-key="{{item.lineKey}}" data-src="{{item.imageUrl}}" binderror="onProductImageError" /><image wx:else style="width:100%;height:100%" src="/assets/product-placeholder.png" mode="aspectFit" /></view>
+        <view>
+          <view class="product-name" data-id="{{item.productId}}" bindtap="goProduct">{{item.name}}</view>
+          <view class="spec" wx:if="{{item.saleMode === 'FIXED_WEIGHT_SPEC'}}">{{item.spec}} × {{item.quantity}}份</view>
+          <view class="spec" wx:else>规格 {{item.spec || '-'}} · 单位 {{item.unitName || '-'}}</view>
+          <view class="warning" wx:if="{{item.invalidReason}}">{{item.invalidReason}}</view>
+          <view class="small" wx:if="{{item.minOrderQty > 1}}">{{item.minOrderText || ('起订量 ' + item.minOrderQty)}}</view>
+          <view class="labels">
+            <text class="tag {{item.offShelf ? 'off-shelf-tag' : 'gray'}}" wx:for="{{item.tags}}" wx:for-item="tag" wx:key="*this" wx:if="{{tag !== '价格确认中' && tag !== '暂不可结算' && tag !== '价格已确认' && tag !== '可结算'}}">{{tag}}</text>
+          </view>
+          <view class="field line-remark-field">
+            <button class="remark-trigger" wx:if="{{!item.remarkExpanded}}" data-index="{{index}}" bindtap="expandLineRemark">＋ 添加商品备注</button>
+            <view class="remark-shell" wx:else>
+              <textarea class="textarea line-remark" data-key="{{item.lineKey}}" value="{{item.lineRemark}}" bindinput="inputLineRemark" maxlength="100" adjust-position="{{true}}" cursor-spacing="180" disable-default-padding="{{true}}" placeholder="如：打粉、单独装袋、不要太辣" />
+              <view class="remark-tools">
+                <text>{{item.lineRemark.length}}/100</text>
+                <button data-key="{{item.lineKey}}" bindtap="clearLineRemark">清空</button>
+              </view>
+            </view>
+          </view>
+          <view class="row" style="margin-top: 12rpx;">
+            <view>
+              <view class="money" wx:if="{{quoteReady && item.priceVisible}}">{{item.priceText}}{{item.saleMode === 'FIXED_WEIGHT_SPEC' ? ' / 份' : ''}}</view>
+              <view class="small" wx:if="{{quoteReady && item.campaignDiscountText}}">原价 {{item.basePriceText}}</view>
+              <view class="small" wx:if="{{quoteReady && item.priceVisible}}">小计 {{item.lineAmountText}}</view>
+            </view>
+            <view class="qty">
+              <button data-key="{{item.lineKey}}" bindtap="minus">−</button>
+              <input class="qty-input" type="{{item.quantityInputType}}" value="{{item.quantityInput}}" data-key="{{item.lineKey}}" bindinput="changeQuantity" bindblur="confirmQuantity" confirm-type="done" />
+              <button data-key="{{item.lineKey}}" bindtap="plus">+</button>
+            </view>
+          </view>
+          <view class="small" wx:if="{{quoteReady && item.campaignDiscountText}}">{{item.campaignName || '活动优惠'}} · 活动减免 -{{item.campaignDiscountText}}</view>
+          <view class="quantity-rule-hint" wx:if="{{item.saleMode === 'FIXED_WEIGHT_SPEC'}}">数量表示销售份数，1份起订</view>
+          <view class="quantity-rule-hint" wx:elif="{{item.allowDecimalQuantity}}">可直接输入任意正数小数</view>
+          <view class="warning" wx:if="{{item.quantityError}}">{{item.quantityError}}</view>
+          <view class="cart-line-actions">
+            <button class="button-plain" data-key="{{item.lineKey}}" bindtap="openSpecPicker" loading="{{specSwitchingKey === item.lineKey}}" disabled="{{specSwitchingKey !== ''}}">切换规格</button>
+            <button class="button-plain danger" data-key="{{item.lineKey}}" bindtap="removeItem">移除商品</button>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="empty" wx:if="{{!items.length}}">
+      <view>购物车为空</view>
+      <view>请先到分类页选择商品</view>
+    </view>
+  </view>
+
+  <view class="section" wx:if="{{quoteReady && !isMinimumMet && recommendations.length}}">
+    <view class="section-head">
+      <text>补货建议</text>
+      <text class="tag gray">根据购买情况推荐</text>
+    </view>
+    <view class="recommend-list">
+      <view class="recommend-item" wx:for="{{recommendations}}" wx:key="productUnitId">
+        <view class="recommend-copy">
+          <view class="product-name">{{item.name}}</view>
+          <view class="spec">{{item.spec}} · {{item.unitName}}</view>
+          <view class="labels"><text class="tag orange">{{item.reason}}</text></view>
+          <view class="small">{{item.displayPrice}} / {{item.unitName}} · 建议 {{item.quantity}} {{item.unitName}}</view>
+        </view>
+        <button class="button-plain recommend-add" data-key="{{item.productId}}:{{item.productUnitId}}" bindtap="addRecommendation">加入</button>
+      </view>
+    </view>
+  </view>
+
+  <view class="section contact-card" wx:if="{{minimumOrderEnabled && quoteReady && !isMinimumMet}}">
+    <view>
+      <view class="product-name">联系负责业务员特殊安排</view>
+      <view class="small">{{ownerName || '全渠供客服'}}{{ownerPhone ? ' · ' + ownerPhone : ' · 暂无联系电话'}}</view>
+      <view class="small">如有特殊需求，请联系业务员。</view>
+    </view>
+    <button class="button-plain" bindtap="callOwner">拨打电话</button>
+  </view>
+
+  <view class="submit-bar">
+    <view>
+      <view class="small">已选 {{totalCount}} 件</view>
+      <view class="money" wx:if="{{quoteReady && !hasPendingPrice}}">合计 {{totalText}}</view>
+    </view>
+    <button class="button-primary" bindtap="goCheckout" loading="{{navigatingToCheckout}}" disabled="{{navigatingToCheckout || !quoteReady || !isMinimumMet || hasPendingPrice || !defaultAddressReady}}">{{navigatingToCheckout ? '正在打开结算页' : customerMode === 'GUEST' ? '登录后提交' : (quoteLoading || quoteError || hasPendingPrice || !quoteReady) ? '去结算' : primaryActionText}}</button>
+  </view>
+
+  <view class="spec-picker-mask" wx:if="{{specPickerOpen}}" bindtap="closeSpecPicker">
+    <view class="spec-picker" catchtap="preventClose">
+      <view class="section-head">
+        <text>切换规格</text>
+        <button class="button-plain" bindtap="closeSpecPicker">关闭</button>
+      </view>
+      <scroll-view class="spec-picker-list" scroll-y>
+        <button
+          class="spec-picker-option {{item.selected ? 'active' : ''}}"
+          wx:for="{{specPickerOptions}}"
+          wx:key="productUnitId"
+          data-id="{{item.productUnitId}}"
+          bindtap="applySpecSwitch"
+          disabled="{{item.selected}}"
+        >
+          <text>{{item.label}}</text>
+          <text class="small">{{item.selected ? '当前规格' : '切换后将重新确认价格'}}</text>
+        </button>
+      </scroll-view>
+    </view>
+  </view>
+
+  <view class="qcg-tabbar">
+    <button class="qcg-tab" bindtap="goHome"><text class="tab-ico">首</text><text>首页</text></button>
+    <button class="qcg-tab" bindtap="goCategory"><text class="tab-ico">类</text><text>分类</text></button>
+    <button class="qcg-tab active"><text class="tab-ico">车</text><text>购物车</text></button>
+    <button class="qcg-tab" bindtap="goOrders"><text class="tab-ico">单</text><text>订单</text></button>
+    <button class="qcg-tab" bindtap="goMe"><text class="tab-ico">我</text><text>我的</text></button>
+  </view>
+</view>

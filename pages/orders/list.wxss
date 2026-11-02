@@ -1,0 +1,141 @@
+.order-tabs {
+  white-space: nowrap;
+  padding-bottom: 12rpx;
+}
+
+.filter-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 58rpx;
+  margin-right: 12rpx;
+  padding: 0 22rpx;
+  border: 1rpx solid #dce8df;
+  border-radius: 999rpx;
+  background: #ffffff;
+  color: #2d4235;
+  font-size: 24rpx;
+}
+
+.filter-pill.active {
+  background: #0f8f5f;
+  border-color: #0f8f5f;
+  color: #ffffff;
+  font-weight: 800;
+}
+
+.more-filter-toggle { display: flex; align-items: center; justify-content: space-between; width: 100%; margin: 4rpx 0 12rpx; padding: 0; background: transparent; color: #08734b; font-size: 24rpx; line-height: 1.5; text-align: left; }
+.more-filter-panel { margin: 0 0 12rpx; padding: 16rpx 16rpx 4rpx; border: 1rpx solid #e2e9e3; border-radius: 16rpx; background: #f7faf8; }
+.filter-panel-title { margin-bottom: 8rpx; color: #68756d; font-size: 22rpx; }
+
+/* Date and payment filters must size to their labels, not native button width. */
+.order-tabs:not(.status-tabs) .filter-pill {
+  display: inline-block;
+  width: auto;
+  min-width: 0;
+  max-width: none;
+  min-height: 72rpx;
+  padding: 0 18rpx;
+  line-height: 70rpx;
+  margin: 0 10rpx 0 0;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+.status-green {
+  color: #08734b;
+  background: #e8f7ef;
+}
+
+.status-orange {
+  color: #a45c08;
+  background: #fff2dc;
+}
+
+.status-red {
+  color: #aa302b;
+  background: #fff0ee;
+}
+
+.status-gray {
+  color: #607066;
+  background: #eef2ef;
+}
+
+.order-card {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  margin-top: 16rpx;
+  padding: 20rpx;
+  border: 1rpx solid #e2e9e3;
+  border-radius: 18rpx;
+  background: #ffffff;
+}
+
+.order-card .row {
+  align-items: flex-start;
+}
+
+.order-card .row > view:first-child {
+  flex: 1;
+  min-width: 0;
+}
+
+.order-card .product-name,
+.order-card .small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.thumbs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8rpx;
+  max-width: 260rpx;
+}
+
+.thumbs .pic {
+  width: 58rpx;
+  height: 58rpx;
+  border-radius: 14rpx;
+  font-size: 22rpx;
+}
+
+.order-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12rpx;
+  margin-top: 16rpx;
+}
+
+.order-actions .button-plain {
+  min-height: 58rpx;
+  width: auto;
+  max-width: 220rpx;
+  padding: 0 18rpx;
+  font-size: 23rpx;
+}
+
+.date-range { display: flex; align-items: center; gap: 12rpx; margin: 12rpx 0; flex-wrap: wrap; }
+.date-input { background: #fff; padding: 16rpx; border-radius: 12rpx; font-size: 25rpx; }
+.date-quick { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8rpx; }
+.date-quick .filter-pill { width: 100%; min-width: 0; margin: 0; padding: 0; min-height: 58rpx; line-height: 58rpx; }
+.date-caption { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8rpx; margin: 10rpx 0; color: #68756d; font-size: 22rpx; }
+.date-caption button, .date-close { margin: 0; padding: 8rpx 0; background: transparent; color: #08734b; font-size: 24rpx; line-height: 1.5; }
+.date-mask { position: fixed; inset: 0; z-index: 80; background: rgba(20,35,26,.35); display: flex; align-items: flex-end; }
+.date-panel { width: 100%; box-sizing: border-box; padding: 28rpx 28rpx calc(28rpx + env(safe-area-inset-bottom)); border-radius: 28rpx 28rpx 0 0; background: #fff; }
+.date-panel .date-input { margin-top: 14rpx; background: #f2f6f3; padding: 22rpx; }
+.date-modes { display: flex; margin-top: 20rpx; }
+.date-panel-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 16rpx; margin-top: 24rpx; }
+.date-panel-actions button { width: 100%; margin: 0; }
+
+.status-tabs .filter-pill { margin-right: 8rpx; padding: 0 16rpx; }
+.date-quick { grid-template-columns: repeat(3, minmax(0, 1fr)) 160rpx; align-items: center; margin-bottom: 12rpx; }
+.date-quick .more-filter-toggle { margin: 0; min-height: 58rpx; justify-content: center; font-size: 23rpx; }
+.more-filter-panel .order-tabs { display: flex; flex-wrap: wrap; gap: 8rpx; white-space: normal; }
+.order-card .product-name { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; white-space: normal; word-break: break-all; }
+.order-card .tag { flex: 0 0 auto; margin-left: 12rpx; }

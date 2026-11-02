@@ -1,0 +1,40 @@
+{
+  "description": "全渠供微信小程序正式项目。客户端只保留公开应用标识；所有服务端凭据均禁止写入小程序目录。",
+  "appid": "wx9cb4a72f6ae06f6a",
+  "projectname": "MALL-104-CUSTOMER-NATIVE",
+  "compileType": "miniprogram",
+  "miniprogramRoot": ".",
+  "libVersion": "3.5.8",
+  "packOptions": {
+    "ignore": [],
+    "include": []
+  },
+  "setting": {
+    "urlCheck": true,
+    "es6": true,
+    "postcss": true,
+    "minified": false,
+    "enhance": true,
+    "compileWorklet": false,
+    "uglifyFileName": false,
+    "uploadWithSourceMap": true,
+    "packNpmManually": false,
+    "packNpmRelationList": [],
+    "minifyWXSS": true,
+    "minifyWXML": true,
+    "localPlugins": false,
+    "disableUseStrict": false,
+    "useCompilerPlugins": false,
+    "condition": false,
+    "swc": false,
+    "disableSWC": true,
+    "babelSetting": {
+      "ignore": [],
+      "disablePlugins": [],
+      "outputPath": ""
+    }
+  },
+  "condition": {},
+  "simulatorPluginLibVersion": {},
+  "editorSetting": {}
+}

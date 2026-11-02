@@ -1,0 +1,1 @@
+<view class="quick"><button wx:for="{{entries}}" wx:key="key" class="quick-item" data-key="{{item.key}}" data-enabled="{{item.enabled}}" disabled="{{!item.enabled}}" bindtap="onTap"><view class="quick-art {{item.key}}"><view class="marketing-icon {{item.key}}"></view></view><text>{{item.label}}</text></button></view>

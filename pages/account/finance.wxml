@@ -1,0 +1,25 @@
+<view class="page finance-page">
+  <button class="back-link" bindtap="goBack">‹ 返回</button>
+  <view class="notice" wx:if="{{loading}}">正在读取账户账务…</view>
+  <view class="section" wx:elif="{{errorMessage}}"><view>{{errorMessage}}</view><button class="button-plain" bindtap="loadFinance">重新读取</button></view>
+  <block wx:elif="{{finance}}">
+    <view class="section">
+      <view class="section-head">账户摘要</view>
+      <view class="fact-row"><text>{{finance.receivable.label}}</text><text class="amount">{{finance.receivable.text}}</text></view>
+      <view class="fact-row"><text>{{finance.credit.label}}</text><text class="amount">{{finance.credit.limitText}}</text></view>
+      <view class="fact-row" wx:if="{{finance.balance.state === 'AVAILABLE'}}"><text>可用预存余额</text><text class="amount">{{finance.balance.text}}</text></view>
+      <view class="note">{{finance.balance.message}}</view><view class="note">{{finance.credit.note}}</view>
+      <view class="note">读取时间：{{finance.asOfText}}</view>
+    </view>
+    <view class="section">
+      <view class="section-head">已确认收款</view><view class="note">展示最近 {{finance.receipts.items.length}} 条已确认记录，未确认收款不计入。</view>
+      <view class="record" wx:for="{{finance.receipts.items}}" wx:key="receiptNo"><view class="fact-row"><text class="amount">{{item.amountText}}</text><text class="status-label">已确认</text></view><view class="note">{{item.dateText}}</view><view class="reference">凭证号 {{item.receiptNo}}</view><view class="note">结算优惠：{{item.discountAmountText}}（不属于实收款）</view></view>
+      <view class="empty" wx:if="{{!finance.receipts.items.length}}">暂无已确认收款记录</view>
+    </view>
+    <view class="section">
+      <view class="section-head">未结清销售单</view><view class="note">{{finance.unsettled.note}}</view><view class="note">本次展示 {{finance.unsettled.items.length}} 条，最多 20 条。</view>
+      <view class="record" wx:for="{{finance.unsettled.items}}" wx:key="billNo"><view class="fact-row"><text class="amount">¥{{item.unpaidAmount}}</text><text class="status-label">待结清</text></view><view class="note">{{item.dateText}}</view><view class="reference">业务单号 {{item.billNo}}</view><view class="note">单据金额 ¥{{item.amount}} · 已结 ¥{{item.settledAmount}}</view></view>
+      <view class="empty" wx:if="{{!finance.unsettled.items.length}}">暂无未结清销售单</view>
+    </view>
+  </block>
+</view>

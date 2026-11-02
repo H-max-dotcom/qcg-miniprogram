@@ -1,0 +1,83 @@
+:host {
+  display: block;
+}
+
+.state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80rpx 40rpx;
+}
+
+.state-ico {
+  width: 108rpx;
+  height: 108rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 44rpx;
+  background: #eef6f1;
+}
+
+.state-ico.is-error {
+  color: #c8543f;
+  background: #fbeeea;
+  font-weight: 800;
+}
+
+.state-text {
+  margin-top: 24rpx;
+  font-size: 26rpx;
+  font-weight: 600;
+  color: #45554b;
+}
+
+.state-sub {
+  margin-top: 8rpx;
+  font-size: 22rpx;
+  color: #93a199;
+}
+
+.state-retry {
+  margin-top: 28rpx;
+  padding: 14rpx 40rpx;
+  border-radius: 999rpx;
+  font-size: 24rpx;
+  color: #ffffff;
+  background: linear-gradient(135deg, #16a86a, #0d8455);
+}
+
+.dots {
+  display: flex;
+  gap: 14rpx;
+}
+
+.dot {
+  width: 18rpx;
+  height: 18rpx;
+  border-radius: 50%;
+  background: #16a86a;
+  opacity: 0.4;
+  animation: mallBlink 1s infinite ease-in-out;
+}
+
+.dot:nth-child(2) {
+  animation-delay: 0.15s;
+}
+
+.dot:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+@keyframes mallBlink {
+  0%, 100% {
+    opacity: 0.3;
+    transform: translateY(0);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-8rpx);
+  }
+}

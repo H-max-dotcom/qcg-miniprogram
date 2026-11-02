@@ -1,0 +1,6 @@
+{
+  "component": true,
+  "usingComponents": {
+    "mall-product-card": "../mall-product-card/mall-product-card"
+  }
+}

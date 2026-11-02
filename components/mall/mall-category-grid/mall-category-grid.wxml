@@ -1,0 +1,22 @@
+<view class="cats">
+  <view
+    wx:for="{{categories}}"
+    wx:key="id"
+    class="cat"
+    data-id="{{item.id}}"
+    data-name="{{item.name}}"
+    bindtap="onSelect"
+  >
+    <view class="cat-ico">
+      <image
+        wx:if="{{item.imageUrl}}"
+        class="cat-img"
+        src="{{item.imageUrl}}"
+        mode="aspectFill"
+        lazy-load
+      />
+      <text wx:else class="cat-initial">{{item.iconText}}</text>
+    </view>
+    <text class="cat-name">{{item.name}}</text>
+  </view>
+</view>

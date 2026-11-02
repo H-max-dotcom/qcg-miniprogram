@@ -1,0 +1,18 @@
+<!-- 公告栏：整卡一个热区，点击抛 cardtap 给使用方 -->
+<view class="notice-card" bindtap="onCardTap">
+  <view class="notice-icon-box">
+    <view class="notice-icon"></view>
+  </view>
+  <swiper
+    class="notice-swiper"
+    vertical="{{true}}"
+    circular="{{true}}"
+    autoplay="{{true}}"
+    interval="{{interval}}"
+    duration="{{duration}}"
+  >
+    <swiper-item wx:for="{{items}}" wx:key="*this">
+      <view class="notice-text">{{item}}</view>
+    </swiper-item>
+  </swiper>
+</view>

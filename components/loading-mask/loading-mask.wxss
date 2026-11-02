@@ -1,0 +1,172 @@
+/* 全屏 Loading 遮罩：半透明变暗 + 居中吉祥物（上下挥手/眨眼/浮动）+ 转圈 + 文案 */
+
+.lm-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lm-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ---------- 吉祥物（分图层透明 PNG） ---------- */
+/* 容器比例 = 素材 284:451，所有图层按同一坐标系用百分比定位 */
+.lm-mascot {
+  position: relative;
+}
+
+.lm-mascot--static {
+  display: block;
+}
+
+.lm-layer {
+  position: absolute;
+  display: block;
+}
+
+.lm-body {
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* 手：取景范围 = 手套 + 4px 袖口搭接边（绿色压绿色，位移时看不出接缝）。
+   挥手用 translateY 上下位移实现（贴合「上下挥手」的描述），
+   位移不会产生旋转扇形扫掠，因此不会有细条甩出轮廓。 */
+.lm-hand--l {
+  left: 15.845%;
+  top: 72.727%;
+  width: 14.085%;
+  height: 9.978%;
+  transform-origin: 43.75% 13.33%;
+}
+
+.lm-hand--r {
+  left: 71.479%;
+  top: 72.506%;
+  width: 13.732%;
+  height: 9.978%;
+  transform-origin: 56.41% 13.33%;
+}
+
+/* 眼睛：scaleY 收缩即眨眼，收缩后露出身体上的肤色 */
+.lm-eye--l {
+  left: 25%;
+  top: 30.82%;
+  width: 15.845%;
+  height: 13.082%;
+}
+
+.lm-eye--r {
+  left: 62.324%;
+  top: 31.264%;
+  width: 15.493%;
+  height: 12.639%;
+}
+
+/* ---------- 动画 ---------- */
+/* 身体：上下浮动 */
+.lm-alive {
+  animation: lm-alive 2.6s ease-in-out infinite;
+}
+
+.lm-mascot--float {
+  animation: lm-float 2.4s ease-in-out infinite;
+}
+
+/* 挥手：双手上下错位摆动（右手延迟半拍，避免机械感） */
+.lm-wave--l {
+  animation: lm-wave 1.4s ease-in-out infinite;
+}
+
+.lm-wave--r {
+  animation: lm-wave 1.4s ease-in-out infinite;
+  animation-delay: -0.7s;
+}
+
+/* 眨眼：3 秒一轮，快速闭合再张开 */
+.lm-blink {
+  animation: lm-blink 3s ease-in-out infinite;
+}
+
+/* ---------- 转圈指示 + 文案 ---------- */
+.lm-ring {
+  margin-top: 36rpx;
+  width: 56rpx;
+  height: 56rpx;
+  border: 6rpx solid rgba(255, 255, 255, 0.3);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: lm-spin 1s linear infinite;
+}
+
+.lm-text {
+  margin-top: 20rpx;
+  font-size: 28rpx;
+  letter-spacing: 2rpx;
+  text-align: center;
+}
+
+/* ---------- 关键帧 ---------- */
+@keyframes lm-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes lm-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-14rpx);
+  }
+}
+
+@keyframes lm-alive {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10rpx);
+  }
+}
+
+@keyframes lm-wave {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-8rpx) rotate(3deg);
+  }
+}
+
+@keyframes lm-blink {
+  0%,
+  92%,
+  100% {
+    transform: scaleY(1);
+  }
+  96% {
+    transform: scaleY(0.12);
+  }
+}

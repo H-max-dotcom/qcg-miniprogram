@@ -1,0 +1,57 @@
+/* 公告栏卡片：白底 / 22rpx 圆角 / 极浅绿阴影 / 14rpx 内边距，
+   高度 = 14 + 60(swiper) + 14 + 2(描边) = 90rpx */
+.notice-card {
+  display: flex;
+  align-items: center;
+  gap: 14rpx;
+  width: 100%;
+  padding: 14rpx;
+  border: 1rpx solid #dcefe4;
+  border-radius: 22rpx;
+  background: #ffffff;
+  box-shadow: 0 6rpx 18rpx rgba(0, 178, 106, 0.08);
+  box-sizing: border-box;
+}
+
+/* 翻转容器：只做水平镜像；宽高写死，所以不会挤动右侧文字 */
+.notice-icon-box {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 40rpx;
+  width: 40rpx;
+  height: 40rpx;
+  transform: scaleX(-1);
+  -webkit-transform: scaleX(-1);
+}
+
+/* 线框喇叭：base64 SVG 背景图，矢量缩放不糊边；
+   改色只改 SVG 里的 stroke 值（当前 #ff4d4f） */
+.notice-icon {
+  width: 40rpx;
+  height: 40rpx;
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiNmZjRkNGYiIHN0cm9rZS13aWR0aD0iMS43IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjxwYXRoIGQ9Ik0yMCA5LjVoLTMuMkwxMSA1LjZ2MTIuOGw1LjgtMy45SDIwYTEgMSAwIDAgMCAxLTF2LTNhMSAxIDAgMCAwLTEtMXoiLz48cGF0aCBkPSJNNy41IDguNWE1IDUgMCAwIDAgMCA3Ii8+PHBhdGggZD0iTTUuMiA2LjJhOC41IDguNSAwIDAgMCAwIDExLjYiLz48L3N2Zz4=");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 100% 100%;
+}
+
+/* 轮播容器：flex:1 + min-width:0 才能不撑破卡片，高度必须显式给 */
+.notice-swiper {
+  flex: 1;
+  min-width: 0;
+  height: 60rpx;
+}
+
+/* 单行限制三件套：超长只省略，不换行、不顶高 */
+.notice-text {
+  display: block;
+  height: 60rpx;
+  line-height: 60rpx;
+  color: #ff4d4f;
+  font-size: 24rpx;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

@@ -1,0 +1,57 @@
+.payment-page { padding-bottom: calc(40rpx + env(safe-area-inset-bottom)); }
+.payment-section, .payment-notice { padding: 24rpx; margin-bottom: 20rpx; line-height: 1.7; }
+.payment-heading { font-size: 30rpx; font-weight: 600; margin-bottom: 12rpx; }
+.payment-order { display: block; width: 100%; text-align: left; padding: 24rpx; margin: 16rpx 0; font-size: 28rpx; }
+.payment-amount { color: #12855c; font-weight: 600; }
+.payment-count { padding: 14rpx 0; font-weight: 600; }
+.payment-section .button-plain { margin-top: 14rpx; }
+.coupon-selected { border-color: #12855c; color: #12855c; background: #eef8f2; }
+.payment-pagination { display: flex; gap: 20rpx; }
+.payment-page button.payment-order,
+.payment-page button.button-plain,
+.payment-page button.button-primary {
+  display: flex;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  min-height: 68rpx;
+  padding: 14rpx 20rpx;
+  white-space: normal;
+  word-break: break-word;
+  line-height: 1.5;
+}
+.payment-page button.payment-order { display: block; }
+.payment-heading { overflow-wrap: anywhere; }
+.payment-page > button { margin-top: 18rpx; }
+.payment-page button.button-plain[disabled] { color: #69766f; background: #f2f4f2; }
+.history-head, .detail-row { display: flex; justify-content: space-between; align-items: center; gap: 16rpx; }
+.history-amount { color: #12855c; font-size: 44rpx; font-weight: 700; }
+.history-meta, .history-label { color: #64756b; font-size: 26rpx; margin-top: 10rpx; }
+.history-link { display: block; color: #12855c; margin-top: 12rpx; }
+.payment-status { display: inline-block; border-radius: 18rpx; padding: 4rpx 14rpx; font-size: 24rpx; }
+.payment-status.success { background: #e8f6ed; color: #12855c; }
+.payment-status.pending { background: #fff3dc; color: #a8680c; }
+.payment-status.closed { background: #f2eeee; color: #8b5555; }
+.detail-row { padding: 10rpx 0; }
+.payment-section { overflow-wrap: anywhere; }
+
+.coupon-summary { margin-top: 14rpx; font-size: 28rpx; }
+.coupon-entry { justify-content: space-between; color: #12855c; }
+.coupon-picker-overlay { position: fixed; inset: 0; z-index: 1000; }
+.coupon-picker-mask { position: absolute; inset: 0; background: rgba(16, 39, 29, .45); }
+.coupon-picker-sheet { position: absolute; bottom: 0; left: 0; right: 0; background: #fff; border-radius: 28rpx 28rpx 0 0; padding: 28rpx 28rpx calc(28rpx + env(safe-area-inset-bottom)); }
+.coupon-picker-head { display: flex; align-items: center; justify-content: space-between; }
+.coupon-picker-close { margin: 0; padding: 8rpx 24rpx; font-size: 26rpx; line-height: 1.6; color: #12855c; background: #eef8f2; }
+.coupon-picker-list { height: 58vh; margin-top: 18rpx; }
+.coupon-picker-list .button-plain { margin: 12rpx 0; }
+.coupon-group-title { font-size: 28rpx; font-weight: 600; margin: 24rpx 0 10rpx; }
+.coupon-unavailable { padding: 20rpx; margin-bottom: 12rpx; background: #f2f4f2; border-radius: 14rpx; color: #67716b; }
+
+.coupon-picker-list button.button-plain { display: block; text-align: left; line-height: 1.7; }
+
+/* 032E financial hierarchy and bounded titles. */
+.reference{font-size:22rpx;color:#68776e;line-height:1.6;word-break:break-all;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;word-break:break-all;line-height:1.5;margin-top:10rpx}
+.payment-page .coupon-name,.payment-page .coupon-summary{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;word-break:break-all;line-height:1.5;}.payment-page .history-meta{font-size:24rpx;color:#607165;margin-top:10rpx}.payment-page .allocation-main{min-width:0;flex:1}.payment-page .detail-row>text{flex:none}.payment-page .payment-order{white-space:normal;text-align:left}.payment-page .coupon-picker-list .button-plain{text-align:left}
+
+/* 032F: readable dates and references without promoting internal IDs. */
+.payment-page .reference, .payment-page .history-meta, .payment-page .muted { font-size: 25rpx; line-height: 1.6; color: #59695f; }

@@ -1,0 +1,8 @@
+<button
+  class="cart-entry {{selected ? 'cart-entry--selected' : ''}}"
+  aria-label="{{ariaLabel}}"
+  bindtap="openCart"
+>
+  <view class="cart-icon-shell" aria-hidden="true">车</view>
+  <text class="cart-badge" wx:if="{{badgeText}}">{{badgeText}}</text>
+</button>

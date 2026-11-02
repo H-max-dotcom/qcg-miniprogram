@@ -1,0 +1,35 @@
+<view class="card {{compact ? 'card--compact' : ''}}" bindtap="onOpen">
+  <view class="thumb">
+    <image
+      wx:if="{{product.imageUrl && !imgError}}"
+      class="thumb-img"
+      src="{{product.imageUrl}}"
+      mode="aspectFill"
+      lazy-load
+      binderror="onImgError"
+    />
+    <image wx:else class="thumb-img" src="/assets/product-placeholder.png" mode="aspectFit" />
+    <view wx:if="{{product.promotionLabel}}" class="badge badge--promo">{{product.promotionLabel}}</view>
+    <view wx:if="{{product.hasPurchased}}" class="badge badge--repurchase">买过</view>
+    <view wx:if="{{product.requiresSpecSelection || product.sellableSpecCount > 1}}" class="badge badge--repurchase">多规格</view>
+  </view>
+
+  <view class="info">
+    <text class="name">{{product.name}}</text>
+    <text wx:if="{{product.meta}}" class="meta">{{product.meta}}</text>
+
+    <view class="foot">
+      <view class="price-wrap">
+        <block wx:if="{{product.priceVisible && product.priceText}}">
+          <text class="price">{{product.priceText}}</text>
+          <text wx:if="{{product.unitName}}" class="price-unit">/{{product.unitName}}</text>
+        </block>
+        <text wx:elif="{{product.mallSellabilityStatus === 'NOT_SELLABLE'}}" class="price-hint">暂无报价</text>
+        <text wx:elif="{{product.requiresSpecSelection}}" class="price-hint">选规格后查看</text>
+        <text wx:else class="price-hint">{{product.priceText || priceHint}}</text>
+      </view>
+      <view wx:if="{{product.requiresSpecSelection}}" class="add" catchtap="onOpen">选</view>
+      <view wx:elif="{{product.canOrder || product.canAddToCart}}" class="add" catchtap="onAdd">＋</view>
+    </view>
+  </view>
+</view>

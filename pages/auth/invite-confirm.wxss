@@ -1,0 +1,124 @@
+.invite-page {
+  min-height: 100vh;
+  padding: 28rpx 24rpx 180rpx;
+  background: #f4f7f5;
+  box-sizing: border-box;
+}
+
+.invite-card {
+  margin-bottom: 20rpx;
+  padding: 30rpx;
+  border: 1rpx solid #dce7e1;
+  border-radius: 24rpx;
+  background: #fff;
+  box-shadow: 0 12rpx 32rpx rgba(24, 64, 45, 0.06);
+}
+
+.state-mark {
+  display: flex;
+  width: 72rpx;
+  height: 72rpx;
+  margin-bottom: 20rpx;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20rpx;
+  color: #fff;
+  background: #0f8f5f;
+  font-weight: 700;
+}
+
+.title,
+.section-title {
+  color: #18352a;
+  font-weight: 700;
+}
+
+.title {
+  font-size: 38rpx;
+}
+
+.section-title {
+  margin-bottom: 16rpx;
+  font-size: 30rpx;
+}
+
+.muted,
+.safe-note {
+  margin-top: 12rpx;
+  color: #66776f;
+  font-size: 26rpx;
+  line-height: 1.6;
+}
+
+.detail-row {
+  display: flex;
+  gap: 20rpx;
+  justify-content: space-between;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #edf2ef;
+  color: #53665e;
+  font-size: 26rpx;
+}
+
+.detail-row text:last-child {
+  max-width: 64%;
+  color: #18352a;
+  text-align: right;
+  word-break: break-all;
+}
+
+.error {
+  margin-top: 20rpx;
+  padding: 18rpx;
+  border-radius: 14rpx;
+  color: #a12b24;
+  background: #fff0ee;
+  font-size: 25rpx;
+}
+
+.button-row {
+  display: block;
+  width: calc(100vw - 48rpx);
+  max-width: 100%;
+  margin-top: 20rpx;
+}
+
+.button-row .primary-btn,
+.button-row .secondary-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0 24rpx;
+  box-sizing: border-box;
+  border-radius: 16rpx;
+  font-size: 30rpx;
+  font-weight: 700;
+  line-height: 1;
+  text-align: center;
+  overflow: hidden;
+}
+
+.button-row .primary-btn + .secondary-btn {
+  margin-top: 16rpx;
+}
+
+.primary-btn {
+  min-height: 92rpx;
+  color: #fff;
+  background: #0f8f5f;
+}
+
+.primary-btn[disabled] {
+  color: rgba(255, 255, 255, 0.86);
+  background: #76b99d;
+}
+
+.secondary-btn {
+  min-height: 80rpx;
+  color: #285844;
+  background: #fff;
+  border: 1rpx solid #c9d9d1;
+}

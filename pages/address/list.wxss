@@ -1,0 +1,93 @@
+.add-button {
+  flex: 0 0 auto;
+  min-height: 58rpx;
+  padding: 0 22rpx;
+}
+
+.address-list {
+  display: grid;
+  gap: 18rpx;
+  margin-top: 20rpx;
+}
+
+.address-card {
+  display: grid;
+  gap: 14rpx;
+  padding: 22rpx;
+  border: 1rpx solid #dce8df;
+  border-radius: 18rpx;
+  background: #ffffff;
+}
+
+.address-card.selectable {
+  border-color: #b9ddc8;
+  box-shadow: 0 8rpx 28rpx rgba(15, 143, 95, 0.08);
+}
+
+.address-card.status-pending {
+  border-color: #ecd59f;
+  background: #fffdf7;
+}
+
+.address-card.status-rejected,
+.address-card.status-disabled {
+  border-color: #e4c7c7;
+  background: #fffafa;
+}
+
+.status-tag {
+  padding: 4rpx 12rpx;
+  border-radius: 999rpx;
+  font-size: 22rpx;
+}
+
+.status-tag.status-approved { color: #087a50; background: #e8f6ef; }
+.status-tag.status-pending { color: #9a6500; background: #fff1cf; }
+.status-tag.status-rejected,
+.status-tag.status-disabled { color: #a53b3b; background: #fdeaea; }
+
+.address-head,
+.address-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14rpx;
+}
+
+.address-detail {
+  color: #405048;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+
+.address-actions {
+  padding-top: 14rpx;
+  border-top: 1rpx solid #edf1ee;
+}
+
+.button-danger {
+  color: #b83434;
+  font-size: 24rpx;
+}
+
+.select-hint {
+  margin-left: auto;
+  color: #0f8f5f;
+  font-size: 24rpx;
+}
+
+.select-hint.disabled {
+  color: #8a968f;
+}
+
+.rejected-reason {
+  flex: 1 1 100%;
+  color: #a53b3b;
+}
+
+.address-empty {
+  display: grid;
+  justify-items: center;
+  gap: 16rpx;
+  margin-top: 80rpx;
+}

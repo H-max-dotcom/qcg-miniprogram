@@ -1,0 +1,6 @@
+@import "../marketing-visual/icons.wxss";
+:host{display:block}.quick{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:22rpx 8rpx;padding:28rpx 12rpx;background:#fff;border:1rpx solid #e7eee8;border-radius:24rpx}.quick-item{display:flex;flex-direction:column;align-items:center;gap:14rpx;padding:0;background:transparent;width:100%;font-size:23rpx;color:#345144;line-height:1.4}.quick-item::after{border:0}.quick-art{height:76rpx;width:76rpx;border-radius:25rpx;display:flex;align-items:center;justify-content:center;background:#eaf5ee}.quick-art.coupon{background:#fcf1dd}.quick-art.campaigns{background:#e6efda}.quick-art.orders{background:#eaf2f3}
+/* Five compact entries stay in normal document flow below the hero. */
+:host{position:static;transform:none}
+.quick{grid-template-columns:repeat(5,minmax(0,1fr));padding:18rpx 8rpx;gap:8rpx}
+.quick-item{font-size:21rpx;gap:8rpx}.quick-art{height:62rpx;width:62rpx;border-radius:18rpx}.quick-art .marketing-icon{transform:scale(.8)}

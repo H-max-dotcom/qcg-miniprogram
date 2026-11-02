@@ -1,0 +1,28 @@
+.campaign-cover { display: block; width: 100%; height: 280rpx; background: #124c37; }
+.campaign-original-poster { height: auto; background: #f7f8f5; }
+.campaign-cover-empty { box-sizing: border-box; display: flex; flex-direction: column; justify-content: center; gap: 18rpx; padding: 32rpx; color: #f4e3ba; background: linear-gradient(125deg, #103f2e, #267958); font-size: 22rpx; letter-spacing: 2rpx; }
+.cover-name { color: #fff; font-size: 36rpx; font-weight: 700; letter-spacing: 0; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.brand-title { font-size: 30rpx; }
+.campaign-card { overflow: hidden; padding: 0; text-align: left; border: 1rpx solid #e5e8e3; border-radius: 18rpx; background: #fff; }
+.campaign-card-head, .campaign-card .campaign-description, .campaign-card .campaign-fact, .campaign-card .campaign-action { margin: 0 24rpx; }
+.campaign-card-head { padding-top: 22rpx; }
+.campaign-card .campaign-action { padding: 14rpx 0 22rpx; }
+.campaign-title { font-size: 29rpx; font-weight: 700; }
+.campaign-description { font-size: 24rpx; }
+.campaign-hero { display: block; padding: 0 0 24rpx; overflow: hidden; background: #fff; border: 1rpx solid #e5e8e3; border-radius: 18rpx; }
+.campaign-hero-head { margin: 22rpx 24rpx 12rpx; }
+.campaign-name { font-size: 32rpx; font-weight: 700; }
+.campaign-hero .campaign-description, .campaign-hero .campaign-time { display: block; margin: 8rpx 24rpx 0; }
+.campaign-products { gap: 16rpx; }
+.campaign-product { grid-template-columns: 154rpx minmax(0, 1fr); padding: 0 0 22rpx; border: 0; border-bottom: 1rpx solid #e8ebe7; border-radius: 0; background: #fff; }
+.product-image { width: 154rpx; height: 154rpx; border-radius: 12rpx; background: #f6f5f0; }
+.product-image-fallback { font-size: 20rpx; color: #7c837d; }
+.product-name { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.45; font-size: 26rpx; font-weight: 600; }
+.price-facts .money { color: #ba4d25; font-size: 32rpx; font-weight: 700; }
+.discount-note { background: #fbf3e7; color: #966028; padding: 5rpx 10rpx; font-size: 21rpx; }
+.published-rules { white-space: pre-wrap; font-size: 24rpx; color: #526158; line-height: 1.6; }
+.campaign-bottom { position: fixed; left: 0; right: 0; bottom: 0; z-index: 36; display: flex; gap: 12rpx; align-items: center; padding: 16rpx 24rpx calc(16rpx + env(safe-area-inset-bottom)); background: #fff; border-top: 1rpx solid #e5e8e3; }
+.campaign-bottom button { margin: 0; font-size: 25rpx; line-height: 1.4; padding: 20rpx 14rpx; }
+.campaign-bottom .shop-entry { flex: 1; }
+.campaign-bottom .share-entry { background: #f4f5f0; color: #18553b; }
+.campaign-bottom .cart-entry { position: static; min-width: 124rpx; box-shadow: none; }

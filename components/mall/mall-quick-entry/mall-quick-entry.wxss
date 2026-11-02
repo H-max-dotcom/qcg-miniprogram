@@ -1,0 +1,58 @@
+:host {
+  display: block;
+}
+
+.quick {
+  display: flex;
+  padding: 24rpx 12rpx 18rpx;
+  border-radius: 24rpx;
+  background: #ffffff;
+  box-shadow: 0 10rpx 28rpx rgba(16, 90, 60, 0.06);
+}
+
+.quick-item {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10rpx;
+  position: relative;
+}
+
+.quick-ico {
+  width: 76rpx;
+  height: 76rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 24rpx;
+  font-size: 30rpx;
+  font-weight: 700;
+  color: #0b7a4f;
+  background: linear-gradient(135deg, #e8f7ef, #f3fbf6);
+}
+
+.quick-label {
+  font-size: 23rpx;
+  color: #33433a;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+}
+
+.quick-hint {
+  font-size: 18rpx;
+  line-height: 1.1;
+  color: #ad8a3a;
+}
+
+.quick-item.is-disabled .quick-ico {
+  color: #aab6ae;
+  background: #f1f3f1;
+}
+
+.quick-item.is-disabled .quick-label {
+  color: #aab6ae;
+}

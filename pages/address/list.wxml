@@ -1,0 +1,50 @@
+<view class="page no-tab">
+  <view class="mini-topbar">
+    <view class="brand">
+      <text class="brand-title" style="font-size: 34rpx;">收货地址</text>
+      <text class="brand-subtitle">{{mode === 'select' ? '选择本次订单的收货地址' : '管理常用收货地址'}}</text>
+    </view>
+    <button class="button-primary add-button" wx:if="{{canAddressApply}}" bindtap="add">新增地址</button>
+  </view>
+
+  <view class="notice" wx:if="{{mode === 'select'}}">请选择本次订单的收货地址。</view>
+  <view class="warning" wx:if="{{error}}">{{error}}</view>
+  <view class="empty" wx:if="{{loading}}">正在读取收货地址…</view>
+
+  <view class="address-list" wx:if="{{!loading && addresses.length}}">
+    <view
+      class="address-card status-{{item.statusClass}} {{mode === 'select' && item.canCheckout ? 'selectable' : ''}}"
+      wx:for="{{addresses}}"
+      wx:key="id"
+      data-index="{{index}}"
+      bindtap="choose"
+    >
+      <view class="address-head">
+        <text class="product-name">{{item.recipientNameMasked}}</text>
+        <text>{{item.phoneMasked}}</text>
+        <text class="tag" wx:if="{{item.isDefault}}">默认</text>
+        <text class="status-tag status-{{item.statusClass}}">{{item.statusText}}</text>
+      </view>
+      <view class="address-detail">{{item.fullAddress}}</view>
+      <view class="address-actions">
+        <button class="button-plain" wx:if="{{canAddressApply && !item.isApplication && item.status === 'APPROVED' && !item.isReadonly}}" data-id="{{item.id}}" catchtap="edit">修改地址</button>
+        <button class="button-plain" wx:if="{{canAddressApply && !item.isApplication && item.status === 'APPROVED' && !item.isDefault && !item.isReadonly}}" data-id="{{item.id}}" catchtap="makeDefault">设为默认</button>
+        <button class="button-danger" wx:if="{{canAddressApply && !item.isApplication && item.status === 'APPROVED' && !item.isReadonly}}" data-id="{{item.id}}" catchtap="remove">停用</button>
+        <button class="button-plain" wx:if="{{canAddressApply && item.isApplication && item.status === 'REJECTED'}}" data-id="{{item.applicationId}}" catchtap="reapply">重新申请</button>
+        <text class="small" wx:if="{{item.isApplication && item.status === 'PENDING'}}">地址信息确认中，确认后可用于下单。</text>
+        <text class="small rejected-reason" wx:if="{{item.isApplication && item.status === 'REJECTED'}}">未通过原因：{{item.rejectionReason || '请联系业务员了解详情'}}</text>
+        <text class="small" wx:if="{{!item.isApplication && item.addressSource === 'ERP_DEFAULT'}}">如需修改，请联系业务员</text>
+        <text class="small" wx:if="{{!item.isApplication && item.status === 'DISABLED'}}">已停用</text>
+        <text class="select-hint" wx:if="{{mode === 'select' && item.canCheckout}}">点击卡片选择 ›</text>
+        <text class="select-hint disabled" wx:if="{{mode === 'select' && !item.canCheckout}}">暂不可选择</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="empty address-empty" wx:if="{{!loading && !addresses.length && !error}}">
+    <view>还没有收货地址</view>
+    <view class="small">新增地址并确认可用后，即可在订单确认页选择。</view>
+    <button class="button-primary" wx:if="{{canAddressApply}}" bindtap="add">新增第一个地址</button>
+    <view class="small" wx:else>当前账号仅可查看地址。</view>
+  </view>
+</view>

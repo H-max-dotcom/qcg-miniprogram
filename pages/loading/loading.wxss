@@ -1,0 +1,78 @@
+/* 冷启动启动页：全屏效果图铺满，Logo 叠加在上部留白区。
+   大图内烧制的静态圈由 .splash-loader 盖住，改由本文件渲染真实的加载圈。 */
+.splash-page {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #eaf6ec;
+  overflow: hidden;
+}
+
+.splash-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.splash-logo {
+  position: absolute;
+  top: 9%;
+  left: 50%;
+  width: 132rpx;
+  height: 132rpx;
+  margin-left: -66rpx;
+  border-radius: 50%;
+  box-shadow: 0 10rpx 24rpx rgba(15, 143, 95, 0.18);
+}
+
+/* ---------- 真实加载圈（跟随 /api/mall/home 的请求状态） ----------
+
+   对齐图片里烧制的静态圈：外径 102px（= 图高 1672px 的 6.10%）、
+   圆心在图高 71.17% 处、水平正中 49.95%。
+   aspectFill 在竖屏机型上恒为「按高缩放」（机型高宽比 1.78~2.22 都 > 图片的 1672/941=1.777），
+   所以这两个百分比在真机上不随机型变化，直接用 vh 就能像素级对齐，无需按机型写死 rpx。 */
+.splash-loader {
+  position: absolute;
+  left: 50%;
+  top: 71.17vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 10vh;
+  height: 10vh;
+  margin: -5vh 0 0 -5vh;
+  border-radius: 50%;
+  /* 用局部背景色做成一块羽化圆斑，把烧制的静态圈盖掉。
+     #fafdf8 取自该处实拍背景（#f9fefa ~ #fcfcfa，逐通道偏差 ≤3）；
+     80% 以内完全不透明（半径 3.8vh > 静态圈外半径 3.05vh，留 8px 余量），
+     再往外羽化到全透明。圆斑外沿 5vh = 42px，落在下方「正在为您跳转...」
+     文字（距圆心 44.8px）之上，不会洗到文字。 */
+  background: radial-gradient(circle closest-side, #fafdf8 0%, #fafdf8 80%, rgba(250, 253, 248, 0) 100%);
+}
+
+/* 真圈：外径 6.1vh 与静态圈一致，描边 1.05vh（≈ 静态圈的 17%）；
+   轨道用浅绿 #b3e0c4、活动弧用深绿 #35a86f，两色均取自原图，保证观感连续。 */
+.splash-loader-ring {
+  width: 6.1vh;
+  height: 6.1vh;
+  box-sizing: border-box;
+  border: 1.05vh solid #b3e0c4;
+  border-top-color: #35a86f;
+  border-left-color: #35a86f;
+  border-radius: 50%;
+  animation: splash-ring-spin 900ms linear infinite;
+}
+
+@keyframes splash-ring-spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}

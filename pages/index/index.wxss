@@ -1,0 +1,948 @@
+@import "../../components/mall/marketing-visual/icons.wxss";
+.page,
+.page view,
+.page scroll-view,
+.page button,
+.page input,
+.page text {
+  box-sizing: border-box;
+}
+
+.page {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+  padding: 24rpx 24rpx calc(272rpx + env(safe-area-inset-bottom));
+}
+
+.page button {
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.topbar,
+.search-row,
+.search,
+.section,
+.category-grid,
+.promo-list,
+.product-grid {
+  width: 100%;
+  max-width: 100%;
+}
+
+.brand {
+  flex: 1;
+  min-width: 0;
+}
+
+.brand-title,
+.brand-subtitle {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.home-page .search {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12rpx;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  grid-template-columns: none;
+}
+
+.home-page .search-field {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8rpx;
+}
+
+.home-page .search-input {
+  flex: 1 1 auto;
+  min-width: 0;
+  width: auto;
+}
+
+.home-page .search .button-clear {
+  flex: 0 0 44rpx;
+  width: 44rpx;
+  height: 54rpx;
+  min-width: 44rpx;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #7a8b82;
+  font-size: 34rpx;
+  line-height: 54rpx;
+  overflow: visible;
+}
+
+.home-page .search-submit,
+.home-page .search .button-primary.search-submit {
+  flex: 0 0 auto;
+  flex-shrink: 0;
+  width: auto;
+  min-width: 128rpx;
+  max-width: none;
+  height: 56rpx;
+  min-height: 56rpx;
+  padding: 0 20rpx;
+  margin: 0;
+  overflow: visible;
+  white-space: nowrap;
+  line-height: 56rpx;
+  font-size: 26rpx;
+  text-align: center;
+}
+
+.category-tile--all {
+  border-color: #b8d9c4;
+  background: #f0faf3;
+}
+
+.hero-card {
+  display: block;
+  width: 100%;
+  min-height: 0;
+  height: auto;
+  margin: 16rpx 0 0;
+  padding: 28rpx 24rpx;
+  text-align: left;
+  overflow: visible;
+}
+
+.hero-card .row {
+  align-items: stretch;
+  gap: 18rpx;
+}
+
+.hero-copy {
+  flex: 1;
+  min-width: 0;
+}
+
+.hero-title {
+  font-size: 38rpx;
+  line-height: 1.18;
+  white-space: normal;
+  word-break: break-word;
+}
+
+.hero-card .small {
+  display: block;
+  margin-top: 12rpx;
+  white-space: normal;
+  word-break: break-word;
+}
+
+.hero-actions {
+  flex-wrap: wrap;
+}
+
+.hero-actions .button-plain {
+  min-width: 128rpx;
+}
+
+.hero-visual {
+  flex: 0 0 108rpx;
+  width: 108rpx;
+  min-height: 160rpx;
+  height: auto;
+  padding: 12rpx 8rpx;
+  font-size: 32rpx;
+  line-height: 1.2;
+  white-space: normal;
+}
+
+.section {
+  overflow: hidden;
+}
+
+.section-head {
+  align-items: center;
+}
+
+.section-head text:first-child {
+  flex: 1;
+  min-width: 0;
+}
+
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12rpx;
+}
+
+.category-tile {
+  width: 100%;
+  min-width: 0;
+  min-height: 0;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 16rpx 6rpx 12rpx;
+}
+
+.category-icon {
+  flex: 0 0 auto;
+}
+
+.category-name {
+  width: 100%;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  white-space: normal;
+  word-break: break-word;
+}
+
+.promo-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14rpx;
+}
+
+.promo-card {
+  width: 100%;
+  min-width: 0;
+}
+
+.promo-card .row {
+  align-items: center;
+  gap: 16rpx;
+}
+
+.promo-copy {
+  flex: 1;
+  min-width: 0;
+}
+
+.promo-card .product-name,
+.promo-card .spec {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.promo-card .pic {
+  flex: 0 0 88rpx;
+  width: 88rpx;
+  height: 88rpx;
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14rpx;
+  margin-top: 16rpx;
+}
+
+.mini-product {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  padding: 12rpx;
+  white-space: normal;
+}
+
+.mini-product > button {
+  display: block;
+  width: 100%;
+  text-align: left;
+}
+
+.mini-product .pic {
+  width: 100%;
+  /* Native image needs a definite parent height; aspect-ratio alone is not a height contract. */
+  height: 260rpx;
+  flex: 0 0 auto;
+  overflow: hidden;
+}
+
+.mini-product .product-image {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  height: 260rpx;
+  flex: 0 0 auto;
+}
+
+.mini-product .product-name {
+  min-height: 76rpx;
+  display: -webkit-box;
+  overflow: hidden;
+  word-break: break-word;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.mini-product .spec {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mini-product .labels {
+  min-height: 44rpx;
+  overflow: hidden;
+}
+
+.price-line {
+  align-items: center;
+}
+
+.blank-price,
+.money {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.add-btn {
+  flex: 0 0 58rpx;
+}
+
+.cart-float {
+  left: 24rpx;
+  right: 24rpx;
+  bottom: calc(112rpx + env(safe-area-inset-bottom));
+  z-index: 45;
+  grid-template-columns: 72rpx minmax(0, 1fr) 144rpx;
+  overflow: visible;
+}
+
+.cart-float mall-cart-entry {
+  position: relative;
+  z-index: 46;
+  overflow: visible;
+}
+
+.cart-float .button-primary {
+  width: 144rpx;
+  padding: 0;
+}
+
+.cart-float .product-name,
+.cart-float .small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.qcg-tabbar {
+  z-index: 50;
+}
+
+.qcg-tabbar .marketing-icon{color:#7b8a80;transform:scale(.75)}
+.qcg-tabbar .active .marketing-icon{color:#0b7a4f}
+
+/* 023: formal marketing facts, compact native merchandise shelves. */
+.home-page{background:linear-gradient(180deg,#e4f1e7 0,#f4f7f2 490rpx)}.home-page .topbar{padding:8rpx 2rpx 22rpx}.home-page .brand-title{font-size:38rpx;letter-spacing:3rpx;color:#175b40}.home-page .brand-subtitle{font-size:21rpx;color:#617569}.home-page .section{border-radius:24rpx;border:1rpx solid #e4ece3;padding:24rpx;margin-top:20rpx}.home-page .section-head{font-size:30rpx}.home-page .search{border:2rpx solid #227a52;border-radius:18rpx;background:#fff}.home-page .search-row{margin-bottom:20rpx}.home-page .mini-product{padding:12rpx;border:1rpx solid #e5ebe2;border-radius:18rpx;background:#fff}.home-page .mini-product .pic,.home-page .mini-product .product-image{height:224rpx;background:#fafbf8}.home-page .mini-product .product-name{font-size:25rpx;line-height:1.45;min-height:72rpx}.home-page .mini-product .spec{font-size:21rpx}.home-page .mini-product .money{font-size:30rpx}.home-page .product-grid{gap:14rpx}.product-photo-empty{font-size:22rpx;color:#89958a}.purchased-label{display:inline-block;font-size:19rpx;color:#397755;background:#edf6e8;padding:3rpx 9rpx;margin-top:8rpx;border-radius:5rpx}.category-art,.category-photo{display:flex;align-items:center;justify-content:center;width:68rpx;height:68rpx;margin-bottom:12rpx;background:#eef6ec;border-radius:20rpx}.hero-visual .marketing-icon{color:white;transform:scale(1.8)}.marketing-eyebrow{display:block!important;font-size:19rpx;color:#72816b;letter-spacing:3rpx;font-weight:400;margin-bottom:6rpx}.marketing-heading{display:block;font-size:32rpx;color:#224f38}
+
+/* Home campaign posters: 2 full posters plus the next edge, with no artificial item cap. */
+.home-page .campaign-section{padding:24rpx 0 20rpx;overflow:hidden}
+.campaign-section .section-head{padding:0 24rpx 18rpx}
+.campaign-scroll-hint{font-size:20rpx!important;font-weight:400;color:#6b806b}
+.campaign-poster-scroll{width:100%;white-space:nowrap}
+.campaign-poster-rail{display:inline-flex;align-items:flex-start;gap:16rpx;padding:0 24rpx;box-sizing:border-box}
+.home-page .campaign-poster{flex:0 0 258rpx;width:258rpx;max-width:none;margin:0;padding:0;border-radius:16rpx;background:#f0f5e9;text-align:left;overflow:hidden;line-height:1.4;white-space:normal}
+.campaign-poster::after{border:0}
+.campaign-poster-image{display:block;width:100%;height:auto}
+.campaign-poster-fallback{display:block;width:258rpx;height:334rpx}
+.campaign-poster-fallback{box-sizing:border-box;padding:28rpx 22rpx;background:linear-gradient(135deg,#dce9c8,#f2f0da);display:flex;flex-direction:column;justify-content:center}
+.campaign-poster-name{font-size:32rpx;font-weight:700;line-height:1.4;color:#275035;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
+.campaign-poster-subtitle{font-size:22rpx;color:#5b7150;margin-top:18rpx;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.campaign-poster-caption{padding:14rpx 16rpx;display:flex;flex-direction:column;gap:6rpx;color:#36583e;font-size:23rpx}
+.campaign-poster-caption>text:first-child{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:600}
+.campaign-poster-state{font-size:19rpx;color:#748169}
+
+.featured-campaign-products{padding:26rpx 24rpx 0}.featured-campaign-heading{font-size:25rpx;color:#38523e;margin-bottom:18rpx}.featured-campaign-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20rpx 12rpx}.home-page .featured-campaign-product{padding:0;margin:0;width:100%;text-align:left;background:transparent;line-height:1.4}.featured-campaign-product::after{border:0}.featured-campaign-image{display:block;width:100%;height:176rpx;border-radius:12rpx;background:#f5f7f2}.featured-image-empty{display:flex;align-items:center;justify-content:center;font-size:19rpx;color:#8a9585}.featured-campaign-name{font-size:22rpx;margin-top:10rpx;height:62rpx;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;color:#314b38}.featured-campaign-price{display:block;color:#237044;font-size:25rpx;font-weight:700;margin-top:6rpx}.featured-campaign-price-unavailable{display:block;font-size:19rpx;color:#819079;margin-top:6rpx}
+
+/* 024A: the scroll viewport ends above both fixed bars, including safe-area. */
+.page.home-page{height:100vh;overflow:hidden;padding:0 0 calc(236rpx + env(safe-area-inset-bottom));display:block}
+.home-scroll{width:100%;height:100%;min-height:0}
+.home-content{display:flex;flex-direction:column;box-sizing:border-box;padding:16rpx 24rpx 24rpx;width:100%}
+.home-content>view,.home-content>mall-promo-banner,.home-content>mall-quick-entry{flex-shrink:0}
+.home-hero-slot{display:block;width:100%;height:308rpx;margin-bottom:14px}
+.home-quick-slot{display:block;position:static;width:100%;margin:0;transform:none}
+.home-announcement{font-size:22rpx;line-height:1.5;color:#607468;margin-top:18rpx}
+.home-page .marketing-feature{display:flex;justify-content:flex-start;margin:0;align-items:center;gap:20rpx;padding:22rpx;text-align:left;width:100%;box-sizing:border-box;background:#fff;line-height:1.5;border-radius:18rpx}
+.marketing-feature::after{border:0}.marketing-feature-image{width:120rpx;height:156rpx;flex:none;border-radius:12rpx}.marketing-feature-copy{flex:1;min-width:0}.marketing-feature-title{display:block;font-size:29rpx;font-weight:600;color:#24533b}.marketing-feature-note{display:block;font-size:22rpx;color:#617468;margin-top:8rpx}.marketing-countdown{display:block;font-size:28rpx;font-weight:600;font-variant-numeric:tabular-nums;color:#a75125;margin-top:10rpx}.marketing-feature-label{font-size:20rpx;color:#477653;display:block;margin-bottom:8rpx}
+
+.receivable-summary{margin:20rpx 0;padding:24rpx;background:#e8f3e9;border-radius:18rpx;color:#174b35;font-size:30rpx;font-weight:600}.receivable-summary-arrow{float:right;font-size:25rpx;font-weight:400}.receivable-summary-meta{font-size:24rpx;color:#5d7766;margin-top:12rpx;font-weight:400}
+
+/* 032A: one poster becomes an editorial row; several retain a natural-ratio rail. */
+.featured-campaign-grid-single { display:block; }
+.featured-campaign-grid-single .featured-campaign-product { display:grid; grid-template-columns:180rpx minmax(0,1fr); grid-template-rows:auto auto auto; column-gap:20rpx; align-items:center; width:100%; text-align:left; }
+.featured-campaign-grid-single .featured-campaign-image { grid-row:1 / span 3; width:180rpx; height:180rpx; }
+.featured-campaign-grid-single .featured-campaign-name { align-self:end; }
+.featured-campaign-grid-single .featured-campaign-price { align-self:start; }
+.campaign-poster-rail-single{display:flex;width:100%}
+.home-page .campaign-poster-rail-single .campaign-poster{flex:1;width:100%;display:flex;align-items:center;background:#f2f6ed}
+.campaign-poster-rail-single .campaign-poster-image{width:258rpx;flex:0 0 258rpx}
+.campaign-poster-rail-single .campaign-poster-caption{flex:1;min-width:0;padding:24rpx}
+.campaign-poster-title{font-size:25rpx;color:#244d36}
+.campaign-poster-rail-single .campaign-poster-title{font-size:30rpx;white-space:normal;line-height:1.45}
+.campaign-poster-description{font-size:23rpx;line-height:1.5;color:#667662;margin:12rpx 0}
+.campaign-poster-link{font-size:24rpx;color:#0f704d;margin-top:18rpx}
+.home-page .limited-time-section{background:#fff3e8;border-color:#f3dac4;padding:0}
+.home-page .limited-time-section .marketing-feature{background:transparent}
+.home-page .buy-gift-section{background:#edf5e8;border-color:#d8e8ce;padding:0}
+.home-page .buy-gift-section .marketing-feature{background:transparent}
+.home-page .theme-section{background:#edf3f6;border-color:#dae5eb;padding:0}
+.home-page .theme-section .marketing-feature{background:transparent}
+.home-page .featured-campaign-products{padding:0}
+.receivable-summary{background:#fff3e5;color:#9a561c;padding:18rpx 22rpx;font-size:27rpx}
+.receivable-summary-meta{color:#956d49;font-size:22rpx;margin-top:8rpx}
+
+/* ---------- 首页滚动轮播图 ---------- */
+/* 素材 750x330（约 2.27:1），内容区宽 710rpx → 高度 312rpx 不变形 */
+.banner-slot {
+  position: relative;
+  width: 100%;
+  margin-bottom: 20rpx;
+}
+
+.banner-swiper {
+  width: 100%;
+  height: 312rpx;
+  border-radius: 24rpx;
+  overflow: hidden;
+}
+
+.banner-slide {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 24rpx;
+  overflow: hidden;
+  background: #e8f0ea;
+}
+
+.banner-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.banner-fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #0b9468, #37b98c);
+}
+
+.banner-fallback-title {
+  color: #fff;
+  font-size: 40rpx;
+  font-weight: 800;
+  letter-spacing: 2rpx;
+}
+
+.banner-dots {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 16rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10rpx;
+}
+
+.banner-dot {
+  width: 12rpx;
+  height: 6rpx;
+  border-radius: 999rpx;
+  background: rgba(255, 255, 255, 0.55);
+  transition: width 0.2s;
+}
+
+.banner-dot--on {
+  width: 28rpx;
+  background: #ffffff;
+}
+
+/* ---------- 本周活动 ---------- */
+.activity-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.activity-card {
+  border-radius: 20rpx;
+  overflow: hidden;
+  background: #fff;
+  border: 1rpx solid #e6ece5;
+}
+
+.activity-image {
+  display: block;
+  width: 100%;
+  height: 200rpx;
+  background: #eef5ef;
+}
+
+.activity-image--empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #a9b6ae;
+}
+
+.activity-body {
+  padding: 18rpx 20rpx 20rpx;
+}
+
+.activity-title {
+  color: #22402f;
+  font-size: 30rpx;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.activity-subtitle {
+  margin-top: 6rpx;
+  color: #6b7c71;
+  font-size: 24rpx;
+  line-height: 1.4;
+}
+
+.activity-cta {
+  margin-top: 12rpx;
+  color: #0b9468;
+  font-size: 24rpx;
+  font-weight: 700;
+}
+
+/* ---------- 会员资产模块（纯新增） ----------
+   选择器全部收敛在 .member-assets 命名空间内，不改动任何既有类；
+   按钮用 .member-assets 前缀是为了盖过 index.wxss 里的 `.page button`。 */
+.member-assets {
+  display: flex;
+  flex-direction: column;
+  gap: 12rpx;
+  width: 100%;
+  margin-top: 10rpx;
+}
+
+/* 紧跟其后的「本周活动」收掉一半上边距，两段之间不出现双倍留白。
+   写在 .home-page 下（0,3,0）是为了稳过同文件的 `.home-page .section`（0,2,0）。
+   注意：新版 V2 分支里 mall-quick-entry 会插在中间，这条选择器届时不会命中，
+   属预期行为（V2 是另一套版式）。 */
+.home-page .member-assets + .section {
+  margin-top: 10rpx;
+}
+
+/* 下方两张卡片：左右并排，内容整体水平居中，上下 padding 各 16rpx */
+.member-actions {
+  display: flex;
+  gap: 12rpx;
+  width: 100%;
+}
+
+.member-action-card {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  align-items: center;
+  min-width: 0;
+  padding: 16rpx 12rpx;
+  border: 1rpx solid #dcefe4;
+  border-radius: 22rpx;
+  background: #ffffff;
+  box-shadow: 0 6rpx 18rpx rgba(0, 178, 106, 0.08);
+  box-sizing: border-box;
+}
+
+/* 第一行：图标在左、标题在右，同一行居中 */
+.member-action-head {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 8rpx;
+  width: 100%;
+}
+
+/* 图标：造型照参考图（储值 = 卡片，领券 = 票券），颜色统一系统绿 #00b26a。
+   纯 CSS 绘制，描边用 border + currentColor，内部线条也用 currentColor，
+   所以整枚图标只有一种颜色，不需要 filter 调色，也不会残留参考图的红色。 */
+.asset-icon {
+  position: relative;
+  box-sizing: border-box;
+  border: 3rpx solid #00b26a;
+  color: #00b26a;
+}
+
+.asset-icon::before,
+.asset-icon::after {
+  position: absolute;
+  background: currentColor;
+  content: "";
+}
+
+/* —— 储值：卡片（圆角矩形 + 顶部通栏横带 + 左下短横线）—— */
+.asset-icon--card {
+  width: 40rpx;
+  height: 30rpx;
+  border-radius: 6rpx;
+}
+
+/* 横带通栏：绝对定位的包含块是 padding box，left/right:0 正好顶到左右描边内侧 */
+.asset-icon--card::before {
+  left: 0;
+  right: 0;
+  top: 7rpx;
+  height: 3rpx;
+}
+
+.asset-icon--card::after {
+  left: 5rpx;
+  bottom: 5rpx;
+  width: 10rpx;
+  height: 3rpx;
+}
+
+/* —— 领券：票券（圆角矩形 + 左右半圆缺口 + 中间等号）—— */
+.asset-icon--ticket {
+  width: 40rpx;
+  height: 28rpx;
+  border-radius: 4rpx;
+}
+
+.asset-icon--ticket::before,
+.asset-icon--ticket::after {
+  left: 50%;
+  width: 13rpx;
+  height: 3rpx;
+  transform: translateX(-50%);
+}
+
+.asset-icon--ticket::before {
+  top: 7rpx;
+}
+
+.asset-icon--ticket::after {
+  top: 13rpx;
+}
+
+/* 缺口：用与卡片同色的白圆压在左右描边中线上，剪出半圆。
+   圆心落在描边内侧（left: -5rpx + 半径 5rpx = 描边内沿 3rpx 处），
+   图标所在的 .member-action-card 背景就是 #ffffff，所以这里用白色是安全的。 */
+.asset-ticket-notch {
+  position: absolute;
+  top: 50%;
+  width: 10rpx;
+  height: 10rpx;
+  margin-top: -5rpx;
+  border-radius: 50%;
+  background: #ffffff;
+}
+
+.asset-ticket-notch--left {
+  left: -5rpx;
+}
+
+.asset-ticket-notch--right {
+  right: -5rpx;
+}
+
+.member-assets .member-action-title {
+  color: #1f2a24;
+  font-size: 28rpx;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+/* 副标题刻意弱化：仅作补充说明，不与主标题争视觉比重。
+   字号 22 → 20rpx、颜色 #7b8a80 → #bbbbbb，配合上边距收紧，卡片整体反而更矮。 */
+.member-assets .member-action-note {
+  margin-top: 3rpx;
+  color: #bbbbbb;
+  font-size: 20rpx;
+  line-height: 1.3;
+}
+
+/* 绿底白字胶囊按钮 */
+.member-assets .member-action-btn {
+  width: 100%;
+  max-width: 180rpx;
+  height: 40rpx;
+  min-height: 40rpx;
+  margin: 10rpx 0 0;
+  padding: 0 16rpx;
+  border: 0;
+  border-radius: 999rpx;
+  background: #00b26a;
+  color: #ffffff;
+  font-size: 22rpx;
+  font-weight: 500;
+  line-height: 40rpx;
+  text-align: center;
+}
+
+/* ===================================================================
+   首页改版（2026-11-02）：纯样式追加层
+   顶部全幅轮播（主色底 + 完整海报）→ 白色卡片内收
+   =================================================================== */
+
+/* ---- 1. 两处微调：游客提示语弱化、活动 CTA 轻量化 ---- */
+.home-page .brand-subtitle {
+  font-size: 18rpx;
+  color: #999999;
+}
+
+.activity-cta {
+  margin-top: 14rpx;
+  font-size: 22rpx;
+  font-weight: 500;
+}
+
+/* ---- 2. 搜索框：胶囊 + 绿描边 + 白底铺满 ---- */
+.home-page .search {
+  border: 2rpx solid #227a52;
+  border-radius: 100px;
+  background: #FFFFFF;
+  padding: 0 8rpx 0 22rpx;
+}
+
+.home-page .search input,
+.home-page .search-input {
+  background: transparent;
+  color: #333333;
+}
+
+.home-page .search-submit,
+.home-page .search .button-primary.search-submit {
+  border-radius: 100px;
+  background: #0B7A4F;
+  font-weight: 600;
+}
+
+/* ---- 3. 页面底色 + 底部不再自己留白 ---- */
+.page.home-page {
+  background: #E8EEF2;
+  padding-bottom: 0 !important;
+}
+
+/* 首页不显示悬浮结算条：visibility 隐藏（保留尺寸，避免影响底部留白测量） */
+.page.home-page .cart-float {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* 内容容器撑满一屏，白卡才能一路延伸到底 */
+.home-content {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding: 0 24rpx 0;
+  box-sizing: border-box;
+}
+
+/* ---- 4. 顶部 Hero：全幅轮播 ---- */
+.hero-zone {
+  position: relative;
+  margin: 0 -24rpx;
+  background: #E8EEF2;
+  overflow: hidden;
+}
+
+.hero-swiper {
+  display: block;
+  width: 100%;
+}
+
+/* 轮播单元：背景色取该图主色（WXML 内联），这里给品牌绿兜底 */
+.hero-slide {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #0E7C52;
+}
+
+/* 完整海报（aspectFit），文字不裁；上下余量由主色背景填满 */
+.hero-image {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.hero-fallback {
+  display: flex;
+  align-items: flex-end;
+  width: 100%;
+  height: 100%;
+  padding: 0 32rpx 96rpx;
+  background: linear-gradient(135deg, #0E7C52 0%, #2FAE83 100%);
+  box-sizing: border-box;
+}
+
+.hero-fallback-title {
+  color: #FFFFFF;
+  font-size: 44rpx;
+  font-weight: 800;
+  letter-spacing: 2rpx;
+}
+
+/* 指示点 */
+.hero-dots {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 34rpx;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10rpx;
+}
+
+.hero-dot {
+  width: 12rpx;
+  height: 6rpx;
+  border-radius: 4rpx;
+  background: rgba(255, 255, 255, 0.55);
+}
+
+.hero-dot.on {
+  width: 30rpx;
+  background: #FFFFFF;
+}
+
+/* 自定义导航占位：压在海报上，只用于避让系统胶囊按钮 */
+.hero-nav {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 5;
+  background: transparent;
+}
+
+.hero-zone .home-hero-slot {
+  display: block;
+  width: 100%;
+  height: 340rpx;
+  margin: 0;
+  border-radius: 0;
+}
+
+.hero-zone .hero-card {
+  margin: 0;
+  border-radius: 0;
+}
+
+/* 轮播与白卡之间的底色带 */
+.hero-zone::after {
+  display: block;
+  height: 12rpx;
+  background: #E8EEF2;
+  content: "";
+}
+
+/* ---- 5. 白色内容卡片（内收 + 圆角） ---- */
+.home-sheet {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  position: relative;
+  margin: 0;
+  padding: 20rpx 20rpx calc(124rpx + env(safe-area-inset-bottom));
+  border-radius: 24rpx 24rpx 0 0;
+  background: #FFFFFF;
+  box-shadow: 0 6rpx 18rpx rgba(6, 40, 60, 0.08);
+}
+
+/* 第一行：绿色品牌名 + 搜索框 */
+.sheet-head {
+  display: flex;
+  align-items: center;
+  gap: 14rpx;
+  width: 100%;
+}
+
+.sheet-brand {
+  flex: 0 0 auto;
+  color: #14513A;
+  font-size: 42rpx;
+  font-weight: 800;
+  letter-spacing: 2rpx;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.sheet-head .search-row {
+  flex: 1 1 auto;
+  min-width: 0;
+  margin: 0;
+}
+
+.sheet-head .search {
+  height: 76rpx;
+  min-height: 76rpx;
+}
+
+/* 第二行：门店/状态 + 游客标签 */
+.sheet-sub {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12rpx;
+  width: 100%;
+  margin: 10rpx 0 4rpx;
+}
+
+.sheet-sub .brand-subtitle {
+  flex: 1;
+  min-width: 0;
+  font-size: 18rpx;
+  line-height: 1.5;
+  color: #999999;
+}
+
+.sheet-sub .tag.orange {
+  flex: 0 0 auto;
+  background: #FFF2E8;
+  color: #E8833A;
+  font-weight: 500;
+}
+
+/* 卡片内部模块：浅灰底，与白卡形成第二层 */
+.home-sheet .member-action-card {
+  border: 0;
+  background: #F5F7F9;
+  box-shadow: none;
+}
+
+.home-sheet .section {
+  border: 0;
+  background: #F5F7F9;
+}
+
+.home-sheet .notice-card,
+.home-sheet .activity-card,
+.home-sheet .mini-product {
+  border: 0;
+}

@@ -1,0 +1,55 @@
+:host {
+  display: block;
+}
+
+.shelf-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 18rpx;
+  gap: 16rpx;
+}
+
+.shelf-titles {
+  min-width: 0;
+}
+
+.shelf-title {
+  font-size: 30rpx;
+  font-weight: 800;
+  color: #1a2a21;
+}
+
+.shelf-note {
+  display: block;
+  margin-top: 4rpx;
+  font-size: 21rpx;
+  color: #8a998f;
+}
+
+.shelf-more {
+  flex: 0 0 auto;
+  font-size: 23rpx;
+  color: #0d8455;
+}
+
+.shelf-scroll {
+  width: 100%;
+  white-space: nowrap;
+}
+
+.shelf-row {
+  display: inline-flex;
+  gap: 18rpx;
+  padding: 4rpx 2rpx 8rpx;
+}
+
+.shelf-row-item {
+  flex: 0 0 auto;
+}
+
+.shelf-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18rpx;
+}

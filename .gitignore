@@ -1,0 +1,33 @@
+# 本地开发私有配置：只用于本机微信开发者工具，不入库、不交付
+project.private.config.json
+
+# 依赖与构建产物
+node_modules/
+package-lock.json
+yarn.lock
+.pnpm-store/
+
+# 系统与编辑器
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+
+# 日志与临时文件
+*.log
+*.tmp
+_work/
+.DS_Store?
+
+# 本地签名/密钥（任何情况下都不入库）
+*.pem
+*.key
+*.p12
+appsecret*.json
+.env
+.env.*
+
+# 大图/临时截图（验收截图不入库，避免仓库膨胀）
+screenshots/
+*.psd

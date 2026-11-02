@@ -1,0 +1,320 @@
+<view class="page home-page" style="{{bottomClearance ? 'padding-bottom: ' + bottomClearance + 'px;' : ''}}">
+ <scroll-view class="home-scroll" scroll-y enhanced show-scrollbar="{{false}}" refresher-enabled refresher-triggered="{{refreshing}}" bindrefresherrefresh="onPullDownRefresh">
+ <view class="home-content">
+
+  <!-- ==================== 顶部 Hero：全幅轮播 + 自定义导航占位 ==================== -->
+  <view class="hero-zone">
+    <!-- 全幅轮播：图片从屏幕最顶端铺满（含状态栏区域），导航只做占位避让 -->
+    <swiper
+      wx:if="{{banners.length}}"
+      class="hero-swiper"
+      style="height: {{heroHeight}}px;"
+      autoplay="{{banners.length > 1}}"
+      circular="{{banners.length > 1}}"
+      interval="4500"
+      duration="420"
+      current="{{bannerIndex}}"
+      bindchange="onBannerChange"
+    >
+      <swiper-item wx:for="{{banners}}" wx:key="id">
+        <view class="hero-slide" data-index="{{index}}" bindtap="onBannerTap" style="background-color: {{bannerColors[index] || '#0E7C52'}};">
+          <!-- 背景用该图主色铺满（上面 style），这里只放完整海报，文字不裁 -->
+          <image wx:if="{{item.imageUrl}}" class="hero-image" src="{{item.imageUrl}}" mode="aspectFit" />
+          <view wx:else class="hero-fallback"><text class="hero-fallback-title">{{item.title}}</text></view>
+        </view>
+      </swiper-item>
+    </swiper>
+    <!-- 没有 banner 图时，退回营销组件（活动海报） -->
+    <mall-promo-banner
+      wx:elif="{{homepageV2Enabled && homepageModules.banner && marketingState === 'READY' && marketingHeroCampaigns.length}}"
+      id="homepage-campaign-hero" class="home-hero-slot"
+      banners="{{marketingHeroCampaigns}}"
+      bind:select="onCampaignHeroSelect"
+    />
+    <view class="hero-card" wx:elif="{{!homepageV2Enabled}}" bindtap="goCategory">
+      <view class="row">
+        <view class="hero-copy">
+          <text class="tag">{{apiStateText}}</text>
+          <text class="hero-title" style="margin-top: 14rpx;">{{heroTitle}}</text>
+          <text class="small">{{heroSubtitle}}</text>
+          <view class="hero-actions">
+            <text class="button-plain" style="background: rgba(255,255,255,0.18); color: #fff; border-color: rgba(255,255,255,0.42);">{{heroButtonText}}</text>
+          </view>
+        </view>
+        <view class="hero-visual"><view class="marketing-icon restock"></view></view>
+      </view>
+    </view>
+
+    <!-- 轮播指示点 -->
+    <view wx:if="{{banners.length > 1}}" class="hero-dots">
+      <view class="hero-dot {{bannerIndex === index ? 'on' : ''}}" wx:for="{{banners}}" wx:key="id"></view>
+    </view>
+
+    <!-- 自定义导航占位：绝对定位压在图片上，只负责避让系统胶囊按钮 -->
+    <view class="hero-nav" style="height:{{navBarHeight}}px;"></view>
+  </view>
+
+  <!-- ==================== 白色内容卡片（内收：左右留底色沟槽） ==================== -->
+  <view class="home-sheet">
+
+    <!-- 第一行：品牌名 + 搜索框同一行 -->
+    <view class="sheet-head">
+      <text class="sheet-brand">全渠供</text>
+      <view class="search-row" wx:if="{{!homepageV2Enabled || homepageModules.search}}">
+        <view class="search">
+          <view class="search-field">
+            <input
+              class="search-input"
+              value="{{searchKeyword}}"
+              bindinput="inputSearch"
+              bindconfirm="onSearch"
+              confirm-type="search"
+              placeholder="搜索商品名 / 编码 / 条码 / 品牌"
+            />
+            <button wx:if="{{searchKeyword}}" class="button-clear" catchtap="clearSearch">×</button>
+          </view>
+          <button class="button-primary search-submit" bindtap="search">搜索</button>
+        </view>
+      </view>
+    </view>
+
+    <!-- 第二行：门店/客户状态 + 游客标签 -->
+    <view class="sheet-sub">
+      <text class="brand-subtitle">{{storefront.name}} · {{customerStatusText}}</text>
+      <view class="tag orange">{{memberTagText}}</view>
+    </view>
+
+    <delivery-promise wx:if="{{customerMode === 'BOUND'}}" storefront-code="{{storefrontCode}}" />
+    <view wx:if="{{receivableSummary && customerMode === 'BOUND'}}" class="receivable-summary" style="order: {{homepageV2Enabled ? homepageModuleOrder.quickEntries + 2 : 1}};" bindtap="goReceivableCenter"><view><text>待付款 {{receivableSummary.totalCount}}笔</text><text class="receivable-summary-arrow">¥{{receivableSummary.totalAmount}} · 查看明细 ›</text></view><view class="receivable-summary-meta">今日 {{receivableSummary.todayCount}} 笔 / ¥{{receivableSummary.todayAmount}}</view></view>
+    <campaign-return wx:if="{{!loading && !errored && customerMode === 'BOUND'}}" customer-status="{{customerStatus}}" storefront-code="{{storefrontCode}}" />
+
+    <view wx:if="{{loading}}" class="section empty" style="order: 1000;">正在加载商品…</view>
+    <view wx:elif="{{errored}}" class="section empty" style="order: 1000;">
+      <view>商城数据暂不可用，请稍后重试</view>
+      <button class="button-primary" bindtap="reload">重新加载</button>
+    </view>
+
+    <block wx:else>
+  <!-- 会员资产模块：插在轮播与「本周活动」之间，纯增量。
+       刻意不挂 wx:if，所以旧版 / 新版首页都会显示；本节之外未改动任何既有结构。 -->
+  <view class="member-assets">
+    <!-- 公告栏已抽成独立组件，样式与逻辑都在 components/mall/message-board 内，
+         页面只负责喂数据和处理点击，改组件不会牵动首页其它区块。 -->
+    <message-board
+      list="{{noticeList}}"
+      interval="{{3000}}"
+      duration="{{500}}"
+      bind:cardtap="goMessage"
+    />
+
+    <view class="member-actions">
+      <view class="member-action-card">
+        <view class="member-action-head">
+          <view class="asset-icon asset-icon--card"></view>
+          <text class="member-action-title">储值</text>
+        </view>
+        <text class="member-action-note">充值送好礼</text>
+        <button class="member-action-btn" data-target="recharge" bindtap="goMemberAsset">去充值</button>
+      </view>
+      <view class="member-action-card">
+        <view class="member-action-head">
+          <view class="asset-icon asset-icon--ticket">
+            <view class="asset-ticket-notch asset-ticket-notch--left"></view>
+            <view class="asset-ticket-notch asset-ticket-notch--right"></view>
+          </view>
+          <text class="member-action-title">领券</text>
+        </view>
+        <text class="member-action-note">大额券随心领</text>
+        <button class="member-action-btn" data-target="coupon" bindtap="goMemberAsset">去领券</button>
+      </view>
+    </view>
+  </view>
+
+  <mall-quick-entry
+    id="homepage-quick-entries" class="home-quick-slot"
+    wx:if="{{homepageV2Enabled && homepageModules.quickEntries && quickEntries.length}}"
+    entries="{{quickEntries}}"
+    bind:entrytap="onQuickTap"
+    style="order: {{homepageModuleOrder.quickEntries}};"
+  />
+
+  <view wx:if="{{homepageV2Enabled && announcement}}" class="home-announcement" style="order: {{homepageModuleOrder.quickEntries + 1}};">{{announcement}}</view>
+  <view class="section" wx:if="{{!homepageV2Enabled}}">
+    <view class="section-head">
+      <text>本周活动</text>
+      <text class="tag orange" wx:if="{{activities.length}}">活动资讯</text>
+    </view>
+    <view class="activity-list" wx:if="{{activities.length}}">
+      <view class="activity-card" wx:for="{{activities}}" wx:key="id" data-jump-type="{{item.jumpType}}" data-jump-value="{{item.jumpValue}}" bindtap="onActivity">
+        <image wx:if="{{item.imageUrl}}" class="activity-image" src="{{item.imageUrl}}" mode="aspectFill" />
+        <view wx:else class="activity-image activity-image--empty"><text class="marketing-icon activity"></text></view>
+        <view class="activity-body">
+          <view class="activity-title">{{item.title}}</view>
+          <view class="activity-subtitle">{{item.subtitle}}</view>
+          <view class="activity-cta">查看活动 ›</view>
+        </view>
+      </view>
+    </view>
+    <view class="empty" wx:else>本周暂无活动</view>
+  </view>
+
+  <view class="section" wx:if="{{!homepageV2Enabled}}">
+    <view class="section-head">
+      <text>常买待补</text>
+      <text class="tag">按购买记录推荐</text>
+    </view>
+    <view class="product-grid">
+      <view class="mini-product" wx:for="{{restockProducts}}" wx:key="lineKey">
+        <button data-id="{{item.productId}}" bindtap="goProduct">
+          <view class="pic">
+            <image wx:if="{{item.imageUrl && !item.imageFailed}}" class="product-image" src="{{item.imageUrl}}" mode="aspectFit" data-key="{{item.lineKey}}" data-src="{{item.imageUrl}}" binderror="onProductImageError" />
+            <image wx:else class="product-image" src="/assets/product-placeholder.png" mode="aspectFit" />
+          </view>
+          <view class="product-name" style="margin-top: 10rpx;">{{item.name}}</view>
+          <view class="spec">{{item.spec}}</view>
+        </button>
+        <view class="price-line">
+          <text wx:if="{{item.priceVisible}}" class="money">{{item.priceText}}</text>
+          <text wx:else class="blank-price">登录后查看价格</text>
+          <button wx:if="{{customerMode === 'BOUND' && item.canOrder}}" class="add-btn" data-key="{{item.lineKey}}" catchtap="addCart">+</button>
+          <text wx:else class="blank-price">{{item.priceUnavailableText}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="section" wx:if="{{!homepageV2Enabled}}">
+    <view class="section-head">
+      <text>推荐补货</text>
+      <text class="tag gray">为您推荐</text>
+    </view>
+    <view class="product-grid" wx:if="{{recommendProducts.length}}">
+      <view class="mini-product" wx:for="{{recommendProducts}}" wx:key="lineKey">
+        <button data-id="{{item.productId}}" bindtap="goProduct">
+          <view class="pic">
+            <image wx:if="{{item.imageUrl && !item.imageFailed}}" class="product-image" src="{{item.imageUrl}}" mode="aspectFit" data-key="{{item.lineKey}}" data-src="{{item.imageUrl}}" binderror="onProductImageError" />
+            <image wx:else class="product-image" src="/assets/product-placeholder.png" mode="aspectFit" />
+          </view>
+          <view class="product-name" style="margin-top: 10rpx;">{{item.name}}</view>
+          <view class="spec">{{item.spec}}</view>
+          <view class="labels">
+            <text class="tag gray" wx:for="{{item.tags}}" wx:key="*this">{{item}}</text>
+          </view>
+        </button>
+        <view class="price-line">
+          <text wx:if="{{item.priceVisible}}" class="money">{{item.priceText}}</text>
+          <text wx:else class="blank-price">价格确认中</text>
+          <button wx:if="{{customerMode === 'BOUND' && item.canOrder}}" class="add-btn" data-key="{{item.lineKey}}" catchtap="addCart">+</button>
+          <text wx:else class="blank-price">{{item.priceUnavailableText}}</text>
+        </view>
+      </view>
+    </view>
+    <view class="empty" wx:else>
+      <view>暂无推荐商品</view>
+      <view>可以看看其他分类</view>
+    </view>
+  </view>
+
+  <block wx:if="{{homepageV2Enabled}}">
+    <view class="section campaign-section" wx:if="{{homepageModules.currentCampaigns && marketingState === 'READY' && marketingCampaigns.length}}" style="order: {{homepageModuleOrder.currentCampaigns}};">
+      <view class="section-head"><view><text class="marketing-eyebrow">采购好活动</text><text class="marketing-heading">本期活动</text></view><text class="campaign-scroll-hint" wx:if="{{marketingCampaigns.length > 2}}">滑动查看更多 ›</text></view>
+      <scroll-view class="campaign-poster-scroll" scroll-x show-scrollbar="{{false}}" enhanced>
+        <view class="campaign-poster-rail {{marketingCampaigns.length === 1 ? 'campaign-poster-rail-single' : ''}}">
+          <button class="campaign-poster" wx:for="{{marketingCampaigns}}" wx:key="code" data-code="{{item.code}}" bindtap="openMarketingCampaign" aria-label="{{item.name}}">
+            <image wx:if="{{item.imageUrl}}" class="campaign-poster-image" src="{{item.imageUrl}}" mode="widthFix" />
+            <view wx:else class="campaign-poster-fallback"><text class="campaign-poster-name">{{item.name}}</text><text class="campaign-poster-subtitle" wx:if="{{item.description}}">{{item.description}}</text></view>
+            <view class="campaign-poster-caption"><text class="campaign-poster-title">{{item.name}}</text><text class="campaign-poster-description" wx:if="{{marketingCampaigns.length === 1}}">{{item.description}}</text><text class="campaign-poster-state">{{item.stateText}}</text><text class="campaign-poster-link" wx:if="{{marketingCampaigns.length === 1}}">查看活动 ›</text></view>
+          </button>
+        </view>
+      </scroll-view>
+
+    </view>
+
+    <view class="section limited-time-section" wx:if="{{homepageModules.limitedTime && marketingState === 'READY' && limitedTimeCampaigns.length}}" style="order: {{homepageModuleOrder.limitedTime}};">
+      <button wx:for="{{limitedTimeCampaigns}}" wx:key="code" class="marketing-feature" data-code="{{item.code}}" bindtap="openMarketingCampaign">
+        <image wx:if="{{item.imageUrl}}" class="marketing-feature-image" src="{{item.imageUrl}}" mode="aspectFit" />
+        <view class="marketing-feature-copy"><text class="marketing-feature-label">限时活动</text><text class="marketing-feature-title">{{item.name}}</text><text class="marketing-countdown">{{item.ended ? '' : '距结束 '}}{{item.countdownText}}</text><text class="marketing-feature-note">{{item.ended ? '查看活动详情' : '活动优惠以实时核验为准'}}</text></view>
+      </button>
+    </view>
+    <view class="section buy-gift-section" wx:if="{{homepageModules.buyGift && marketingState === 'READY' && buyGiftCampaigns.length}}" style="order: {{homepageModuleOrder.buyGift}};">
+      <button wx:for="{{buyGiftCampaigns}}" wx:key="code" class="marketing-feature" data-code="{{item.code}}" bindtap="openMarketingCampaign">
+        <image wx:if="{{item.imageUrl}}" class="marketing-feature-image" src="{{item.imageUrl}}" mode="aspectFit" />
+        <view class="marketing-feature-copy"><text class="marketing-feature-label">买赠活动</text><text class="marketing-feature-title">{{item.name}}</text><text class="marketing-feature-note">{{item.description || '查看活动商品与参与规则'}}</text></view>
+      </button>
+    </view>
+    <view class="section theme-section" wx:if="{{homepageModules.featuredTheme && marketingState === 'READY' && themeCampaigns.length}}" style="order: {{homepageModuleOrder.featuredTheme}};">
+      <button wx:for="{{themeCampaigns}}" wx:key="code" class="marketing-feature" data-code="{{item.code}}" bindtap="openMarketingCampaign">
+        <image wx:if="{{item.imageUrl}}" class="marketing-feature-image" src="{{item.imageUrl}}" mode="aspectFit" />
+        <view class="marketing-feature-copy"><text class="marketing-feature-label">主题精选</text><text class="marketing-feature-title">{{item.name}}</text><text class="marketing-feature-note">{{item.description || '查看主题精选商品'}}</text></view>
+      </button>
+    </view>
+
+<view class="section featured-campaign-section" wx:if="{{homepageModules.currentCampaigns && marketingState === 'READY' && featuredCampaignProducts.length}}" style="order: {{homepageModuleOrder.currentCampaigns + 4}};">      <view class="featured-campaign-products" wx:if="{{featuredCampaignProducts.length}}"><view class="featured-campaign-heading">活动商品精选</view><view class="featured-campaign-grid {{featuredCampaignProducts.length === 1 ? 'featured-campaign-grid-single' : ''}}"><button class="featured-campaign-product" wx:for="{{featuredCampaignProducts}}" wx:key="key" data-id="{{item.productId}}" bindtap="openFeaturedCampaignProduct"><image wx:if="{{item.imageUrl && !item.imageFailed}}" class="featured-campaign-image" src="{{item.imageUrl}}" mode="aspectFit" data-key="{{item.key}}" data-src="{{item.imageUrl}}" binderror="onFeaturedProductImageError" /><image wx:else class="featured-campaign-image" src="/assets/product-placeholder.png" mode="aspectFit" /><text class="featured-campaign-name">{{item.name}}</text><text wx:if="{{item.priceText}}" class="featured-campaign-price">{{item.priceText}}</text><text wx:else class="featured-campaign-price-unavailable">价格暂不可用</text></button></view></view></view>
+    <view class="section" wx:for="{{homepageShelves}}" wx:key="key" style="order: {{item.homepageOrder}};">
+      <view class="section-head"><text>{{item.title}}</text><text class="tag gray">补货推荐</text></view>
+      <view class="product-grid">
+        <view class="mini-product" wx:for="{{item.products}}" wx:for-item="product" wx:key="lineKey">
+          <button data-id="{{product.productId}}" bindtap="goProduct">
+            <view class="pic">
+              <image wx:if="{{product.imageUrl && !product.imageFailed}}" class="product-image" src="{{product.imageUrl}}" mode="aspectFit" data-key="{{product.lineKey}}" data-src="{{product.imageUrl}}" binderror="onProductImageError" />
+              <image wx:else class="product-image" src="/assets/product-placeholder.png" mode="aspectFit" />
+            </view>
+            <view class="product-name" style="margin-top: 10rpx;">{{product.name}}</view>
+            <view class="spec">{{product.spec}}</view><text class="purchased-label" wx:if="{{product.hasPurchased}}">买过的商品</text>
+          </button>
+          <view class="price-line">
+            <text wx:if="{{product.priceVisible}}" class="money">{{product.priceText}}</text>
+            <text wx:else class="blank-price">{{product.priceUnavailableText}}</text>
+            <button wx:if="{{customerMode === 'BOUND' && product.canOrder}}" class="add-btn" data-key="{{product.lineKey}}" catchtap="addCart">+</button>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="section" wx:if="{{homepageModules.brandZone && majorBrands.length}}" style="order: {{homepageModuleOrder.brandZone}};">
+      <view class="section-head"><text>品牌专区</text><text class="tag gray">精选品牌</text></view>
+      <view class="category-grid">
+        <button class="category-tile" wx:for="{{majorBrands}}" wx:key="name" data-brand="{{item.name}}" bindtap="goBrand">
+          <text class="category-icon">{{item.initial}}</text>
+          <text class="category-name">{{item.name}}</text>
+        </button>
+      </view>
+    </view>
+
+    <view class="section" wx:if="{{homepageModules.categorySelection && categories.length}}" style="order: {{homepageModuleOrder.categorySelection}};">
+      <view class="section-head"><text>分类精选</text><text class="tag gray">商品分类</text></view>
+      <view class="category-grid">
+        <button class="category-tile" wx:for="{{categories}}" wx:key="id" data-id="{{item.id}}" bindtap="goCategory">
+          <image wx:if="{{item.imageUrl}}" class="category-photo" src="{{item.imageUrl}}" mode="aspectFit" /><view wx:else class="category-art"><view class="marketing-icon category"></view></view>
+          <text class="category-name">{{item.name}}</text>
+        </button>
+        <button class="category-tile category-tile--all" bindtap="goCategoryAll"><view class="category-art"><view class="marketing-icon category"></view></view><text class="category-name">全部分类</text></button>
+      </view>
+    </view>
+  </block>
+    </block>
+  </view>
+
+ </view>
+ </scroll-view>
+  <view class="cart-float">
+    <mall-cart-entry id="cart-entry" count="{{cartCount}}" selected="{{cartCount > 0}}" bind:entrytap="goCart" />
+    <button class="cart-summary" bindtap="goCart">
+      <view class="product-name">已选 {{cartCount}} 件</view>
+      <view class="small">{{cartAmountText}}</view>
+    </button>
+    <button class="button-primary" bindtap="goCart">去结算</button>
+  </view>
+
+  <!-- 页面内加载遮罩：请求数据期间居中显示动态吉祥物 + 转圈 + 文案，
+       半透明压暗下层内容并阻断误触。这里用的是吉祥物抠图，不是启动页大图。 -->
+  <loading-mask isLoading="{{loading}}" text="正在加载商品..." />
+
+  <view class="qcg-tabbar">
+    <button class="qcg-tab active"><view class="marketing-icon home"></view><text>首页</text></button>
+    <button class="qcg-tab" bindtap="goCategory"><view class="marketing-icon category"></view><text>分类</text></button>
+    <button class="qcg-tab" bindtap="goCart"><view class="marketing-icon cart"></view><text>购物车</text></button>
+    <button class="qcg-tab" bindtap="goOrders"><view class="marketing-icon orders"></view><text>订单</text></button>
+    <button class="qcg-tab" bindtap="goMe"><view class="marketing-icon me"></view><text>我的</text></button>
+  </view>
+</view>

@@ -1,0 +1,376 @@
+@import "../../components/mall/marketing-visual/icons.wxss";
+.mine-head {
+  display: grid;
+  grid-template-columns: 86rpx minmax(0, 1fr);
+  gap: 18rpx;
+  align-items: center;
+  padding: 22rpx;
+  background: linear-gradient(135deg, #ffffff, #edf9f2);
+}
+
+.mine-head .customer-title,
+.mine-head .small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.customer-title {
+  color: #1f2a24;
+  font-size: 38rpx;
+  font-weight: 900;
+  line-height: 1.35;
+}
+
+.customer-summary {
+  display: grid;
+  gap: 10rpx;
+  margin-top: 16rpx;
+  padding-top: 14rpx;
+  border-top: 1rpx solid #dce9e0;
+}
+
+.customer-summary-row {
+  display: grid;
+  grid-template-columns: 150rpx minmax(0, 1fr);
+  gap: 12rpx;
+  color: #33443a;
+  font-size: 24rpx;
+  line-height: 1.5;
+}
+
+.customer-summary-label {
+  color: #33443a;
+  font-size: 25rpx;
+  font-weight: 800;
+}
+
+.customer-summary-row text:first-child {
+  color: #7a8b82;
+}
+
+.customer-summary-row text:last-child {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.mine-copy {
+  min-width: 0;
+}
+
+.account-tag {
+  display: inline-flex;
+  margin-bottom: 10rpx;
+}
+
+.avatar {
+  width: 86rpx;
+  height: 86rpx;
+  border-radius: 50%;
+  background: #ddf2e6;
+  border: 1rpx solid #bfe0cb;
+  color: #0f8f5f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 34rpx;
+  font-weight: 800;
+}
+
+.service-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16rpx 10rpx;
+  margin-top: 18rpx;
+}
+
+.service-card {
+  display: inline-grid;
+  justify-items: center;
+  gap: 8rpx;
+  min-width: 0;
+  width: auto;
+  height: auto;
+  padding: 0 4rpx;
+  color: #33443a;
+  font-size: 22rpx;
+  text-align: center;
+}
+
+.service-card text:last-child {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.service-icon {
+  width: 62rpx;
+  height: 62rpx;
+  flex: 0 0 62rpx;
+  border-radius: 16rpx;
+  background: #e9f6ef;
+  color: #0f8f5f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+}
+
+.list-row .small {
+  max-width: 66%;
+  text-align: right;
+  line-height: 1.5;
+}
+
+.login-entry {
+  margin-top: 14rpx;
+  height: 64rpx;
+  line-height: 64rpx;
+  padding: 0 28rpx;
+  border-radius: 999rpx;
+  background: #07c160;
+  color: #ffffff;
+  font-size: 26rpx;
+  font-weight: 700;
+}
+
+.login-entry::after {
+  border: none;
+}
+
+.status-panel .small {
+  margin-top: 10rpx;
+  line-height: 1.55;
+}
+
+.status-action {
+  margin-top: 18rpx;
+}
+
+.customer-experience {
+  display: grid;
+  gap: 16rpx;
+}
+
+.experience-card {
+  display: block;
+  width: 100%;
+  padding: 20rpx;
+  border: 1rpx solid #dce9e0;
+  border-radius: 18rpx;
+  background: #fbfdfb;
+}
+
+.experience-card-head,
+.campaign-preview,
+.balance-primary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16rpx;
+}
+
+.experience-card-head > view {
+  display: grid;
+  gap: 6rpx;
+  min-width: 0;
+}
+
+.experience-title {
+  color: #1f2a24;
+  font-size: 28rpx;
+  font-weight: 800;
+}
+
+.experience-arrow {
+  color: #0f8f5f;
+  font-size: 44rpx;
+  line-height: 1;
+}
+
+.balance-primary {
+  margin-top: 18rpx;
+  padding: 18rpx;
+  border-radius: 16rpx;
+  background: linear-gradient(135deg, #0f8f5f, #28a86d);
+  color: #ffffff;
+}
+
+.balance-primary text:last-child {
+  font-size: 38rpx;
+  font-weight: 900;
+}
+
+.balance-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12rpx;
+  margin-top: 14rpx;
+}
+
+.balance-grid > view {
+  display: grid;
+  gap: 5rpx;
+  padding: 14rpx;
+  border-radius: 14rpx;
+  background: #ffffff;
+}
+
+.balance-grid text:first-child,
+.metric-unavailable,
+.experience-empty {
+  color: #708078;
+  font-size: 22rpx;
+}
+
+.balance-grid text:last-child {
+  color: #1f2a24;
+  font-size: 27rpx;
+  font-weight: 800;
+}
+
+.metric-unavailable,
+.experience-empty {
+  margin-top: 14rpx;
+  line-height: 1.5;
+}
+
+.campaign-preview {
+  margin-top: 16rpx;
+  padding-top: 16rpx;
+  border-top: 1rpx solid #e6eee8;
+  color: #33443a;
+  font-size: 25rpx;
+}
+
+.campaign-preview > text:first-child {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.membership-role {
+  margin-bottom: 12rpx;
+  font-size: 30rpx;
+  font-weight: 700;
+}
+
+.membership-benefit {
+  margin-top: 10rpx;
+  line-height: 1.5;
+  overflow-wrap: break-word;
+}
+
+.membership-message {
+  margin-top: 14rpx;
+  line-height: 1.6;
+}
+
+/* Account center: real identity and capabilities, no loyalty/financial fiction. */
+.account-center { background: linear-gradient(180deg, #e2f3e9 0, #f3f7f3 490rpx); }
+.account-center .mini-topbar { padding: 4rpx 4rpx 20rpx; }
+.account-center .brand-title { font-size: 34rpx; }
+.account-center .brand-subtitle { font-size: 22rpx; color: #59746a; }
+.account-center .section { margin-top: 20rpx; border: 1rpx solid #e3ebe5; border-radius: 24rpx; padding: 26rpx; }
+.account-center .section-head { font-size: 29rpx; font-weight: 700; gap: 16rpx; }
+.account-center .mine-head { background: transparent; border: 0; padding: 16rpx 6rpx 22rpx; align-items: start; grid-template-columns: 84rpx minmax(0,1fr); }
+.account-center .avatar { margin-top: 4rpx; border-radius: 24rpx; background: #fff; color: #147a56; border: 1rpx solid #bedbcc; }
+.account-center .customer-title { font-size: 32rpx; line-height: 1.5; white-space: normal; overflow-wrap: anywhere; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+.identity-tags { display: flex; flex-wrap: wrap; align-items: center; gap: 10rpx; margin-top: 12rpx; }
+.identity-tag { color: #146944; background: #cee9d6; padding: 6rpx 14rpx; border-radius: 99rpx; font-size: 21rpx; }
+.identity-type { color: #476b59; font-size: 22rpx; }
+.account-center .customer-summary { border: 0; padding: 0; margin-top: 12rpx; gap: 5rpx; }
+.identity-contact { font-size: 22rpx; color: #5b7367; }
+.identity-link { font-size: 23rpx; color: #226e51; padding: 10rpx 0; width: 100%; }
+.identity-link text { margin-left: 8rpx; }
+.account-center .membership-summary { background: linear-gradient(120deg,#124e3b,#087451); color: #f5fff8; border: 0; position: relative; overflow: hidden; padding: 28rpx; }
+.membership-summary::before { content: ''; position: absolute; right: -70rpx; top: -70rpx; width: 220rpx; height: 220rpx; border: 30rpx solid rgba(255,255,255,.04); border-radius: 50%; pointer-events: none; }
+.account-center .membership-summary .section-head { color: #d6eddf; font-size: 24rpx; }
+.member-status { border: 1rpx solid #5a9b7e; padding: 6rpx 13rpx; border-radius: 99rpx; font-size: 20rpx; }
+.account-center .membership-role { font-size: 38rpx; font-weight: 700; margin: 12rpx 0 4rpx; letter-spacing: 2rpx; }
+.member-caption { color: #cae3d5; font-size: 22rpx; }
+.member-benefit-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 14rpx; margin: 18rpx 0; }
+.member-benefit-grid .membership-benefit { display: flex; gap: 10rpx; font-size: 23rpx; margin: 0; }
+.benefit-check { color: #c5e8b2; }
+.member-details-toggle { display: flex; justify-content: space-between; width: 100%; border-top: 1rpx solid rgba(255,255,255,.17); padding: 20rpx 0 0; font-size: 23rpx; color: #eff4d2; min-height: 60rpx; }
+.membership-details { margin-top: 16rpx; border-top: 1rpx solid rgba(255,255,255,.17); padding-top: 8rpx; }
+.membership-details .membership-benefit { font-size: 24rpx; }
+.membership-details .membership-message { color: #cde5d9; font-size: 22rpx; }
+.section-note { font-size: 21rpx; font-weight: 400; color: #64776d; }
+.section-description { color: #687b70; font-size: 23rpx; line-height: 1.55; margin-top: 10rpx; }
+.coupon-entry-grid { display: grid; grid-template-columns: minmax(0,1.5fr) minmax(0,1fr); gap: 16rpx; margin-top: 20rpx; }
+.coupon-entry { background: #f0f7ef; padding: 20rpx 16rpx; border-radius: 16rpx; display: flex; align-items: center; gap: 12rpx; color: #1b6449; width: 100%; min-width: 0; }
+.coupon-entry > view { flex: 1; min-width: 0; }
+.coupon-symbol { border: 2rpx dashed #78ac87; border-radius: 6rpx; padding: 12rpx 8rpx; font-size: 24rpx; }
+.entry-title,.entry-subtitle { display: block; }
+.entry-title { font-size: 25rpx; font-weight: 700; line-height: 1.5; }
+.entry-subtitle { font-size: 20rpx; color: #617b68; margin-top: 6rpx; line-height: 1.45; }
+.claim-entry { background: #e1f1dd; }
+.section-retry { margin-top: 14rpx; }
+.section-link { color: #687b70; font-size: 23rpx; font-weight: 400; padding: 8rpx 0 8rpx 10rpx; }
+.order-entry-grid { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 10rpx; margin-top: 22rpx; }
+.order-entry { display: flex; flex-direction: column; align-items: center; gap: 16rpx; padding: 10rpx 0; font-size: 23rpx; color: #344e41; }
+.order-icon { height: 46rpx; width: 40rpx; border: 3rpx solid #247457; border-radius: 6rpx; position: relative; }
+.order-icon::before,.order-icon::after { content: ''; position: absolute; }
+.order-icon.order::before { top: 11rpx; left: 7rpx; right: 7rpx; height: 3rpx; background: #247457; box-shadow: 0 10rpx 0 #247457; }
+.order-icon.check::before,.order-icon.done::before { width: 20rpx; height: 10rpx; border-bottom: 3rpx solid #247457; border-left: 3rpx solid #247457; transform: rotate(-45deg); top: 10rpx; left: 7rpx; }
+.order-icon.done { border-radius: 50%; width: 46rpx; }
+.order-icon.truck { width: 48rpx; height: 34rpx; margin-top: 6rpx; margin-bottom: 6rpx; }
+.order-icon.truck::before { width: 11rpx; height: 11rpx; border: 3rpx solid #247457; border-radius: 50%; background: #fff; left: 2rpx; bottom: -10rpx; }
+.order-icon.truck::after { width: 11rpx; height: 11rpx; border: 3rpx solid #247457; border-radius: 50%; background: #fff; right: 2rpx; bottom: -10rpx; }
+.account-center .service-grid { grid-template-columns: repeat(3,minmax(0,1fr)); gap: 20rpx; }
+.account-center .service-card { gap: 12rpx; padding: 10rpx 0; font-size: 23rpx; }
+.account-center .service-icon { width: 64rpx; height: 64rpx; background: #edf6f0; color: #25805a; font-size: 28rpx; }
+.service-contact-note { border-top: 1rpx solid #eaf0eb; margin-top: 20rpx; padding-top: 18rpx; color: #728078; font-size: 21rpx; line-height: 1.6; }
+.campaign-closed { background: #edf4eb; }
+.account-footer { padding: 24rpx 0 0; }
+.finance-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 24rpx 18rpx; margin-top: 22rpx; }
+.finance-grid > view { min-width: 0; color: #617268; font-size: 23rpx; }
+.finance-grid text { display: block; }
+.finance-grid .finance-value { font-size: 33rpx; line-height: 1.5; font-weight: 700; color: #20583f; overflow-wrap: anywhere; }
+.account-footer .button-plain { width: 100%; background: transparent; border: 0; color: #64776d; font-size: 23rpx; }
+
+.qcg-tabbar .marketing-icon{color:#7b8a80;transform:scale(.75)}
+.qcg-tabbar .active .marketing-icon{color:#0b7a4f}
+
+.account-center .avatar{display:flex;align-items:center;justify-content:center}.account-center .finance-detail-entry{background:#f7faf6}.account-center .finance-detail-entry .section-head{font-size:25rpx}.account-center .account-experience{background:linear-gradient(125deg,#edf5e6,#f8fbf3);border-color:#d8e8cc}.account-center .balance-primary{padding:22rpx 0}.account-center .balance-primary text:last-child{font-size:46rpx;color:#205936}.account-center .experience-arrow{font-size:22rpx;white-space:nowrap}.account-center .balance-grid{gap:14rpx}.account-center .service-icon{display:flex;align-items:center;justify-content:center}
+
+.account-center .membership-summary .section-link { color: #f5fff8; }
+.coupon-entry > .marketing-icon { flex: 0 0 40rpx; width: 40rpx; }
+
+.receivable-summary{margin:20rpx 0;padding:24rpx;background:#e8f3e9;border-radius:18rpx;color:#174b35;font-size:30rpx;font-weight:600}.receivable-summary-arrow{float:right;font-size:25rpx;font-weight:400}.receivable-summary-meta{font-size:24rpx;color:#5d7766;margin-top:12rpx;font-weight:400}
+
+/* Account summary shares the standalone account's wide balance hierarchy. */
+.account-center .customer-experience { display:block; padding:0; border:0; background:transparent; }
+.account-center .account-experience { display:block; box-sizing:border-box; width:100%; max-width:none; margin:0; padding:28rpx 24rpx; border:0; border-radius:24rpx; text-align:left; line-height:1.5; background:linear-gradient(120deg,#18583f,#28744f); color:#fff; }
+.account-experience::after { border:0; }
+.account-center .account-experience .experience-title { color:#d7eadd; font-size:24rpx; font-weight:500; }
+.account-center .account-experience .experience-arrow { color:#e0f0e5; font-size:22rpx; }
+.account-center .account-experience .balance-primary { display:block; background:none; padding:16rpx 0 22rpx; margin:0; border-radius:0; }
+.account-experience .balance-primary text { display:block; white-space:nowrap; }
+.account-experience .balance-primary text:first-child { font-size:25rpx; color:#e0f0e5; }
+.account-center .account-experience .balance-primary text:last-child { color:#fff; font-size:58rpx; font-weight:800; line-height:1.4; overflow-wrap:anywhere; white-space:normal; }
+.account-center .account-experience .balance-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:10rpx; border-top:1rpx solid rgba(255,255,255,.2); padding-top:20rpx; margin:0; }
+.account-experience .balance-grid > view { padding:0; background:none; border-radius:0; min-width:0; }
+.account-experience .balance-grid text:first-child { color:#d3e8da; font-size:21rpx; white-space:nowrap; }
+.account-experience .balance-grid text:last-child { color:#fff; font-size:24rpx; font-weight:600; overflow-wrap:anywhere; }
+.account-experience .experience-empty { color:#e0f0e5; }
+.account-pressed { opacity:.9; }
+.receivable-summary.has-pending { background:#fff4e3; color:#995218; border:1rpx solid #f0d4ae; }
+.receivable-summary-heading { display:flex; justify-content:space-between; align-items:center; gap:16rpx; }
+.receivable-summary-arrow { float:none; white-space:nowrap; font-size:23rpx; }
+.receivable-summary-amount { font-size:42rpx; font-weight:750; margin-top:8rpx; }
+.has-pending .receivable-summary-meta { color:#94633a; font-size:23rpx; }
+.receivable-summary.no-pending { display:flex; align-items:center; justify-content:space-between; gap:16rpx; padding:22rpx 24rpx; }
+.no-pending .receivable-summary-heading { flex:1; font-size:25rpx; }
+.no-pending .receivable-summary-amount { display:none; }
+.payment-summary .coupon-entry-grid { grid-template-columns:1fr; gap:0; margin-top:8rpx; }
+.payment-summary .coupon-entry { justify-content:space-between; background:transparent; padding:18rpx 0; border-radius:0; border-bottom:1rpx solid #edf1ed; font-size:25rpx; }
+.payment-summary .coupon-entry:last-child { border-bottom:0; }
+
+.account-center .customer-title { max-height: 96rpx; overflow: hidden; }
+.identity-tag { color: #536c5d; background: #edf4ef; padding: 4rpx 10rpx; font-weight: 400; }
+.identity-type, .identity-contact { color: #68796e; font-size: 23rpx; }
+.identity-contact { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }

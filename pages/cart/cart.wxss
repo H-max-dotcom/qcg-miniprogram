@@ -1,0 +1,234 @@
+.page {
+  padding-bottom: calc(226rpx + env(safe-area-inset-bottom));
+}
+
+.cart-item {
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #edf1ee;
+}
+
+.cart-item:last-child {
+  border-bottom: 0;
+}
+
+.off-shelf-item .off-shelf-tag {
+  color: #b42318;
+  background: #fff0ee;
+  border: 1rpx solid #f2b8b5;
+  font-weight: 700;
+}
+
+.off-shelf-action {
+  margin-top: 16rpx;
+  color: #b42318;
+  border-color: #f2b8b5;
+}
+
+.submit-bar {
+  bottom: calc(96rpx + env(safe-area-inset-bottom));
+}
+
+.cart-item .product-row {
+  grid-template-columns: 86rpx minmax(0, 1fr);
+}
+
+.cart-item .row {
+  align-items: center;
+}
+
+.line-remark-field {
+  margin-top: 12rpx;
+}
+
+.line-remark {
+  width: 100%;
+  min-height: 104rpx;
+  height: 104rpx;
+  max-height: 260rpx;
+  padding: 14rpx 16rpx;
+  line-height: 1.5;
+  overflow-y: auto;
+}
+
+.remark-trigger {
+  width: auto;
+  min-height: 52rpx;
+  padding: 0;
+  color: #0f6f4b;
+  font-size: 24rpx;
+  text-align: left;
+}
+
+.remark-shell {
+  position: relative;
+  padding-bottom: 46rpx;
+}
+
+.remark-tools {
+  position: absolute;
+  left: 14rpx;
+  right: 14rpx;
+  bottom: 6rpx;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #8a968f;
+  font-size: 22rpx;
+  pointer-events: none;
+}
+
+.remark-tools button {
+  min-height: 38rpx;
+  color: #6b776f;
+  font-size: 22rpx;
+  pointer-events: auto;
+}
+
+.qty-input {
+  color: #15231b;
+  background: #ffffff;
+  font-size: 28rpx;
+  font-weight: 700;
+}
+
+.quantity-rule-hint {
+  margin-top: 8rpx;
+  color: #557062;
+  font-size: 22rpx;
+  text-align: right;
+}
+
+.minimum-card {
+  background: linear-gradient(135deg, #f5fbf7, #ffffff);
+}
+
+.minimum-summary {
+  margin-top: 14rpx;
+  color: #24352b;
+  font-size: 30rpx;
+  font-weight: 800;
+}
+
+.minimum-track {
+  height: 14rpx;
+  margin: 16rpx 0 10rpx;
+  overflow: hidden;
+  border-radius: 999rpx;
+  background: #e4ece7;
+}
+
+.minimum-fill {
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #0f8f5f, #45b97c);
+  transition: width 180ms ease;
+}
+
+.minimum-remaining {
+  color: #b54708;
+  font-size: 26rpx;
+  font-weight: 700;
+}
+
+.recommend-list {
+  display: grid;
+  gap: 0;
+}
+
+.recommend-item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 18rpx;
+  align-items: center;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #edf1ee;
+}
+
+.recommend-item:last-child {
+  border-bottom: 0;
+}
+
+.recommend-copy {
+  min-width: 0;
+}
+
+.recommend-add {
+  min-width: 104rpx;
+  color: #0f8f5f;
+  border-color: #9ccdb2;
+}
+
+.contact-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 18rpx;
+  align-items: center;
+}
+
+.checkout-precheck {
+  background: #f8fbf9;
+}
+
+.cart-line-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12rpx;
+  margin-top: 14rpx;
+}
+
+.cart-line-actions .button-plain {
+  min-height: 54rpx;
+  padding: 0 18rpx;
+  font-size: 24rpx;
+}
+
+.cart-line-actions .danger {
+  color: #b42318;
+  border-color: #f2b8b5;
+}
+
+.spec-picker-mask {
+  position: fixed;
+  z-index: 90;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  background: rgba(18, 28, 22, 0.42);
+}
+
+.spec-picker {
+  width: 100%;
+  padding: 28rpx 24rpx calc(28rpx + env(safe-area-inset-bottom));
+  border-radius: 24rpx 24rpx 0 0;
+  background: #ffffff;
+  box-sizing: border-box;
+}
+
+.spec-picker-list {
+  max-height: 58vh;
+}
+
+.spec-picker-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 88rpx;
+  margin-top: 12rpx;
+  padding: 0 20rpx;
+  border: 1rpx solid #dce7e0;
+  border-radius: 12rpx;
+  background: #ffffff;
+  color: #24352b;
+  text-align: left;
+}
+
+.spec-picker-option.active {
+  border-color: #0f8f5f;
+  background: #f0faf4;
+}
+
+.cart-item .product-name, .recommend-copy .product-name { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; white-space: normal; word-break: break-word; }
+.cart-item .spec { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.price-status-card .row { margin-top: 14rpx; gap: 14rpx; }

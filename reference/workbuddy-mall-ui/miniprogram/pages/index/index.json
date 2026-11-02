@@ -1,0 +1,11 @@
+{
+  "navigationBarTitleText": "全渠供",
+  "enablePullDownRefresh": true,
+  "usingComponents": {
+    "delivery-promise": "/components/mall/delivery-promise/delivery-promise",
+    "campaign-return": "/components/mall/campaign-return/campaign-return",
+    "mall-cart-entry": "/components/mall/mall-cart-entry/mall-cart-entry",
+    "mall-promo-banner": "/components/mall/marketing-banner/marketing-banner",
+    "mall-quick-entry": "/components/mall/marketing-quick-entry/marketing-quick-entry"
+  }
+}

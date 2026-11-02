@@ -1,0 +1,20 @@
+<view class="invite-page">
+  <view class="brand">全渠供</view>
+  <view class="invite-card">
+    <view class="title">订单付款邀请</view>
+    <view wx:if="{{state === 'LOADING'}}" class="note">正在核验订单…</view>
+    <block wx:elif="{{state === 'PAID'}}"><view class="success">该订单已付款</view><view class="note">无需重复支付，商家将按订单安排履约。</view></block>
+    <block wx:elif="{{order}}">
+      <view class="order-number">订单 {{order.orderNo}}</view>
+      <view class="amount">订单金额 ¥{{order.amount}}</view>
+      <view class="note">您正在为该订单付款。款项计入订单所属客户，不会转入您的预付款余额。</view>
+      <button wx:if="{{order.loginRequired}}" bindtap="login" loading="{{busy}}" disabled="{{busy}}">微信登录后付款</button>
+      <button wx:elif="{{order.wechatPay}}" class="pay" bindtap="pay" loading="{{busy}}" disabled="{{busy || recovering}}">微信支付 ¥{{order.amount}}</button>
+      <view wx:else class="note">微信支付暂不可用，请联系业务员。</view>
+      <button wx:if="{{recovering}}" bindtap="recover" disabled="{{busy}}">核实付款结果</button>
+    </block>
+    <view wx:if="{{message}}" class="message">{{message}}</view>
+    <button wx:if="{{state === 'ERROR'}}" bindtap="refresh" disabled="{{busy}}">重新核验</button>
+    <button class="button-plain" bindtap="goHome">返回商城</button>
+  </view>
+</view>

@@ -1,0 +1,8 @@
+<view class="cstatus cstatus--{{view.tone}}">
+  <view class="cstatus-ico">{{view.icon}}</view>
+  <view class="cstatus-main">
+    <text class="cstatus-title">{{view.title}}</text>
+    <text class="cstatus-desc">{{view.desc}}</text>
+  </view>
+  <view wx:if="{{view.cta}}" class="cstatus-cta" bindtap="onAction">{{view.cta}}</view>
+</view>

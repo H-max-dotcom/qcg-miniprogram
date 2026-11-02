@@ -1,0 +1,134 @@
+.page {
+  padding-bottom: calc(184rpx + env(safe-area-inset-bottom));
+}
+
+.field {
+  display: grid;
+  gap: 8rpx;
+  margin-top: 18rpx;
+}
+
+.order-remark-shell {
+  position: relative;
+}
+
+.order-remark {
+  height: 112rpx;
+  min-height: 112rpx;
+  max-height: 270rpx;
+  padding: 16rpx 18rpx 46rpx;
+  line-height: 1.5;
+  overflow-y: auto;
+}
+
+.order-remark-counter {
+  position: absolute;
+  right: 16rpx;
+  bottom: 10rpx;
+  z-index: 2;
+  color: #8a968f;
+  font-size: 22rpx;
+  pointer-events: none;
+}
+
+.checkout-item {
+  padding: 18rpx 0;
+  border-bottom: 1rpx solid #edf1ee;
+}
+
+.checkout-item:last-child {
+  border-bottom: 0;
+}
+
+.checkout-item .product-row {
+  grid-template-columns: 82rpx minmax(0, 1fr);
+}
+
+.checkout-item .notice {
+  margin-top: 10rpx;
+}
+
+.minimum-review {
+  display: grid;
+  gap: 14rpx;
+  background: linear-gradient(135deg, #f5fbf7, #ffffff);
+}
+
+.minimum-hint {
+  color: #0f6f4b;
+  font-size: 26rpx;
+  font-weight: 700;
+}
+
+.contact-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 16rpx;
+  align-items: center;
+  padding-top: 14rpx;
+  border-top: 1rpx solid #e1ebe5;
+}
+
+.address-choice {
+  display: grid;
+  gap: 12rpx;
+  width: 100%;
+  margin-top: 18rpx;
+  padding: 20rpx;
+  border: 1rpx solid #cfe4d7;
+  border-radius: 16rpx;
+  background: #f7fcf9;
+}
+
+.address-choice-footer,
+.address-empty-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 14rpx;
+}
+
+.select-address-link {
+  color: #0f8f5f;
+  font-size: 24rpx;
+}
+
+.address-choice-head {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14rpx;
+}
+
+.address-choice-detail {
+  color: #405048;
+  line-height: 1.65;
+  overflow-wrap: anywhere;
+}
+
+.address-empty {
+  display: grid;
+  justify-items: center;
+  gap: 18rpx;
+  margin-top: 18rpx;
+}
+
+.requote-button {
+  justify-self: start;
+  min-height: 58rpx;
+  color: #0f6f4b;
+  border-color: #9ccdb2;
+}
+
+.submit-success {
+  display: grid;
+  gap: 16rpx;
+  border-color: #93caaa;
+  background: linear-gradient(135deg, #eefaf3, #ffffff);
+}
+
+.submit-success .button-primary {
+  width: 100%;
+  margin-top: 8rpx;
+}

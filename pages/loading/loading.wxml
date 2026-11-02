@@ -1,0 +1,19 @@
+<!-- 冷启动启动页（Splash）：全屏「吉祥物推购物车」大图 + 顶部绿底蔬菜 Logo。
+     注意：大图 y≈71.17% 高度处烧制了一个静态圈（外径 102px = 图高 6.10%），
+     它只是画上去的图案、永远不会转。所以下面用 .splash-loader 把这个位置盖住，
+     再渲染一个真正跟着网络请求状态走的加载圈。 -->
+<view class="splash-page">
+  <!-- 全屏大图：效果图即素材（941x1672 ≈ 9:16），aspectFill 高屏机型左右轻微裁边 -->
+  <image class="splash-bg" src="/assets/splash.jpg" mode="aspectFill" aria-hidden="true" />
+
+  <!-- 绿底蔬菜 Logo：置于大图上方留白区（吉祥物叶子上方） -->
+  <image class="splash-logo" src="/assets/brand-logo.png" mode="aspectFit" aria-hidden="true" />
+
+  <!-- 盖住图片里烧制的静态圈：始终存在，尺寸略大于它，
+       颜色取自该处背景（#f9fefa~#fcfcfa），边缘羽化，看不出色块边界 -->
+  <view class="splash-loader" aria-hidden="true">
+    <!-- 真圈：只有请求还没落地时才渲染。
+         成功、失败、5s 兜底超时都会把 isLoading 置为 false，圈立刻消失。 -->
+    <view class="splash-loader-ring" wx:if="{{isLoading}}"></view>
+  </view>
+</view>

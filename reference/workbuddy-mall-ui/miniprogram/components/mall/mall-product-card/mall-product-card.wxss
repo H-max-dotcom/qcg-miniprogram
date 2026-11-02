@@ -1,0 +1,144 @@
+:host {
+  display: block;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  padding: 14rpx;
+  border-radius: 24rpx;
+  background: #ffffff;
+  box-shadow: 0 10rpx 26rpx rgba(16, 90, 60, 0.07);
+}
+
+.card--compact {
+  width: 232rpx;
+}
+
+.thumb {
+  position: relative;
+  width: 100%;
+  height: 200rpx;
+  border-radius: 18rpx;
+  overflow: hidden;
+  background: linear-gradient(135deg, #eef8f2, #f6fbf8);
+}
+
+.card--compact .thumb {
+  height: 188rpx;
+}
+
+.thumb-img {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.thumb-initial {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 56rpx;
+  font-weight: 800;
+  color: #9ccdb4;
+}
+
+.badge {
+  position: absolute;
+  top: 12rpx;
+  padding: 4rpx 14rpx;
+  border-radius: 999rpx;
+  font-size: 19rpx;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.badge--promo {
+  left: 12rpx;
+  background: linear-gradient(135deg, #e0a534, #c8860d);
+}
+
+.badge--repurchase {
+  right: 12rpx;
+  background: rgba(11, 122, 79, 0.92);
+}
+
+.info {
+  padding: 14rpx 6rpx 4rpx;
+}
+
+.name {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  min-height: 68rpx;
+  font-size: 25rpx;
+  line-height: 1.32;
+  font-weight: 600;
+  color: #1d2b23;
+  word-break: break-word;
+}
+
+.meta {
+  display: block;
+  margin-top: 6rpx;
+  font-size: 21rpx;
+  color: #8a998f;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.foot {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-top: 14rpx;
+}
+
+.price-wrap {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 4rpx;
+}
+
+.price {
+  font-size: 32rpx;
+  font-weight: 800;
+  color: #0b7a4f;
+}
+
+.price-unit {
+  font-size: 20rpx;
+  color: #8a998f;
+}
+
+.price-hint {
+  font-size: 21rpx;
+  color: #a7b3ab;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.add {
+  flex: 0 0 auto;
+  width: 52rpx;
+  height: 52rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 38rpx;
+  line-height: 1;
+  color: #ffffff;
+  background: linear-gradient(135deg, #16a86a, #0d8455);
+  box-shadow: 0 6rpx 16rpx rgba(13, 132, 85, 0.32);
+}
+
+.meta, .price-unit, .price-hint { color: #65786c; }

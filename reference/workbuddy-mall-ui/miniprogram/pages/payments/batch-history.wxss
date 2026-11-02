@@ -1,0 +1,4 @@
+.history-page { padding-bottom: calc(32rpx + env(safe-area-inset-bottom)); } .heading { font-size: 36rpx; font-weight: 600; margin: 24rpx 0; } .record { padding: 22rpx; margin-bottom: 18rpx; } .record-head { background: transparent; text-align: left; font-size: 28rpx; padding: 0; line-height: 1.8; } .record-head::after { border: 0; } .amount { font-size: 36rpx; color: #12855c; font-weight: 600; } .details { border-top: 1rpx solid #e3e8e3; margin-top: 18rpx; padding-top: 16rpx; } .allocation { padding: 16rpx 0; } .allocation .amount { font-size: 30rpx; } .small { color: #69766f; font-size: 24rpx; } .pagination { display: flex; gap: 16rpx; }
+
+.reference{font-size:22rpx;color:#68776e;line-height:1.6;word-break:break-all;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;word-break:break-all;line-height:1.5;margin-top:10rpx}
+.record-head{white-space:normal}.allocation{min-width:0}.record-head .small{font-size:24rpx;color:#607165}

@@ -1,0 +1,181 @@
+<view class="page account-center">
+  <view class="mini-topbar">
+    <view class="brand">
+      <text class="brand-title">我的账户</text>
+      <text class="brand-subtitle">全渠供 · 让日常采购更省心</text>
+    </view>
+  </view>
+
+  <view class="notice" wx:if="{{accountLoading}}">正在读取账户与门店身份…</view>
+  <!-- 读取失败时也要保留身份卡片：卡片里有访客态的「微信登录」入口，
+       若被错误提示顶掉，用户将无法登录，只能反复点「重新读取」。 -->
+  <view class="notice" wx:if="{{!accountLoading && accountError}}"><view>{{accountError}}</view><button class="button-plain" bindtap="loadAccountStatus">重新读取</button></view>
+  <view class="mine-head card" wx:if="{{!accountLoading}}">
+    <view class="avatar"><view class="marketing-icon home"></view></view>
+    <view class="mine-copy">
+      <text wx:if="{{accountTagText && !showAccountInfo}}" class="tag orange account-tag">{{accountTagText}}</text>
+      <view class="customer-title">{{showAccountInfo ? customerName : profileName}}</view>
+      <view class="identity-tags" wx:if="{{showAccountInfo}}">
+        <text class="identity-tag" wx:if="{{customerStatus === 'APPROVED_BOUND_CUSTOMER'}}">✓ 已绑定门店</text>
+        <text class="identity-type" wx:if="{{customerTypeText}}">{{customerTypeText}}</text>
+      </view>
+      <view wx:if="{{profileDesc && !showAccountInfo}}" class="small">{{profileDesc}}</view>
+      <view wx:if="{{showAccountInfo}}" class="customer-summary">
+        <text class="identity-contact">{{contactNameMasked || '-'}} · {{contactPhoneMasked || '-'}}</text>
+        <button class="identity-link" data-key="profile" bindtap="goService">查看门店资料 <text>›</text></button>
+      </view>
+      <view
+        class="login-entry-boundary"
+        style="display:flex;width:100%;justify-content:center;"
+        wx:if="{{customerStatus === 'GUEST'}}"
+      >
+        <button
+          class="login-entry"
+          style="display:flex;flex:0 1 360rpx;align-items:center;justify-content:center;width:360rpx;max-width:100%;margin:14rpx 0 0;"
+          catchtap="openAuthSheet"
+        >微信登录</button>
+      </view>
+    </view>
+  </view>
+
+  <view class="section status-panel" wx:if="{{showStatusPanel}}">
+    <view class="section-head">
+      <text>{{panelTitle}}</text>
+      <text class="tag orange">{{accountTagText}}</text>
+    </view>
+    <view class="small">{{panelDesc}}</view>
+    <view class="warning" wx:if="{{rejectionReason}}">{{rejectionReason}}</view>
+    <button class="button-primary status-action" wx:if="{{primaryText}}" bindtap="onPrimaryAction">{{primaryText}}</button>
+  </view>
+
+  <view class="section customer-experience" wx:if="{{accountExperienceEnabled}}">
+    <button
+      class="experience-card account-experience" hover-class="account-pressed"
+      wx:if="{{accountExperienceEnabled}}"
+      data-key="account"
+      bindtap="goService"
+    >
+      <view class="experience-card-head">
+        <view>
+          <text class="experience-title">预付款账户</text>
+        </view>
+        <text class="experience-arrow">查看明细 ›</text>
+      </view>
+      <view wx:if="{{accountExperience && accountExperience.state === 'ACCOUNT_EXISTS'}}">
+        <view class="balance-primary">
+          <text>可用余额</text>
+          <text>{{accountExperience.balances.availableBalanceText}}</text>
+        </view>
+        <view class="balance-grid">
+          <view><text>账面余额</text><text>{{accountExperience.balances.bookBalanceText}}</text></view>
+          <view><text>订单占用</text><text>{{accountExperience.balances.reservedBalanceText}}</text></view>
+          <view><text>累计预存</text><text>{{accountExperience.balances.cumulativeDepositedText}}</text></view>
+          <view><text>累计消费</text><text>{{accountExperience.balances.cumulativeConsumedText}}</text></view>
+        </view>
+      </view>
+      <view class="experience-empty" wx:else>
+        {{accountExperience ? accountExperience.message : '账户数据加载中'}}
+      </view>
+    </button>
+
+
+  </view>
+
+  <view wx:if="{{receivableSummary && canViewMall && !accountLoading && !accountError}}" class="receivable-summary {{receivableSummary.totalCount ? 'has-pending' : 'no-pending'}}" bindtap="goReceivableCenter"><view class="receivable-summary-heading"><text>待付款 {{receivableSummary.totalCount}} 笔</text><text class="receivable-summary-arrow">查看明细 ›</text></view><view class="receivable-summary-amount">¥{{receivableSummary.totalAmount}}</view><view class="receivable-summary-meta" wx:if="{{receivableSummary.todayCount}}">今日 {{receivableSummary.todayCount}} 笔 · ¥{{receivableSummary.todayAmount}}</view></view>
+
+  <view class="section payment-summary" wx:if="{{canViewMall}}">
+    <view class="section-head"><text>付款服务</text><text class="section-note">配送完成后付款</text></view>
+    <view class="coupon-entry-grid">
+      <button class="coupon-entry" data-key="waiting-payment" bindtap="goService"><text>待付款</text><text>›</text></button>
+      <button class="coupon-entry" data-key="prepaid-records" bindtap="goService"><text>结款预付款流水</text><text>›</text></button>
+      <button class="coupon-entry" data-key="payment-records" bindtap="goService"><text>付款记录</text><text>›</text></button>
+    </view>
+  </view>
+
+  <view class="section coupon-summary" wx:if="{{couponState !== 'HIDDEN'}}">
+    <view class="section-head"><text>我的优惠券</text><text class="section-note">配送后付款时选用</text></view>
+    <view class="section-description">{{couponMessage}}</view>
+    <view class="coupon-entry-grid" wx:if="{{couponState === 'READY'}}">
+      <button class="coupon-entry" data-key="coupons" bindtap="goService"><view class="marketing-icon coupon"></view><view><text class="entry-title">我的优惠券</text><text class="entry-subtitle">查看券状态与使用条件</text></view><text>›</text></button>
+      <button class="coupon-entry claim-entry" data-key="coupon-center" bindtap="goService"><view><text class="entry-title">{{couponCanClaim ? '去领券' : '查看优惠'}}</text><text class="entry-subtitle">领券中心</text></view><text>›</text></button>
+    </view>
+    <button class="button-plain section-retry" wx:if="{{couponState === 'ERROR'}}" bindtap="loadCouponSummary">重新读取优惠券</button>
+  </view>
+
+  <view class="section membership-summary" wx:if="{{membershipInfo}}">
+    <view class="section-head"><text>商城会员</text><button class="section-link" data-key="membership" bindtap="goService">查看权益 ›</button></view>
+    <view class="membership-role">{{membershipInfo.roleText}}</view>
+    <view class="member-caption">{{membershipInfo.message}}</view>
+  </view>
+
+  <view class="section" wx:if="{{campaignExperienceEnabled}}">
+    <button
+      class="experience-card campaign-experience"
+      wx:if="{{campaignExperienceEnabled}}"
+      data-key="campaigns"
+      bindtap="goService"
+    >
+      <view class="experience-card-head">
+        <view>
+          <text class="experience-title">活动中心</text>
+          <text class="small">{{campaignCountText}}</text>
+        </view>
+        <text class="experience-arrow">›</text>
+      </view>
+      <view class="campaign-preview" wx:if="{{campaignExperience && campaignExperience.items.length}}">
+        <text>{{campaignExperience.items[0].name}}</text>
+        <text class="tag orange">{{campaignExperience.items[0].stateText}}</text>
+      </view>
+      <view class="experience-empty" wx:else>{{campaignCountText}}</view>
+    </button>
+  </view>
+
+  <view class="section orders-summary" wx:if="{{canViewMall}}">
+    <view class="section-head"><text>我的订单</text><button class="section-link" bindtap="goOrders">全部订单 ›</button></view>
+    <view class="order-entry-grid">
+      <button class="order-entry" wx:for="{{orderEntries}}" wx:key="tab" data-tab="{{item.tab}}" bindtap="openOrderStatus"><view class="order-icon {{item.icon}}"><view></view></view><text>{{item.name}}</text></button>
+    </view>
+  </view>
+
+  <view class="section" wx:if="{{!accountLoading && !accountError && customerStatus !== 'GUEST'}}">
+    <view class="section-head">
+      <text>常用服务</text>
+    </view>
+    <view class="service-grid">
+      <button class="service-card" wx:for="{{services}}" wx:key="key" wx:if="{{item.key !== 'orders' && (item.key !== 'service' || ownerPhone)}}" data-key="{{item.key}}" bindtap="goService">
+        <view class="service-icon"><view class="marketing-icon {{item.key}}"></view></view>
+        <text>{{item.name}}</text>
+      </button>
+    </view>
+    <view class="service-contact-note" wx:if="{{!ownerPhone}}">业务联系：{{ownerName || '暂未分配'}} · 暂无联系电话</view>
+  </view>
+
+
+
+  <view class="section finance-summary finance-detail-entry" wx:if="{{financeAllowed}}"><view class="section-head"><text>账务明细</text><button wx:if="{{finance}}" class="section-link" data-key="finance" bindtap="goService">查看账单 ›</button></view><view class="section-description" wx:if="{{financeLoading}}">正在读取账务…</view><view wx:elif="{{financeError}}"><view class="section-description">{{financeError}}</view><button class="button-plain section-retry" bindtap="loadFinanceSummary">重新读取</button></view><view class="section-description" wx:elif="{{finance}}">收款、未结清记录与授信说明</view></view>
+
+  <view class="account-footer" wx:if="{{customerStatus !== 'GUEST'}}">
+    <button class="button-plain" bindtap="logout">退出登录</button>
+  </view>
+
+  <view class="qcg-tabbar">
+    <button class="qcg-tab" bindtap="goHome"><view class="marketing-icon home"></view><text>首页</text></button>
+    <button class="qcg-tab" bindtap="goCategory"><view class="marketing-icon category"></view><text>分类</text></button>
+    <button class="qcg-tab" bindtap="goCart"><view class="marketing-icon cart"></view><text>购物车</text></button>
+    <button class="qcg-tab" bindtap="goOrders"><view class="marketing-icon orders"></view><text>订单</text></button>
+    <button class="qcg-tab active"><view class="marketing-icon me"></view><text>我的</text></button>
+  </view>
+
+  <mall-auth-sheet
+    id="mall-auth-sheet"
+    class="mall-auth-sheet-host"
+    visible="{{authSheetVisible}}"
+    brand-name="全渠供"
+    submitting="{{authSubmitting}}"
+    error-message="{{loginError}}"
+    bind:close="closeAuthSheet"
+    bind:login="onAuthLogin"
+    bind:privacyopened="onPrivacyOpened"
+    bind:privacyblock="onPrivacyBlock"
+  />
+</view>

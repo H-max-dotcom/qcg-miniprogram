@@ -1,0 +1,13 @@
+# Local-only material; never commit credentials or business data
+.env
+.env.*
+**/project.private.config.json
+node_modules/
+.DS_Store
+*.log
+*.pem
+*.key
+*.p12
+*.sql
+*.sqlite
+*.db
